@@ -4,6 +4,12 @@
 # 최초실행시 자동 생성됩니다.
 
 # 현재 테스트는 Home DB 의 COL1 COL2 를 불러오는 DB 작업입니다. -- 추후 삭제
+Home DB 생성
+
+CREATE TEST1 (
+	COL1 INT,
+	COL2 LONGTEXT
+)
 
 
 # 작업할 것
