@@ -12,7 +12,7 @@ namespace CoreMvcWeb.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(TestModel.GetList(2));
         }
 
         public IActionResult Privacy()

@@ -19,6 +19,19 @@ namespace CoreMvcWeb
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .UseKestrel(options => {
+                    if (args != null)
+                    {
+                        foreach (var arg in args)
+                        {
+                            if (arg.Trim().ToLower().IndexOf("--port=") == 0)
+                            {
+                                options.ListenAnyIP(Convert.ToInt16(arg.Trim().ToLower().Replace("--port=", "")));
+
+                            }
+                        }
+                    }
+                });
     }
 }

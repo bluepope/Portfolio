@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Html
+@model string
+
+@functions {
+    HtmlString GetAlert(int cnt)
+    {
+        if (cnt > 0)
+        {
+            return new HtmlString($"<span class=\"label label-rouded label-danger pull-right\">{cnt}</span>");
+        }
+        return null;
+    }
+}
+<nav class="sidebar-nav">
+    <ul id="sidebarnav">
+        <li>
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-folder"></i><span class="hide-menu">ASP.NET Core</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="/aspnetcore/chat">· SignalR Chat</a></li>
+            </ul>
+        </li>
+        <li>
+            <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-folder"></i><span class="hide-menu">Client Side</span></a>
+            <ul aria-expanded="false" class="collapse">
+                <li><a href="/clientside/vuejs">· Vue Js</a></li>
+                <li><a href="/clientside/fileupload">· JQuery File Upload</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
