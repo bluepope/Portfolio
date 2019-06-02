@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Chat";
+
+    var userName = User?.Identity?.Name ?? "비로그인 유저";
+}
+<script src="~/lib/signalr/signalr.min.js"></script>
+
+<div class="row">
+    <div class="col-12">
+        <table>
+            <tr>
+                <th>사용자 명</th>
+                <td>@Html.TextBox("userInput", userName, new { @class = "signalr-chat" })</td>
+                <td rowspan="2">
+                    <input type="button" id="sendButton" value="Send Message" class="btn btn-sm btn-primary" />
+                </td>
+            </tr>
+            <tr>
+                <th>사용자 명</th>
+                <td>@Html.TextBox("messageInput", "", new { @class = "signalr-chat" })</td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <ul id="messagesList"></ul>
+    </div>
+</div>
+
+<script>
+    $(".signalr-chat").keydown(function (evt) {
+        if (evt.keyCode !== 13)
+            return;
+
+        if ($(this).attr("id") === "userInput") {
+            $("#messageInput").focus();
+        }
+        else if ($(this).attr("id") === "messageInput") {
+            $("#sendButton").trigger("click");
+        }
+    });
+</script>
+<script>
+    var _connection = new signalR.HubConnectionBuilder().withUrl("/hubs/chatHub").build();
+    var _tryConnect = 0;
+
+    _connection.on("ReceiveMessage", function (user, message) {
+        var msg = message;
+        var encodedMsg = user + ": " + msg;
+        var li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+
+    _connection.on("NoAuth", function (msg) {
+        console.log('connecition about');
+        _tryConnect = 100;
+        _connection.stop();
+    });
+
+
+    _connection.onclose(function () {
+        console.log('connecition closed');
+        if (_tryConnect < 5) {
+            _tryConnect++;
+
+            setTimeout(function () {
+                console.log('connecition reconnect try');
+
+                _connection.start().catch(function (err) {
+                    return console.error(err.toString());
+                });
+            }, 5000);
+        }
+    });
+
+    _connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    $("#sendButton").on("click", function (event) {
+        var user = $("#userInput").val();
+        var message = $("#messageInput").val();
+        $("#messageInput").val("");
+
+        if (user.length < 1 || message.length < 1) {
+            return;
+        }
+
+        _connection.invoke("SendMessage", user, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        event.preventDefault();
+    });
+
+</script>

@@ -5,20 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreMvcWeb.Models;
+using CoreMvcWeb.Hubs.Chat;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CoreMvcWeb.Controllers
 {
-    public class HomeController : Controller
+    public class ClientSideController : Controller
     {
         public IActionResult Index()
+        {
+            return Redirect("/clientside/vue");
+        }
+
+        public IActionResult Vue()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult AjaxTest()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

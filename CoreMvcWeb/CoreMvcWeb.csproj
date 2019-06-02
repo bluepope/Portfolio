@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Sql\Home.xml" />
     <None Remove="TypeScript\common\main.ts" />
   </ItemGroup>
 
@@ -18,10 +19,16 @@
     <_ContentIncludedByDefault Remove="bundleconfig.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Sql\Home.xml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
 

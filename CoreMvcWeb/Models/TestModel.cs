@@ -13,7 +13,7 @@ namespace CoreMvcWeb.Models
 
         public static IList<TestModel> GetList(int col1)
         {
-            return MySqlDapperHelper.RunGetQueryXml<TestModel>("Sql/Home.xml", "GetTestData", new { COL1 = 2 });
+            return MySqlDapperHelper.RunGetQueryXml<TestModel>("Sql/Home.xml", "GetTestData", new { COL1 = col1 });
         }
     }
 }
