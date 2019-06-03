@@ -11,14 +11,20 @@
             <tr>
                 <th>사용자 명</th>
                 <td>@Html.TextBox("userInput", userName, new { @class = "signalr-chat" })</td>
-                <td rowspan="2">
-                    <input type="button" id="sendButton" value="Send Message" class="btn btn-sm btn-primary" />
-                </td>
+                @if (User != null && User.Identity.IsAuthenticated)
+                {
+                    <td rowspan="2">
+                        <input type="button" id="sendButton" value="메시지 전송" class="btn btn-sm btn-primary" />
+                    </td>
+                }
             </tr>
-            <tr>
-                <th>사용자 명</th>
-                <td>@Html.TextBox("messageInput", "", new { @class = "signalr-chat" })</td>
-            </tr>
+            @if (User != null && User.Identity.IsAuthenticated)
+            {
+                <tr>
+                    <th>메시지 작성</th>
+                    <td>@Html.TextBox("messageInput", "", new { @class = "signalr-chat" })</td>
+                </tr>
+            }
         </table>
 
     </div>
@@ -62,6 +68,10 @@
 
     _connection.on("NoAuth", function (msg) {
         console.log('connecition about');
+      
+        var li = document.createElement("li");
+        li.textContent = msg;
+        document.getElementById("messagesList").appendChild(li);
         _tryConnect = 100;
         _connection.stop();
     });
