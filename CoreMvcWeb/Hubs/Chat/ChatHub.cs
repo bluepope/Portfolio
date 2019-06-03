@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreMvcWeb.Extentions;
 
 namespace CoreMvcWeb.Hubs.Chat
 {
@@ -24,6 +25,16 @@ namespace CoreMvcWeb.Hubs.Chat
             await Clients.Groups(groups).SendAsync("ReceiveMessage", message);
         }
 
+        /// <summary>
+        /// 인증이 안된 사용자에게 보내는 메시지
+        /// </summary>
+        /// <param name="sendMessage"></param>
+        /// <returns></returns>
+        private async Task SendMessageToIsNotAuthenticated(string sendMessage)
+        {
+            await Clients.All.SendAsync("NoAuth", sendMessage);
+        }
+
         public override async Task OnConnectedAsync()
         {
             /*
@@ -38,15 +49,23 @@ namespace CoreMvcWeb.Hubs.Chat
 
             }
             */
-            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
-            await base.OnConnectedAsync();
-            await Clients.All.SendAsync("ReceiveMessage", "System", "입장 알림");
+            if (!Context.User.Identity.IsAuthenticated)
+            {
+                await SendMessageToIsNotAuthenticated("비로그인님 채팅방에 입장 못합니다.");
+            }
+            else
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+                await base.OnConnectedAsync();
+                await Clients.All.SendAsync("ReceiveMessage", "System", $"{Context.User.Identity.Name}님 입장 알림");
+            }
+
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
-            await Clients.All.SendAsync("ReceiveMessage", "System", "퇴장 알림");
+            await Clients.All.SendAsync("ReceiveMessage", "System", $"{Context.User.Identity.Name}님 퇴장 알림");
             await base.OnDisconnectedAsync(exception);
         }
     }
