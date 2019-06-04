@@ -33,7 +33,7 @@ namespace CoreMvcWeb.Controllers
         }
 
 
-        //[Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult AdminMessage(string message)
         {
             if (message.IsNull() == false)

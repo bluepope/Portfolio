@@ -47,9 +47,9 @@ namespace CoreMvcWeb.Controllers
 
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, item.USER_ID));
                 identity.AddClaim(new Claim(ClaimTypes.Name, item.USER_NAME));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
 
                 var principal = new ClaimsPrincipal(identity);
-
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true, AllowRefresh = true });
 
                 return Json(new { msg = "OK" });
