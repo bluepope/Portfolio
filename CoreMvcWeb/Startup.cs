@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 
 namespace CoreMvcWeb
 {
@@ -45,7 +46,9 @@ namespace CoreMvcWeb
 
             services
                 .AddMvc()
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()) //return Json 에서 camelcase 강제 적용 안함
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
 
             //SignalR 추가
             services.AddSignalR();

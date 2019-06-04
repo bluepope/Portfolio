@@ -1,14 +1,87 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Ajax Test";
 }
-<script src="~/lib/vue/vue.min.js"></script>
 
-<div id="test">
-    <button class="btn btn-sm btn-primary">테스트</button>
+<div id="ajax-test">
+    <input name="COL1" type="text" class="form-control" />
+    <input name="COL2" type="text" class="form-control" />
+
+    <input name="file1" type="file" />
+    <input name="file1" type="file" />
+    <input name="file2" type="file" />
 </div>
 
-<script>
-    $(".btn").click(function () {
+<button id="btn1" class="btn btn-xs btn-primary">Json타입</button>
+<button id="btn2" class="btn btn-xs btn-primary">Form Append타입</button>
 
+<script>
+    $("#btn1").click(function () {
+        //파일을 전송할 수 없음
+        var obj = {};
+
+        $("#ajax-test input[type=text]").each(function () {
+            obj[$(this).attr("name")] = $(this).val();
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/ClientSide/SaveAjaxData",
+            dataType: "json",
+            data: {
+                input: obj
+            },
+            success: function (data, status, xhr) {
+                if (data.msg == "OK") {
+                    alert("저장되었습니다");
+                }
+                else {
+                    alert(data.msg);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                AjaxCommonError(xhr);
+            }
+        });
     });
+
+    $("#btn2").click(function () {
+        //json 형태로 전송할 수 없음
+        var obj = {};
+        $("#ajax-test input[type=text]").each(function () {
+            obj[$(this).attr("name")] = $(this).val();
+        });
+
+        var formData = new FormData();
+        formData.append("json_data", JSON.stringify(obj));
+
+        $("#ajax-test input[type=file]").each(function () {
+            var fileObj = $(this)[0].files;
+
+            if (fileObj.length > 0) {
+                formData.append("file1", fileObj[0]);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/ClientSide/SaveAjaxData",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data, status, xhr) {
+                if (data.msg == "OK") {
+                    alert("저장되었습니다");
+                }
+                else {
+                    alert(data.msg);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                AjaxCommonError(xhr);
+            }
+        });
+    });
+
 </script>

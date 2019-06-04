@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using CoreMvcWeb.Models;
 using CoreMvcWeb.Hubs.Chat;
 using Microsoft.AspNetCore.SignalR;
-using CoreMvcWeb.Extentions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CoreMvcWeb.Controllers

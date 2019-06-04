@@ -3,12 +3,132 @@
 }
 <script src="~/lib/vue/vue.min.js"></script>
 
-<div id="test">
-    <button class="btn btn-sm btn-primary">테스트</button>
+<div id="vue-test">
+    <div>
+        <button v-on:click="OnSearch" class="btn btn-sm btn-primary">조회</button>
+        <button v-on:click="OnSave" class="btn btn-sm btn-primary">저장</button>
+    </div>
+    <div>
+        <table class="table-common" style="width:auto;">
+            <colgroup>
+                <col style="width:100px" />
+                <col style="width:100px" />
+                <col style="width:90px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>COL1</th>
+                    <th>COL2</th>
+                    <th>
+                        <div>기능</div>
+                        <button v-on:click="OnAddRow" class="btn btn-xs btn-outline-primary">추가</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr v-for="(item, index) in data" v-if="item.isDelete == false">
+                    <td>
+                        <div v-if="item.isEdit">
+                            <input v-model="item.COL1" type="text" class="form-control" />
+                        </div>
+                        <div v-else>
+                            {{item.COL1}}
+                        </div>
+                    </td>
+                    <td>
+                        <div v-if="item.isEdit">
+                            <input v-model="item.COL2" type="text" class="form-control" />
+                        </div>
+                        <div v-else>
+                            {{item.COL2}}
+                        </div>
+                    </td>
+                    <td>
+                        <div v-if="item.isEdit">
+                            <button v-on:click="OnDelete(index)" class="btn btn-xs btn-outline-danger">삭제</button>
+                        </div>
+                        <div v-else>
+                            <button v-on:click="item.isEdit = true"  class="btn btn-xs btn-primary">수정</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 </div>
 
 <script>
-    $(".btn").click(function () {
+    var vm1 = new Vue({
+        el: "#vue-test",
+        data: {
+            searchData: {},
+            data: []
+        },
+        methods: {
+            Load: function () {
+                var $this = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/ClientSide/GetTestData",
+                    dataType: "json",
+                    data: $this.searchData,
+                    success: function (data, status, xhr) {
+                        $this.data = data;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        AjaxCommonError(xhr);
+                    }
+                });
+            },
+            OnSearch: function () {
+                //Reload를 위한 Load 와의 분리
+                this.searchData = {};
+                this.Load();
+            },
+            OnAddRow: function () {
+                this.data.push({
+                    isNew: true,
+                    isEdit: true,
+                    isDelete: false
+                });
+            },
+            OnDelete: function (index) {
+                if (this.data[index].isNew === true)
+                    this.data.splice(index, 1);
+                else
+                    this.data[index].isDelete = true;
+            },
+            OnSave: function () {
+                if (confirm("저장하시겠습니까?") == false)
+                    return;
 
+                var $this = this;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/ClientSide/SaveTestData",
+                    dataType: "json",
+                    data: {
+                        input: $this.data
+                    },
+                    success: function (data, status, xhr) {
+                        if (data.msg == "OK") {
+                            alert("저장되었습니다");
+                            $this.Load();
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        AjaxCommonError(xhr);
+                    }
+                });
+            }
+        },
+        mounted: function () {
+            this.Load();
+        }
     });
 </script>

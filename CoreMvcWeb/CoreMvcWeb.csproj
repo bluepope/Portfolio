@@ -13,6 +13,8 @@
   <ItemGroup>
     <None Remove="Sql\Home.xml" />
     <None Remove="TypeScript\common\main.ts" />
+    <None Remove="wwwroot\js\vue\v-number.js" />
+    <None Remove="wwwroot\js\vue\vue-custom.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +39,7 @@
     <None Include="Views\Shared\Components\LeftMenu\Default.cshtml" />
     <None Include="Views\Shared\Components\TopMessage.cshtml" />
     <None Include="Views\Shared\Components\TopNoti.cshtml" />
+    <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
     <None Include="wwwroot\lib\ElaAdmin\css\less\advance-widget.less" />
     <None Include="wwwroot\lib\ElaAdmin\css\less\amchart.less" />
     <None Include="wwwroot\lib\ElaAdmin\css\less\badge.less" />
@@ -106,6 +109,83 @@
     <None Include="wwwroot\lib\ElaAdmin\css\less\widget-stat.less" />
     <None Include="wwwroot\lib\ElaAdmin\js\scripts.js" />
     <None Include="wwwroot\lib\ElaAdmin\js\sidebarmenu.js" />
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont3e6e.svg" />
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont3e6e.woff2" />
+    <None Include="wwwroot\lib\jquery.fileDownload\jquery.fileDownload.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\af.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ar.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\az.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\bg.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\bs.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ca.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\cs.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\da.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\de.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\dsb.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\el.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\en.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\es.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\et.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\eu.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\fa.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\fi.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\fr.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\gl.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\he.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\hi.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\hr.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\hsb.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\hu.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\hy.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\id.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\is.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\it.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ja.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\km.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ko.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\lt.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\lv.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\mk.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ms.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\nb.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\nl.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\pl.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ps.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\pt-BR.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\pt.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ro.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\ru.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\sk.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\sl.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\sr-Cyrl.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\sr.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\sv.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\th.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\tr.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\uk.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\vi.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\zh-CN.js" />
+    <None Include="wwwroot\lib\select2\js\i18n\zh-TW.js" />
+    <None Include="wwwroot\lib\select2\js\select2.full.js" />
+    <None Include="wwwroot\lib\select2\js\select2.full.min.js" />
+    <None Include="wwwroot\lib\select2\js\select2.js" />
+    <None Include="wwwroot\lib\select2\js\select2.min.js" />
+    <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.js" />
+    <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.min.js" />
+    <None Include="wwwroot\lib\sticky-kit\sticky-kit.min.js" />
+    <None Include="wwwroot\lib\summernote\lang\summernote-ko-KR.js" />
+    <None Include="wwwroot\lib\summernote\lang\summernote-ko-KR.min.js" />
+    <None Include="wwwroot\lib\summernote\plugin\databasic\summernote-ext-databasic.js" />
+    <None Include="wwwroot\lib\summernote\plugin\hello\summernote-ext-hello.js" />
+    <None Include="wwwroot\lib\summernote\plugin\specialchars\summernote-ext-specialchars.js" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.js" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.min.js" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.js" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote.js" />
+    <None Include="wwwroot\lib\summernote\summernote.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote.min.js" />
   </ItemGroup>
 
 

@@ -12,7 +12,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Web;
 
-namespace CoreMvcWeb.Extentions
+namespace CoreMvcWeb
 {
     public static class WebExtention
     {
