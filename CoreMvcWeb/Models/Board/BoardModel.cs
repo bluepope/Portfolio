@@ -6,6 +6,28 @@ using System.Threading.Tasks;
 
 namespace CoreMvcWeb.Models.Board
 {
+    #region "Home.BOARD 테이블"
+    /*
+CREATE TABLE `BOARD` (
+	`BOARD_TYPE` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`SEQ` INT(11) NOT NULL,
+	`TITLE` VARCHAR(200) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`CONTENTS` MEDIUMTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`DUP_KEY` BIGINT(20) NOT NULL,
+	`VIEW_CNT` INT(11) NOT NULL,
+	`STATUS_FLAG` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`REG_IP` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`REG_USER` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`REG_USERNAME` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`REG_DATE` DATETIME NOT NULL,
+	PRIMARY KEY (`BOARD_TYPE`, `SEQ`)
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+;
+    */
+    #endregion
+
     public class BoardModel
     {
         /// <summary>
