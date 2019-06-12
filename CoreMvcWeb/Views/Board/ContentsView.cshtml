@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Html
+@model CoreMvcWeb.Models.Board.BoardModel
+
+<div style="width:900px;">
+    <table class="table table-common">
+        <colgroup>
+            <col style="width:90px" />
+            <col style="width:auto" />
+        </colgroup>
+        <tbody class="text-left">
+            <tr>
+                <th>제목</th>
+                <td>@Model.TITLE</td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td style="vertical-align:top;">
+                    @(new HtmlString(Model.CONTENTS))
+                </td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td>@Model.REG_USERNAME (@Model.REG_DATE.ToString("yyyy-MM-dd HH:mm:ss")) - @Model.REG_IP</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

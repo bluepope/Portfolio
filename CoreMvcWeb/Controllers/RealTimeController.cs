@@ -13,11 +13,11 @@ namespace CoreMvcWeb.Controllers
 {
     public class RealTimeController : Controller
     {
-        IHubContext<ChatHub> ChatHub;
+        static IHubContext<ChatHub> ChatHub;
 
         public RealTimeController(IHubContext<ChatHub> chatHub)
         {
-            this.ChatHub = chatHub;
+            ChatHub = chatHub;
         }
 
         public IActionResult Index()

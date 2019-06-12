@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SceDocPortal.Controllers.ViewComponents
+namespace CoreMvcWeb.Controllers.ViewComponents
 {
     public class LeftMenu : ViewComponent
     {
