@@ -9,8 +9,8 @@ namespace CoreMvcWeb.Models.Board
     #region "Home.BOARD 테이블"
     /*
 CREATE TABLE `BOARD` (
+	`SEQ` INT(11) NOT NULL AUTO_INCREMENT,
 	`BOARD_TYPE` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`SEQ` INT(11) NOT NULL,
 	`TITLE` VARCHAR(200) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`CONTENTS` MEDIUMTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`DUP_KEY` BIGINT(20) NOT NULL,
@@ -20,10 +20,11 @@ CREATE TABLE `BOARD` (
 	`REG_USER` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`REG_USERNAME` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
 	`REG_DATE` DATETIME NOT NULL,
-	PRIMARY KEY (`BOARD_TYPE`, `SEQ`)
+	PRIMARY KEY (`SEQ`)
 )
 COLLATE='utf8mb4_unicode_ci'
 ENGINE=InnoDB
+AUTO_INCREMENT=2
 ;
     */
     #endregion
@@ -112,7 +113,6 @@ LIMIT
             return db.Execute($@"
 INSERT INTO BOARD (
 	BOARD_TYPE
-	,SEQ
 	,TITLE
 	,CONTENTS
 	,DUP_KEY
@@ -125,7 +125,6 @@ INSERT INTO BOARD (
 )
 SELECT
 	@BOARD_TYPE
-	,IFNULL((SELECT MAX(SEQ) + 1 FROM BOARD), 1)
 	,@TITLE
 	,@CONTENTS
 	,@DUP_KEY
@@ -140,10 +139,12 @@ SELECT
 
         public DateTime? REG_DATE { get; set; }
 
+        /* 필요한가? 
         public string UPDATE_IP { get; set; }
         public string UPDATE_USER { get; set; }
         public string UPDATE_USERNAME { get; set; }
         public DateTime? UPDATE_DATE { get; set; }
+        */
 
     }
 }

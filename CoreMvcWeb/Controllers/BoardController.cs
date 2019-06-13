@@ -19,6 +19,8 @@ namespace CoreMvcWeb.Controllers
             if (p < 1)
                 p = 1;
 
+            ViewData["page"] = p;
+
             var model = BoardModel.GetList("GENERAL", p);
 
             return View(model);

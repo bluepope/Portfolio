@@ -50,7 +50,11 @@ namespace CoreMvcWeb.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
 
                 var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true, AllowRefresh = true });
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties {
+                    IsPersistent = true, //로그인 쿠키 영속성 (브라우저 종료시 유지) 여부
+                    ExpiresUtc = DateTime.UtcNow.AddDays(7), //7일간 미접속시 쿠키 만료
+                    AllowRefresh = true, //갱신여부
+                });
 
                 return Json(new { msg = "OK" });
             }

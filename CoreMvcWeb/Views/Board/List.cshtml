@@ -1,4 +1,7 @@
 ﻿@model IList<CoreMvcWeb.Models.Board.BoardModel>
+@{ 
+    int page = (ViewData["page"] as int?).GetValueOrDefault(1);
+}
 
 <div style="width:900px;">
     <table class="table table-common">
@@ -36,12 +39,13 @@
 
     @*
         min_page, now_page, max_page 값으로 page 표시
+        일단 대충 화면만 그려놓음
     *@
     
     <div style="margin-top:5px">
         <ul class="pagination">
-            <li class="page-item active"><a class="page-link" href="/board/list?p=1">1</a></li>
-            <li class="page-item"><a class="page-link" href="/board/list?p=2">2</a></li>
+            <li class="page-item @(page == 1 ? "active" : "")"><a class="page-link" href="/board/list?p=1">1</a></li>
+            <li class="page-item @(page == 2 ? "active" : "")"><a class="page-link" href="/board/list?p=2">2</a></li>
         </ul>
     </div>
 
