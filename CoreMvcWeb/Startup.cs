@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreMvcWeb.Services.Telegram;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,19 @@ namespace CoreMvcWeb
                 x.MultipartBodyLengthLimit = long.MaxValue; // In case of multipart
             });
 
+            //Telegram Bot Service추가
+            
+            services.Configure<BotConfiguration>(options =>
+            {
+                var config = BotConfiguration.GetFromJson();
+                options.BotToken = config.BotToken;
+                options.Socks5Host = config.Socks5Host;
+                options.Socks5Port = config.Socks5Port;
+                options.WebHookUrl = config.WebHookUrl;
+            });
+            services.AddScoped<IUpdateService, UpdateService>(); //request 마다 생성
+            services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +107,9 @@ namespace CoreMvcWeb
             {
                 routes.MapHub<Hubs.Chat.ChatHub>("/hubs/chathub");
             });
+
+            //서버 시작시 텔레그램 봇 최초 생성
+            app.ApplicationServices.GetService<IBotService>();
         }
     }
 }

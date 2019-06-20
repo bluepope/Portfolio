@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 
 dbconfig.json
+telegrambot-config.json
