@@ -21,6 +21,7 @@ namespace CoreMvcWeb
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
+                    options.Limits.MaxRequestBodySize = 1000 * 1000 * 1024; //1GB; kestrel 업로드 용량 제한
                     if (args != null)
                     {
                         foreach (var arg in args)
@@ -28,7 +29,6 @@ namespace CoreMvcWeb
                             if (arg.Trim().ToLower().IndexOf("--port=") == 0)
                             {
                                 options.ListenAnyIP(Convert.ToInt16(arg.Trim().ToLower().Replace("--port=", "")));
-
                             }
                         }
                     }

@@ -11,11 +11,19 @@ using CoreMvcWeb.Models.ClientSide;
 using Microsoft.AspNetCore.Http.Internal;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CoreMvcWeb.Controllers
 {
     public class ClientSideController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public ClientSideController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         public IActionResult Index()
         {
             return Redirect("/clientside/vue");
@@ -52,10 +60,10 @@ namespace CoreMvcWeb.Controllers
                     if (file.Length > 0)
                     {
                         var fileName = Path.GetFileName(file.FileName);
-                        var filePath = Path.Combine(System.Environment.CurrentDirectory, "UploadFiles", fileName); //파일 저장위치는 소스와 분리해야하나 일단 테스트용으로 놔둠;;
+                        var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "UploadFiles", fileName); //파일 저장위치는 소스와 분리해야하나 일단 테스트용으로 놔둠;;
 
                         Directory.CreateDirectory(Path.GetDirectoryName(filePath)); //exist 하고 없으면 create 함
-
+                        
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
