@@ -1,0 +1,78 @@
+﻿<div style="width:900px;">
+    <div id="dropZone" class="alert alert-primary" style="width:100%;height:80px;">
+        파일을 등록하시려면 이곳에 끌어놓거나 추가버튼을 이용해 등록해주세요
+    </div>
+
+    <div id="divFileList">
+
+    </div>
+
+</div>
+
+<script>
+    DragDrop.SetFileDropZone("#dropZone", function (e, fileList) {
+        for (var i = 0; i < fileList.length; i++) {
+            var file = fileList[i];
+
+            var info = document.createElement('div');
+            info.innerText = file.name + " (" + file.size + ")";
+            $("#divFileList").append(info);
+
+            var formData = new FormData();
+            formData.append("file1", file);
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/ClientSide/SaveAjaxData",
+                dataType: "json",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data, status, xhr) {
+                    if (data.msg == "OK") {
+                        alert("저장되었습니다");
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    AjaxCommonError(xhr);
+                }
+            });
+
+
+            //미리보기 만드는 경우
+            if (file.type.match(/image.*/)) {
+                var reader = new FileReader();
+                reader.onload = function (e2) {
+                    // finished reading file data.
+                    var img = document.createElement('img');
+                    img.src = e2.target.result;
+                    $(img).css({ "width": "100px", "height": "100px" });
+
+
+                    $("#divFileList").append(img);
+
+                }
+
+                reader.readAsDataURL(file); // start reading the file data.
+            }
+            else if (file.type.match(/text.*/)) {
+                var reader = new FileReader();
+
+                reader.onload = function (e2) {
+                    var div = document.createElement('div');
+                    div.innerText = e2.target.result;
+
+                    $("#divFileList").append(div);
+                }
+
+                reader.readAsText(file, "UTF-8"); // start reading the file data.
+            }
+        }
+    });
+
+</script>

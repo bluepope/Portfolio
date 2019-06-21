@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <None Remove="Sql\Home.xml" />
+    <None Remove="TypeScript\common\DragDrop.ts" />
+    <None Remove="TypeScript\common\Hello.ts" />
     <None Remove="TypeScript\common\main.ts" />
     <None Remove="wwwroot\js\vue\v-number.js" />
     <None Remove="wwwroot\js\vue\vue-custom.js" />
@@ -196,6 +198,8 @@
 
 
   <ItemGroup>
+    <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
+    <TypeScriptCompile Include="TypeScript\common\Hello.ts" />
     <TypeScriptCompile Include="TypeScript\common\main.ts" />
   </ItemGroup>
 

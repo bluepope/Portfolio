@@ -1,19 +1,3 @@
-var Hello = /** @class */ (function () {
-    function Hello(name) {
-        if (name) {
-            this.name = name;
-        }
-        else {
-            this.name = "no data";
-        }
-    }
-    Hello.prototype.sayHello = function () {
-        return "Hello, " + this.name;
-    };
-    return Hello;
-}());
-//const hello = new Hello('TypeScript');
-//console.log(hello.sayHello());
 var AjaxCommonError = function (xhr) {
     var titleDiv = "<div class=\"titleerror\">";
     if (xhr.statusText === "abort")
@@ -47,4 +31,39 @@ var AjaxCommonError = function (xhr) {
             }
         });
 */ 
+var Hello = /** @class */ (function () {
+    function Hello(name) {
+        if (name) {
+            this.name = name;
+        }
+        else {
+            this.name = "no data";
+        }
+    }
+    Hello.prototype.sayHello = function () {
+        return "Hello, " + this.name;
+    };
+    return Hello;
+}());
+var DragDrop = /** @class */ (function () {
+    function DragDrop() {
+    }
+    DragDrop.SetFileDropZone = function (cssSelector, callBack) {
+        var dropZoneList = document.querySelectorAll(cssSelector);
+        Array.prototype.slice.call(dropZoneList).forEach(function (dropZone) {
+            dropZone.addEventListener('dragover', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            });
+            // Get file data on drop
+            dropZone.addEventListener('drop', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                callBack(e, e.dataTransfer.files);
+            });
+        });
+    };
+    return DragDrop;
+}());
 //# sourceMappingURL=site.js.map

@@ -109,7 +109,7 @@ namespace CoreMvcWeb
             });
 
             //서버 시작시 텔레그램 봇 최초 생성
-            app.ApplicationServices.GetService<IBotService>();
+            //app.ApplicationServices.GetService<IBotService>();
         }
     }
 }

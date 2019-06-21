@@ -96,5 +96,10 @@ namespace CoreMvcWeb.Controllers
 
             return Json(new { msg = "OK" });
         }
+
+        public IActionResult DragAndDropMultipleupload()
+        {
+            return View();
+        }
     }
 }

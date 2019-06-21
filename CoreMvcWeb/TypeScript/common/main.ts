@@ -1,23 +1,4 @@
-﻿class Hello {
-    private name: string;
-
-    constructor(name: string) {
-        if (name) {
-            this.name = name;
-        }
-        else {
-            this.name = "no data";
-        }
-    }
-
-    sayHello() {
-        return "Hello, " + this.name;
-    }
-}
-//const hello = new Hello('TypeScript');
-//console.log(hello.sayHello());
-
-var AjaxCommonError = function (xhr: XMLHttpRequest) {
+﻿var AjaxCommonError = function (xhr: XMLHttpRequest) {
     let titleDiv = "<div class=\"titleerror\">";
 
     if (xhr.statusText === "abort")
