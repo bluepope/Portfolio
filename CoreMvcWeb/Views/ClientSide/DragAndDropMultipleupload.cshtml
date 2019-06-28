@@ -32,7 +32,7 @@
                 cache: false,
                 success: function (data, status, xhr) {
                     if (data.msg == "OK") {
-                        alert("저장되었습니다");
+                        //alert("저장되었습니다");
                     }
                     else {
                         alert(data.msg);
@@ -40,9 +40,14 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     AjaxCommonError(xhr);
+                },
+                xhr: function () {
+                    var progress = new JQueryAjaxProgress();
+                    progress.SetButtonSendProgress(new ButtonProgress(info));
+
+                    return progress.GetXhr();
                 }
             });
-
 
             //미리보기 만드는 경우
             if (file.type.match(/image.*/)) {
@@ -74,5 +79,4 @@
             }
         }
     });
-
 </script>

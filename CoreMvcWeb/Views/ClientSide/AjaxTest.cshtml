@@ -27,6 +27,7 @@
     </table>
     <button id="btn1" class="btn btn-xs btn-primary">Json타입 전송 (파일 제외)</button>
     <button id="btn2" class="btn btn-xs btn-primary">Form Append타입 전송</button>
+    <button id="btn3" class="btn btn-xs btn-primary">Form Append타입 전송 (button progress)</button>
 
     <div id="progress-bar" class="progress">
         <div class="progress-bar bg-success" style="width:100%">100%</div>
@@ -111,6 +112,53 @@
                     myXhr.upload.addEventListener("abort", transferCanceled);
                 }
                 return myXhr;
+            }
+        });
+    });
+
+    $("#btn3").click(function () {
+        var btn = $(this)[0];
+
+        var obj = {};
+        $("#ajax-test input[type=text]").each(function () {
+            obj[$(this).attr("name")] = $(this).val();
+        });
+
+        var formData = new FormData();
+        formData.append("json_data", JSON.stringify(obj));
+
+        $("#ajax-test input[type=file]").each(function () {
+            var fileObj = $(this)[0].files;
+
+            if (fileObj.length > 0) {
+                formData.append("file1", fileObj[0]);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/ClientSide/SaveAjaxData",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data, status, xhr) {
+                if (data.msg == "OK") {
+                    alert("저장되었습니다");
+                }
+                else {
+                    alert(data.msg);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                AjaxCommonError(xhr);
+            },
+            xhr: function () {
+                var progress = new JQueryAjaxProgress();
+                progress.SetButtonSendProgress(new ButtonProgress(btn));
+
+                return progress.GetXhr();
             }
         });
     });
