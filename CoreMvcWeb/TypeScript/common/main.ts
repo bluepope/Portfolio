@@ -6,7 +6,7 @@
     else if (xhr.responseType == "json") {
         alert(xhr.responseText);
     }
-    else if (xhr.responseText.indexOf(titleDiv) > -1) {
+    else if (xhr.responseText != null && xhr.responseText.indexOf(titleDiv) > -1) {
         let message = xhr.responseText.substring(xhr.responseText.indexOf(titleDiv) + titleDiv.length, xhr.responseText.indexOf("</div>"));
         let div = document.createElement("div");
         div.innerHTML = message;
