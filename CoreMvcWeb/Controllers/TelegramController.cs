@@ -14,11 +14,13 @@ namespace CoreMvcWeb.Controllers
     [Authorize]
     public class TelegramController : Controller
     {
+        private readonly IBotService _botService;
         private readonly IUpdateService _updateService;
 
-        public TelegramController(IUpdateService updateService)
+        public TelegramController(IUpdateService updateService, IBotService botService)
         {
             _updateService = updateService;
+            _botService = botService;
         }
 
         /// <summary>
@@ -41,6 +43,16 @@ namespace CoreMvcWeb.Controllers
 
         public IActionResult ChatList()
         {
+            return View();
+        }
+
+        public IActionResult GetStatus()
+        {
+            //_botService.Config.BotToken
+            //_botService.Config.Socks5Host
+            //_botService.Config.Socks5Port
+            //_botService.Config.WebHookUrl
+
             return View();
         }
     }

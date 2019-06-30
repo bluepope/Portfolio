@@ -35,22 +35,22 @@ namespace CoreMvcWeb.Services.Telegram
             if (message.Type == MessageType.Text)
             {
                 // Echo each Message
-                await _botService.Client.SendTextMessageAsync(message.Chat.Id, message.Text);
+                await _botService.Bot.SendTextMessageAsync(message.Chat.Id, message.Text);
             }
             else if (message.Type == MessageType.Photo)
             {
                 // Download Photo
                 var fileId = message.Photo.LastOrDefault()?.FileId;
-                var file = await _botService.Client.GetFileAsync(fileId);
+                var file = await _botService.Bot.GetFileAsync(fileId);
 
                 var filename = file.FileId + "." + file.FilePath.Split('.').Last();
 
                 using (var saveImageStream = System.IO.File.Open(filename, FileMode.Create))
                 {
-                    await _botService.Client.DownloadFileAsync(file.FilePath, saveImageStream);
+                    await _botService.Bot.DownloadFileAsync(file.FilePath, saveImageStream);
                 }
 
-                await _botService.Client.SendTextMessageAsync(message.Chat.Id, "Thx for the Pics");
+                await _botService.Bot.SendTextMessageAsync(message.Chat.Id, "Thx for the Pics");
             }
         }
     }

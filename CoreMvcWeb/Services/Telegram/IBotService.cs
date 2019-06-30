@@ -8,6 +8,7 @@ namespace CoreMvcWeb.Services.Telegram
 {
     public interface IBotService
     {
-        TelegramBotClient Client { get; }
+        BotConfiguration Config { get; }
+        TelegramBotClient Bot { get; }
     }
 }
