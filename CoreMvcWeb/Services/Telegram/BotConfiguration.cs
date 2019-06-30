@@ -11,9 +11,9 @@ namespace CoreMvcWeb.Services.Telegram
     {
         public string BotToken { get; set; }
 
-        public string Socks5Host { get; set; }
+        public string ProxySocks5Host { get; set; }
 
-        public int Socks5Port { get; set; }
+        public int ProxySocks5Port { get; set; }
 
         public string WebHookUrl { get; set; }
 

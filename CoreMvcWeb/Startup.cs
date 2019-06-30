@@ -68,11 +68,12 @@ namespace CoreMvcWeb
             {
                 var config = BotConfiguration.GetFromJson();
                 options.BotToken = config.BotToken;
-                options.Socks5Host = config.Socks5Host;
-                options.Socks5Port = config.Socks5Port;
+                options.ProxySocks5Host = config.ProxySocks5Host;
+                options.ProxySocks5Port = config.ProxySocks5Port;
                 options.WebHookUrl = config.WebHookUrl;
             });
-            services.AddScoped<IUpdateService, UpdateService>(); //request 마다 생성
+
+            //services.AddScoped<IUpdateService, UpdateService>(); //request 마다 생성
             services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
 
         }
@@ -109,7 +110,7 @@ namespace CoreMvcWeb
             });
 
             //서버 시작시 텔레그램 봇 최초 생성
-            //app.ApplicationServices.GetService<IBotService>();
+            app.ApplicationServices.GetService<IBotService>();
         }
     }
 }

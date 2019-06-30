@@ -15,11 +15,9 @@ namespace CoreMvcWeb.Controllers
     public class TelegramController : Controller
     {
         private readonly IBotService _botService;
-        private readonly IUpdateService _updateService;
 
-        public TelegramController(IUpdateService updateService, IBotService botService)
+        public TelegramController(IBotService botService)
         {
-            _updateService = updateService;
             _botService = botService;
         }
 
@@ -32,7 +30,7 @@ namespace CoreMvcWeb.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Update([FromBody]Update update)
         {
-            await _updateService.EchoAsync(update);
+            await _botService.ReceiveMessageAsync(update);
 
             return Ok();
         }
@@ -54,6 +52,13 @@ namespace CoreMvcWeb.Controllers
             //_botService.Config.WebHookUrl
 
             return View();
+        }
+
+        public async Task<IActionResult> SendMessage(long chatId, string message)
+        {
+            await _botService.SendTextMessageAsync(chatId, message);
+
+            return Json(new { msg = "OK" });
         }
     }
 }
