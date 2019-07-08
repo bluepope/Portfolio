@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@aspnet/signalr": "^1.1.4",
+    "@types/jquery": "^3.3.30",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
     "vue-numeric": "^2.3.0"

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreMvcWeb.Services.Background;
 using CoreMvcWeb.Services.Telegram;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -75,7 +76,15 @@ namespace CoreMvcWeb
 
             //services.AddScoped<IUpdateService, UpdateService>(); //request 마다 생성
             services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
+            
+            /*
+            services.AddHostedService<TimedHostedService>(); //타이머
+            services.AddHostedService<ConsumeScopedServiceHostedService>(); //
+            services.AddScoped<IScopedProcessingService, ScopedProcessingService>();
 
+            services.AddHostedService<QueuedHostedService>();
+            services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+            */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

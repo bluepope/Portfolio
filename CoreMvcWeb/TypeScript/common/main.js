@@ -1,19 +1,3 @@
-var Hello = /** @class */ (function () {
-    function Hello(name) {
-        if (name) {
-            this.name = name;
-        }
-        else {
-            this.name = "no data";
-        }
-    }
-    Hello.prototype.sayHello = function () {
-        return "Hello, " + this.name;
-    };
-    return Hello;
-}());
-//const hello = new Hello('TypeScript');
-//console.log(hello.sayHello());
 var AjaxCommonError = function (xhr) {
     var titleDiv = "<div class=\"titleerror\">";
     if (xhr.statusText === "abort")
@@ -21,7 +5,7 @@ var AjaxCommonError = function (xhr) {
     else if (xhr.responseType == "json") {
         alert(xhr.responseText);
     }
-    else if (xhr.responseText.indexOf(titleDiv) > -1) {
+    else if (xhr.responseText != null && xhr.responseText.indexOf(titleDiv) > -1) {
         var message = xhr.responseText.substring(xhr.responseText.indexOf(titleDiv) + titleDiv.length, xhr.responseText.indexOf("</div>"));
         var div = document.createElement("div");
         div.innerHTML = message;
