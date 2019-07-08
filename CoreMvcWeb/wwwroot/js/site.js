@@ -1,100 +1,4 @@
-var DragDrop = /** @class */ (function () {
-    function DragDrop() {
-    }
-    DragDrop.SetFileDropZone = function (cssSelector, callBack) {
-        var dropZoneList = document.querySelectorAll(cssSelector);
-        Array.prototype.slice.call(dropZoneList).forEach(function (dropZone) {
-            dropZone.addEventListener('dragover', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-                e.dataTransfer.dropEffect = 'copy';
-            });
-            // Get file data on drop
-            dropZone.addEventListener('drop', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-                callBack(e, e.dataTransfer.files);
-            });
-        });
-    };
-    return DragDrop;
-}());
-var AjaxCommonError = function (xhr) {
-    var titleDiv = "<div class=\"titleerror\">";
-    if (xhr.statusText === "abort")
-        return;
-    else if (xhr.responseType == "json") {
-        alert(xhr.responseText);
-    }
-    else if (xhr.responseText != null && xhr.responseText.indexOf(titleDiv) > -1) {
-        var message = xhr.responseText.substring(xhr.responseText.indexOf(titleDiv) + titleDiv.length, xhr.responseText.indexOf("</div>"));
-        var div = document.createElement("div");
-        div.innerHTML = message;
-        alert(div.innerText);
-    }
-    else
-        alert(xhr.statusText);
-};
-/*
- * $.ajax({
-            type: "POST",
-            url: "/login/login",
-            dataType: "json",
-            data: {
-                reception_seq: 1
-            },
-            success: function (data, status, xhr) {
-                _d = data;
-                alert(data.msg);
-            },
-            error: function (xhr, textStatus, thrownError) {
-
-            }
-        });
-*/ 
-var JQueryAjaxProgress = /** @class */ (function () {
-    function JQueryAjaxProgress() {
-    }
-    JQueryAjaxProgress.prototype.SetButtonSendProgress = function (buttonProgressObject) {
-        this._buttonProgressObject = buttonProgressObject;
-        this._buttonProgressObject.InitProgress();
-    };
-    JQueryAjaxProgress.prototype.GetXhr = function () {
-        var _this = this;
-        var customXhr = $.ajaxSettings.xhr();
-        if (customXhr.upload) { // check if upload property exists
-            if (this.sendProgressEvent || this._buttonProgressObject) {
-                customXhr.upload.addEventListener('progress', function (evt) {
-                    if (_this._buttonProgressObject) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = Math.round((evt.loaded / evt.total) * 100);
-                            _this._buttonProgressObject.SetProgress(percentComplete);
-                        }
-                    }
-                    if (_this.sendProgressEvent) {
-                        _this.sendProgressEvent(evt);
-                    }
-                }, false); // for handling the progress of the upload
-            }
-            if (this.sendAbortEvent) {
-                customXhr.upload.addEventListener('abort', this.sendAbortEvent); // for handling the progress of the upload
-            }
-            if (this.sendCompleteEvent || this._buttonProgressObject) {
-                customXhr.upload.addEventListener('load', function (evt) {
-                    if (_this._buttonProgressObject) {
-                        _this._buttonProgressObject.EndProgress();
-                    }
-                    if (_this.sendCompleteEvent) {
-                        _this.sendCompleteEvent(evt);
-                    }
-                }); // for handling the progress of the upload
-            }
-        }
-        return customXhr;
-    };
-    return JQueryAjaxProgress;
-}());
-var ButtonProgress = /** @class */ (function () {
+var ButtonProgress = (function () {
     function ButtonProgress(target) {
         this._targetObject = target;
         this.InitProgress();
@@ -103,7 +7,6 @@ var ButtonProgress = /** @class */ (function () {
         this._initFlag = 0;
         this._progressPercent = 0;
         this._color = window.getComputedStyle(this._targetObject, "").backgroundColor;
-        //console.log(this._color);
         if (this._color == "transparent" || this._color == "rgba(0, 0, 0, 0)") {
             this._color = "#007BFF";
         }
@@ -133,5 +36,83 @@ var ButtonProgress = /** @class */ (function () {
         }
     };
     return ButtonProgress;
+}());
+var DragDrop = (function () {
+    function DragDrop() {
+    }
+    DragDrop.SetFileDropZone = function (cssSelector, callBack) {
+        var dropZoneList = document.querySelectorAll(cssSelector);
+        Array.prototype.slice.call(dropZoneList).forEach(function (dropZone) {
+            dropZone.addEventListener('dragover', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            });
+            dropZone.addEventListener('drop', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                callBack(e, e.dataTransfer.files);
+            });
+        });
+    };
+    return DragDrop;
+}());
+var AjaxCommonError = function (xhr) {
+    var titleDiv = "<div class=\"titleerror\">";
+    if (xhr.statusText === "abort")
+        return;
+    else if (xhr.responseType == "json") {
+        alert(xhr.responseText);
+    }
+    else if (xhr.responseText != null && xhr.responseText.indexOf(titleDiv) > -1) {
+        var message = xhr.responseText.substring(xhr.responseText.indexOf(titleDiv) + titleDiv.length, xhr.responseText.indexOf("</div>"));
+        var div = document.createElement("div");
+        div.innerHTML = message;
+        alert(div.innerText);
+    }
+    else
+        alert(xhr.statusText);
+};
+var JQueryAjaxProgress = (function () {
+    function JQueryAjaxProgress() {
+    }
+    JQueryAjaxProgress.prototype.SetButtonSendProgress = function (buttonProgressObject) {
+        this._buttonProgressObject = buttonProgressObject;
+        this._buttonProgressObject.InitProgress();
+    };
+    JQueryAjaxProgress.prototype.GetXhr = function () {
+        var _this = this;
+        var customXhr = $.ajaxSettings.xhr();
+        if (customXhr.upload) {
+            if (this.sendProgressEvent || this._buttonProgressObject) {
+                customXhr.upload.addEventListener('progress', function (evt) {
+                    if (_this._buttonProgressObject) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = Math.round((evt.loaded / evt.total) * 100);
+                            _this._buttonProgressObject.SetProgress(percentComplete);
+                        }
+                    }
+                    if (_this.sendProgressEvent) {
+                        _this.sendProgressEvent(evt);
+                    }
+                }, false);
+            }
+            if (this.sendAbortEvent) {
+                customXhr.upload.addEventListener('abort', this.sendAbortEvent);
+            }
+            if (this.sendCompleteEvent || this._buttonProgressObject) {
+                customXhr.upload.addEventListener('load', function (evt) {
+                    if (_this._buttonProgressObject) {
+                        _this._buttonProgressObject.EndProgress();
+                    }
+                    if (_this.sendCompleteEvent) {
+                        _this.sendCompleteEvent(evt);
+                    }
+                });
+            }
+        }
+        return customXhr;
+    };
+    return JQueryAjaxProgress;
 }());
 //# sourceMappingURL=site.js.map

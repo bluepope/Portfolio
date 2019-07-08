@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Chat";
 
+    var userId = User?.GetUserId() ?? "";
     var userName = User?.Identity?.Name ?? "비로그인 유저";
 }
 <script src="~/lib/signalr/signalr.min.js"></script>
@@ -9,7 +10,7 @@
     <div class="col-12">
         <table>
             <tr>
-                <th>사용자 명</th>
+                <th>사용자 명 (@userId)</th>
                 <td>@Html.TextBox("userInput", userName, new { @class = "signalr-chat" })</td>
                 @if (User != null && User.Identity.IsAuthenticated)
                 {
