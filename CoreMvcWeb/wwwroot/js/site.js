@@ -1,4 +1,4 @@
-var ButtonProgress = /** @class */ (function () {
+var ButtonProgress = (function () {
     function ButtonProgress(target) {
         this._targetObject = target;
         this.InitProgress();
@@ -7,7 +7,6 @@ var ButtonProgress = /** @class */ (function () {
         this._initFlag = 0;
         this._progressPercent = 0;
         this._color = window.getComputedStyle(this._targetObject, "").backgroundColor;
-        //console.log(this._color);
         if (this._color == "transparent" || this._color == "rgba(0, 0, 0, 0)") {
             this._color = "#007BFF";
         }
@@ -38,7 +37,7 @@ var ButtonProgress = /** @class */ (function () {
     };
     return ButtonProgress;
 }());
-var DragDrop = /** @class */ (function () {
+var DragDrop = (function () {
     function DragDrop() {
     }
     DragDrop.SetFileDropZone = function (cssSelector, callBack) {
@@ -49,7 +48,6 @@ var DragDrop = /** @class */ (function () {
                 e.preventDefault();
                 e.dataTransfer.dropEffect = 'copy';
             });
-            // Get file data on drop
             dropZone.addEventListener('drop', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -75,24 +73,7 @@ var AjaxCommonError = function (xhr) {
     else
         alert(xhr.statusText);
 };
-/*
- * $.ajax({
-            type: "POST",
-            url: "/login/login",
-            dataType: "json",
-            data: {
-                reception_seq: 1
-            },
-            success: function (data, status, xhr) {
-                _d = data;
-                alert(data.msg);
-            },
-            error: function (xhr, textStatus, thrownError) {
-
-            }
-        });
-*/ 
-var JQueryAjaxProgress = /** @class */ (function () {
+var JQueryAjaxProgress = (function () {
     function JQueryAjaxProgress() {
     }
     JQueryAjaxProgress.prototype.SetButtonSendProgress = function (buttonProgressObject) {
@@ -102,7 +83,7 @@ var JQueryAjaxProgress = /** @class */ (function () {
     JQueryAjaxProgress.prototype.GetXhr = function () {
         var _this = this;
         var customXhr = $.ajaxSettings.xhr();
-        if (customXhr.upload) { // check if upload property exists
+        if (customXhr.upload) {
             if (this.sendProgressEvent || this._buttonProgressObject) {
                 customXhr.upload.addEventListener('progress', function (evt) {
                     if (_this._buttonProgressObject) {
@@ -114,10 +95,10 @@ var JQueryAjaxProgress = /** @class */ (function () {
                     if (_this.sendProgressEvent) {
                         _this.sendProgressEvent(evt);
                     }
-                }, false); // for handling the progress of the upload
+                }, false);
             }
             if (this.sendAbortEvent) {
-                customXhr.upload.addEventListener('abort', this.sendAbortEvent); // for handling the progress of the upload
+                customXhr.upload.addEventListener('abort', this.sendAbortEvent);
             }
             if (this.sendCompleteEvent || this._buttonProgressObject) {
                 customXhr.upload.addEventListener('load', function (evt) {
@@ -127,7 +108,7 @@ var JQueryAjaxProgress = /** @class */ (function () {
                     if (_this.sendCompleteEvent) {
                         _this.sendCompleteEvent(evt);
                     }
-                }); // for handling the progress of the upload
+                });
             }
         }
         return customXhr;

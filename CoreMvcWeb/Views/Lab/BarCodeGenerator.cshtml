@@ -1,0 +1,52 @@
+﻿@{
+    var barcode_number = ViewData["barcode_number"] as string;
+    var barcode_image = ViewData["barcode_image"] as string;
+}
+
+<div class="clearfix">
+    <span class="float-left" style="width:200px;">
+        @Html.TextBox("barcode_number", barcode_number, new { @class = "form-control", maxLength = 13 })
+    </span>
+
+    <button id="btn1" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">location 이동형 base64 바코드 조회</button>
+    <button id="btn2" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">img append 바코드 조회</button>
+</div>
+
+<div>
+    예: 8801234543125
+</div>
+
+<div style="width:500px;">
+    @if (barcode_image.IsNull() == false)
+    {
+        <div class="alert alert-success">생성된 바코드 - @barcode_number</div>
+        <img src="data:image/png;base64, @barcode_image" />
+    }
+
+    <div id="div2"></div>
+</div>
+
+<script>
+    $("#btn1").click(function () {
+        var number = $("#barcode_number").val();
+
+        if (number.length < 2) {
+            alert("바코드를 입력해주세요");
+        }
+
+        location.href = "?barcode_number=" + encodeURIComponent(number);
+    });
+
+    $("#btn2").click(function () {
+        var number = $("#barcode_number").val();
+
+        if (number.length < 2) {
+            alert("바코드를 입력해주세요");
+        }
+
+        var img = document.createElement("img");
+        img.src = "GetBarcodeImage?barcode_number=" + number;
+
+        $("#div2").append(img);
+    });
+</script>

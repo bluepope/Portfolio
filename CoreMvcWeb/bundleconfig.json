@@ -4,5 +4,11 @@
     "inputFiles": [
       "wwwroot/js/site.js"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/lib/jquery.fileDownload/jquery.fileDownload.min.js",
+    "inputFiles": [
+      "wwwroot/lib/jquery.fileDownload/jquery.fileDownload.js"
+    ]
   }
 ]

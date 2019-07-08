@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Web;
@@ -16,6 +17,16 @@ namespace CoreMvcWeb
 {
     public static class WebExtention
     {
+        public static string GetUserId(this ClaimsPrincipal principal)
+        {
+            return principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        public static string GetClaim(this ClaimsPrincipal principal, string claimType)
+        {
+            return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
+        }
+
         public static int IsStringNotNullCount(this HtmlHelper htmlHelper, params string[] strList)
         {
             int r = 0;

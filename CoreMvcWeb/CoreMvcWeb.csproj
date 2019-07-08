@@ -34,6 +34,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.1.1" />
+    <PackageReference Include="NetBarcode" Version="1.0.7" />
     <PackageReference Include="Telegram.Bot" Version="14.12.0" />
   </ItemGroup>
 
@@ -211,10 +213,10 @@
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
     <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
-    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
-    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
     <TypeScriptOutFile>wwwroot\js\site.js</TypeScriptOutFile>
-    <TypeScriptOutDir />
+    <TypeScriptOutDir></TypeScriptOutDir>
     <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
