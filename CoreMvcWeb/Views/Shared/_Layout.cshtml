@@ -42,11 +42,7 @@
         </div>
         <div class="left-sidebar">
             <div class="scroll-sidebar">
-                @await Component.InvokeAsync("LeftMenu", new {
-                    requestPath = Context.Request.Path,
-                    controllerName = ViewContext.RouteData.Values["Controller"] as string,
-                    actionName = ViewContext.RouteData.Values["Action"] as string
-                })
+                @await Component.InvokeAsync("LeftMenu")
             </div>
         </div>
         <!-- End Left Sidebar  -->

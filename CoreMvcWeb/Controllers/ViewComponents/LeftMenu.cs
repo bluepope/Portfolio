@@ -14,9 +14,9 @@ namespace CoreMvcWeb.Controllers.ViewComponents
 
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(PathString requestPath, string controllerName, string actionName)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            return await Task.Run(() => { return View("Default", $"{requestPath} / {controllerName} / {actionName}"); });
+            return await Task.Run(() => { return View("Default"); });
         }
     }
 }

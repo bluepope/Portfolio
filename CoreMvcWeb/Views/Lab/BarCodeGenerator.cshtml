@@ -1,52 +1,71 @@
-﻿@{
-    var barcode_number = ViewData["barcode_number"] as string;
-    var barcode_image = ViewData["barcode_image"] as string;
+﻿@{ 
+    var barcodeNumber = "8801234543125";
 }
-
-<div class="clearfix">
-    <span class="float-left" style="width:200px;">
-        @Html.TextBox("barcode_number", barcode_number, new { @class = "form-control", maxLength = 13 })
-    </span>
-
-    <button id="btn1" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">location 이동형 base64 바코드 조회</button>
-    <button id="btn2" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">img append 바코드 조회</button>
-</div>
-
 <div>
-    예: 8801234543125
+    <table class="table table-common">
+        <tr>
+            <th>생성구분</th>
+            <td>
+                @Html.TextBox("barcodeNumber", barcodeNumber, new { @class = "form-control", maxLength = 13 })
+            </td>
+            <th>생성타입</th>
+            <td>
+                <select id="imageType" class="form-control">
+                    <option value="base64">base64(png)</option>
+                    <option value="png">png</option>
+                </select>
+            </td>
+            <td>
+                <button id="btn1" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">바코드 생성</button>
+            </td>
+        </tr>
+    </table>
 </div>
 
-<div style="width:500px;">
-    @if (barcode_image.IsNull() == false)
-    {
-        <div class="alert alert-success">생성된 바코드 - @barcode_number</div>
-        <img src="data:image/png;base64, @barcode_image" />
-    }
-
-    <div id="div2"></div>
-</div>
+<div id="div1"></div>
 
 <script>
     $("#btn1").click(function () {
-        var number = $("#barcode_number").val();
+        var barcodeNumber = $("#barcodeNumber").val();
+        var imageType = $("#imageType").val();
 
-        if (number.length < 2) {
+        var div = document.createElement("div");
+        div.classList.add("alert");
+        div.classList.add("alert-success");
+        div.innerHTML = "바코드 생성";
+
+        if (barcodeNumber.length < 2) {
             alert("바코드를 입력해주세요");
         }
 
-        location.href = "?barcode_number=" + encodeURIComponent(number);
-    });
+        if (imageType == "base64") {
+            $.ajax({
+                type: "GET",
+                url: "GetBarcodeImage",
+                dataType: "text",
+                data: {
+                    imageType: imageType,
+                    barcodeNumber: barcodeNumber
+                },
+                success: function (data, status, xhr) {
+                    var img = document.createElement("img");
+                    img.src = data;
 
-    $("#btn2").click(function () {
-        var number = $("#barcode_number").val();
+                    div.append(img);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    ajaxCommonError(xhr);
+                }
+            });
+        }
+        else {
+            var img = document.createElement("img");
+            img.src = "GetBarcodeImage?imageType=" + imageType + "&barcodeNumber=" + barcodeNumber;
 
-        if (number.length < 2) {
-            alert("바코드를 입력해주세요");
+            div.append(img);
         }
 
-        var img = document.createElement("img");
-        img.src = "GetBarcodeImage?barcode_number=" + number;
+        $("#div1").append(div);
 
-        $("#div2").append(img);
     });
 </script>

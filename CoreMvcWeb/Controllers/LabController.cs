@@ -24,53 +24,34 @@ namespace CoreMvcWeb.Controllers
         /// </summary>
         /// <param name="barcode_number"></param>
         /// <returns></returns>
-        public IActionResult BarCodeGenerator(string barcode_number)
+        public IActionResult BarCodeGenerator()
         {
-            if (barcode_number.IsNull() == false)
-            {
-                try
-                {
-                    ViewData["barcode_number"] = barcode_number;
-
-                    //바코드는 System.Drawing.Common 을 사용하는데 Core 2.2 기준으로 현재 CrossPlatform 지원 안됨
-                    //core 3.0에서 해결될 것으로 기대 중
-
-                    //이를 해결하기 위해 Microsoft.Windows.Compatibility 를 Nuget 에서 설치
-                    // centos 기준으로 다음 작업 필요
-                    // yum install -y epel-release 
-                    // yum whatprovides libgdiplus --최신버전 검색
-                    // yum install -y libgdiplus-2.10-10.el7.x86_64 --19.07.08 기준 최신
-
-                    var barcode = new NetBarcode.Barcode(barcode_number, NetBarcode.Type.EAN13, true);
-
-                    //base64 로 return
-                    ViewData["barcode_image"] = barcode.GetBase64Image();
-                }
-                catch
-                {
-
-                }
-            }
-
             return View();
         }
 
-        public IActionResult GetBarcodeImage(string barcode_number)
+        public IActionResult GetBarcodeImage(string barcodeNumber, string imageType)
         {
-            if (barcode_number.IsNull() == false)
+            if (barcodeNumber.IsNull() == false)
             {
                 try
                 {
-                    var barcode = new NetBarcode.Barcode(barcode_number, NetBarcode.Type.EAN13, true);
+                    var barcode = new NetBarcode.Barcode(barcodeNumber, NetBarcode.Type.EAN13, true);
 
-                    return File(barcode.GetByteArray(), "image/png", $"barcode_{barcode_number}.png");
+                    if (imageType.ToLower() == "base64")
+                    {
+                        return Content($"data:image/png;base64, {barcode.GetBase64Image()}");
+                    }
+                    else //png
+                    {
+                        return File(barcode.GetByteArray(), "image/png", $"barcode_{barcodeNumber}.png");
+                    }
                 }
                 catch
                 {
                 }
             }
 
-            return null;
+            return Content("");
         }
     }
 }

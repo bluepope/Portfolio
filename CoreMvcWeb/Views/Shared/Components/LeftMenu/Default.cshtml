@@ -1,21 +1,25 @@
 ﻿@using Microsoft.AspNetCore.Html
-
-@functions {
-    HtmlString GetAlert(int cnt)
-    {
-        if (cnt > 0)
-        {
-            return new HtmlString($"<span class=\"label label-rouded label-danger pull-right\">{cnt}</span>");
-        }
-        return null;
-    }
+@{
+    //@(ViewContext.RouteData.Values["Controller"] as string)
+    //@(ViewContext.RouteData.Values["Action"] as string)
 }
+<style>
+    .menu-noti {
+        padding: 3px 10px;
+        line-height: 13px;
+    }
+</style>
 <nav class="sidebar-nav">
     <ul id="sidebarnav">
-        <li>
+        <li class="active">
             <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-folder"></i><span class="hide-menu">RealTime</span></a>
-            <ul aria-expanded="false" class="collapse">
-                <li><a href="/realtime/chat">· Chat</a></li>
+            <ul aria-expanded="false" class="collapse in">
+                <li>
+                    <a class="active" href="/realtime/chat">
+                        · Chat
+                        <span class="badge badge-danger menu-noti">1</span>
+                    </a>
+                </li>
             </ul>
         </li>
         <li>
@@ -23,7 +27,13 @@
             <ul aria-expanded="false" class="collapse">
                 <li><a href="/clientside/vue">· VueJs</a></li>
                 <li><a href="/clientside/ajaxTest">· Ajax Test</a></li>
-                <li><a href="/clientside/DragAndDropMultipleupload">· 드래그&드롭 멀티 업로드</a></li>
+                <li>
+                    <a class="active" href="/clientside/DragAndDropMultipleupload">
+                        · 드래그&드롭 멀티 업로드
+                        <span class="badge badge-danger menu-noti">1</span>
+                    </a>
+                    
+                </li>
 
             </ul>
         </li>
