@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mapper>
+  <update id="UpdateViewCount">
+    <![CDATA[
+UPDATE BOARD
+SET VIEW_CNT = VIEW_CNT + 1
+WHERE
+  BOARD_TYPE = @board_type
+  AND SEQ = @seq
+    ]]>
+  </update>
+  
+  <select id="GetBoard">
+    <![CDATA[
+SELECT
+	A.BOARD_TYPE
+	,A.SEQ
+	,A.TITLE
+	,A.CONTENTS
+	,A.DUP_KEY
+	,A.VIEW_CNT
+	,A.STATUS_FLAG
+	,A.REG_IP
+	,A.REG_USER
+	,A.REG_USERNAME
+	,A.REG_DATE
+FROM
+  BOARD A
+WHERE
+	A.BOARD_TYPE = @board_type
+  AND A.SEQ = @seq
+ORDER BY
+    A.SEQ DESC
+    ]]>
+  </select>
+
+  <select id="GetBoardCount">
+    <![CDATA[
+SELECT
+	COUNT(A.SEQ) AS CNT
+FROM
+  BOARD A
+WHERE
+	A.BOARD_TYPE = @board_type
+    ]]>
+  </select>
+
+  <select id="GetBoardList">
+    <![CDATA[
+SELECT
+	A.BOARD_TYPE
+	,A.SEQ
+	,A.TITLE
+	,A.VIEW_CNT
+	,A.STATUS_FLAG
+	,A.REG_IP
+	,A.REG_USER
+	,A.REG_USERNAME
+	,A.REG_DATE
+FROM
+  BOARD A
+WHERE
+	A.BOARD_TYPE = @board_type
+ORDER BY
+  A.SEQ DESC
+    ]]>
+  </select>
+
+  <insert id="InsertBoard">
+    <![CDATA[
+INSERT INTO BOARD (
+	BOARD_TYPE
+	,TITLE
+	,CONTENTS
+	,DUP_KEY
+	,VIEW_CNT
+	,STATUS_FLAG
+	,REG_IP
+	,REG_USER
+	,REG_USERNAME
+	,REG_DATE
+)
+SELECT
+	@BOARD_TYPE
+	,@TITLE
+	,@CONTENTS
+	,@DUP_KEY
+	,@VIEW_CNT
+	,'Y'
+	,@REG_IP
+	,@REG_USER
+	,@REG_USERNAME
+	,now()
+    ]]>
+  </insert>
+</mapper>

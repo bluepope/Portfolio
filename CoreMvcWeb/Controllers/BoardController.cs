@@ -20,15 +20,17 @@ namespace CoreMvcWeb.Controllers
                 p = 1;
 
             ViewData["page"] = p;
-
+            ViewData["total_count"] = BoardModel.GetCount("GENERAL");
+            
             var model = BoardModel.GetList("GENERAL", p);
 
             return View(model);
         }
 
         [Route("/board/view")]
-        public IActionResult ContentsView(int seq) //View()는 메소드로 쓸수 없음 route 로 처리
+        public IActionResult ContentsView(int seq, int p) //View()는 메소드로 쓸수 없음 route 로 처리
         {
+            ViewData["page"] = p;
             return View(BoardModel.Get("GENERAL", seq));
         }
 

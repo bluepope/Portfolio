@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Sql\Board.xml" />
     <None Remove="Sql\Home.xml" />
     <None Remove="TypeScript\common\ButtonProgress.ts" />
     <None Remove="TypeScript\common\DragDrop.ts" />
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Sql\Board.xml" />
     <Content Include="Sql\Home.xml" />
   </ItemGroup>
 

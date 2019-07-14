@@ -84,6 +84,13 @@ namespace CoreLib.DataBase
             _conn = null;
         }
 
+        public static string GetSqlFromXml(string xmlPath, string sqlId)
+        {
+            if (_sqlManager.ContainsKey(xmlPath) == false)
+                _sqlManager[xmlPath] = new SqlManager(xmlPath);
+
+            return _sqlManager[xmlPath].GetSql(sqlId);
+        }
         #region 1회성 쿼리를 위한 static method 영역
         public static IList<T> RunGetQuery<T>(string sql, object param)
         {
@@ -101,7 +108,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public static IList<T> RunGetQueryXml<T>(string xmlPath, string sqlId, object param)
+        public static IList<T> RunGetQueryFromXml<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -125,7 +132,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public static int RunExecuteXml(string xmlPath, string sqlId, object param)
+        public static int RunExecuteFromXml(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -151,7 +158,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public IList<T> GetQueryXml<T>(string xmlPath, string sqlId, object param)
+        public IList<T> GetQueryFromXml<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -175,7 +182,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public int ExecuteXml(string xmlPath, string sqlId, object param)
+        public int ExecuteFromXml(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);

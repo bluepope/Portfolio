@@ -49,92 +49,43 @@ AUTO_INCREMENT=2
 
         public static BoardModel Get(string board_type, int seq)
         {
-            MySqlDapperHelper.RunExecute("UPDATE BOARD SET VIEW_CNT = VIEW_CNT + 1 WHERE BOARD_TYPE = @board_type AND SEQ = @seq", new
+            MySqlDapperHelper.RunExecuteFromXml("Sql/Board.xml", "UpdateViewCount", new
             {
                 board_type = board_type,
                 seq = seq
             });
 
-            return MySqlDapperHelper.RunGetQuery<BoardModel>(@"
-SELECT
-	A.BOARD_TYPE
-	,A.SEQ
-	,A.TITLE
-	,A.CONTENTS
-	,A.DUP_KEY
-	,A.VIEW_CNT
-	,A.STATUS_FLAG
-	,A.REG_IP
-	,A.REG_USER
-	,A.REG_USERNAME
-	,A.REG_DATE
-FROM
-    BOARD A
-WHERE
-	A.BOARD_TYPE = @board_type
-    AND A.SEQ = @seq
-ORDER BY
-    A.SEQ DESC
-", new
+            return MySqlDapperHelper.RunGetQueryFromXml<BoardModel>("Sql/Board.xml", "GetBoard", new
             {
                 board_type = board_type,
                 seq = seq
             }).FirstOrDefault();
         }
+
+        public static int GetCount(string board_type)
+        {
+            return MySqlDapperHelper.RunGetQueryFromXml<int>("Sql/Board.xml", "GetBoardCount", new
+            {
+                board_type = board_type,
+            }).FirstOrDefault();
+            
+        }
+
         public static IList<BoardModel> GetList(string board_type, int page = 1, int page_size = 20)
         {
-            return MySqlDapperHelper.RunGetQuery<BoardModel>($@"
-SELECT
-	A.BOARD_TYPE
-	,A.SEQ
-	,A.TITLE
-	,A.VIEW_CNT
-	,A.STATUS_FLAG
-	,A.REG_IP
-	,A.REG_USER
-	,A.REG_USERNAME
-	,A.REG_DATE
-FROM
-    BOARD A
-WHERE
-	A.BOARD_TYPE = @board_type
-ORDER BY
-    A.SEQ DESC
-LIMIT
-	{(page - 1) * page_size}, {page_size}
-", new
+            //데이터가 많아지면 LIMIT가 느려질수 있다고함, WHERE 로 모집합을 줄이고 LIMIT를 걸어야한다고....
+            var sql = MySqlDapperHelper.GetSqlFromXml("Sql/Board.xml", "GetBoardList");
+            var limit = $" LIMIT {(page - 1) * page_size}, {page_size}";
+
+            return MySqlDapperHelper.RunGetQuery<BoardModel>(sql + limit, new
             {
-                board_type = board_type
+                board_type = board_type,
             });
         }
 
         public int Insert(MySqlDapperHelper db)
         {
-            return db.Execute($@"
-INSERT INTO BOARD (
-	BOARD_TYPE
-	,TITLE
-	,CONTENTS
-	,DUP_KEY
-	,VIEW_CNT
-	,STATUS_FLAG
-	,REG_IP
-	,REG_USER
-	,REG_USERNAME
-	,REG_DATE
-)
-SELECT
-	@BOARD_TYPE
-	,@TITLE
-	,@CONTENTS
-	,@DUP_KEY
-	,@VIEW_CNT
-	,'Y'
-	,@REG_IP
-	,@REG_USER
-	,@REG_USERNAME
-	,now()
-", this);
+            return db.ExecuteFromXml("Sql/Board.xml", "InsertBoard", this);
         }
 
         public DateTime? REG_DATE { get; set; }
