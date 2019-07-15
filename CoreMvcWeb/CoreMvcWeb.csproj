@@ -36,10 +36,11 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.1.1" />
     <PackageReference Include="NetBarcode" Version="1.0.7" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Telegram.Bot" Version="14.12.0" />
   </ItemGroup>
 
@@ -209,6 +210,11 @@
     <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
     <TypeScriptCompile Include="TypeScript\common\main.ts" />
     <TypeScriptCompile Include="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="webdriver\" />
   </ItemGroup>
 
 

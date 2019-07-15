@@ -1,5 +1,7 @@
 ﻿@model CoreMvcWeb.Models.Board.BoardModel
 @{
+    var login = User.GetLoginInfo();
+
     var page = ViewData["page"] as int?;
 
     var param = $"p={page}";
@@ -32,7 +34,7 @@
     <div class="text-center" style="margin-top:15px;">
         <a href="/board/list?@param" class="btn btn-sm btn-secondary">목록</a>
 
-        @if (Model.REG_USER == User.GetUserId())
+        @if (Model.REG_USER == login?.USER_ID)
         {
             //편집 버튼
             //삭제 버튼

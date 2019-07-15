@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using CoreMvcWeb.Models.Login;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -40,6 +41,22 @@ namespace CoreMvcWeb
         {
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }
+
+        public static LoginModel GetLoginInfo(this ClaimsPrincipal principal)
+        {
+            if (principal?.Identity?.IsAuthenticated == false)
+                return null;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<LoginModel>(principal.Claims.FirstOrDefault(x => x.Type == "LOGIN_JSON")?.Value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         public static int IsStringNotNullCount(this HtmlHelper htmlHelper, params string[] strList)
         {

@@ -9,11 +9,13 @@ namespace CoreMvcWeb.Controllers
     [Authorize]
     public class BoardController : Controller
     {
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return Redirect("/board/list");
         }
 
+        [AllowAnonymous]
         public IActionResult List(int p)
         {
             if (p < 1)
@@ -27,6 +29,7 @@ namespace CoreMvcWeb.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [Route("/board/view")]
         public IActionResult ContentsView(int seq, int p) //View()는 메소드로 쓸수 없음 route 로 처리
         {

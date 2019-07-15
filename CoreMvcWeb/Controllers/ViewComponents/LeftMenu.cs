@@ -74,6 +74,11 @@ namespace CoreMvcWeb.Controllers.ViewComponents
                     menu.ActionName = "BarCodeGenerator";
                     menu.Name = "바코드 생성";
                 }));
+
+                setting.SubMenuList.Add(LeftMenuModel.Create((menu) => {
+                    menu.ActionName = "DeliveryCheck";
+                    menu.Name = "택배 조회";
+                }));
             }));
 
             list.FirstOrDefault(p => p.ControllerName.ToLower() == controller.ToLower())?.SubMenuList.FirstOrDefault(p => p.ActionName.ToLower() == action.ToLower())?.setActive(true);

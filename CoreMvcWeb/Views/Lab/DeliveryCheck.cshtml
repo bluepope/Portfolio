@@ -1,0 +1,46 @@
+﻿<div>
+    <table class="table table-common">
+        <tr>
+            <th>택배회사</th>
+            <td>
+                <select id="company_code" class="form-control">
+                    <option value="EMS">EMS</option>
+                </select>
+            </td>
+            <th>송장번호</th>
+            <td>
+                <input id="invoice_no" type="text" class="form-control" value="LA531434907CN" />
+            </td>
+            <td class="text-left">
+                <button id="btn1" class="btn btn-sm btn-primary" style="margin-left:15px;">조회</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="div1"></div>
+
+<script>
+    $("#btn1").click(function () {
+        var company_code = $("#company_code").val();
+        var invoice_no = $("#invoice_no").val();
+
+        $("#div1").html("<i class='fa fa-spinner fa-spin'> 불러오는 중");
+
+        $.ajax({
+            type: "GET",
+            url: "/lab/GetDeliveryCheckList",
+            dataType: "json",
+            data: {
+                company_code: company_code,
+                invoice_no: invoice_no
+            },
+            success: function (data, status, xhr) {
+                $("#div1").html(data.data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                ajaxCommonError(xhr);
+            }
+        });
+    });
+</script>
