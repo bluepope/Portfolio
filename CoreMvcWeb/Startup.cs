@@ -74,8 +74,7 @@ namespace CoreMvcWeb
                 options.WebHookUrl = config.WebHookUrl;
             });
 
-            //services.AddScoped<IUpdateService, UpdateService>(); //request 마다 생성
-            services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
+            //services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
             
             /*
             services.AddHostedService<TimedHostedService>(); //타이머
@@ -119,7 +118,7 @@ namespace CoreMvcWeb
             });
 
             //서버 시작시 텔레그램 봇 최초 생성
-            app.ApplicationServices.GetService<IBotService>();
+            //app.ApplicationServices.GetService<IBotService>();
         }
     }
 }
