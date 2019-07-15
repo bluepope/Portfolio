@@ -21,17 +21,17 @@ namespace CoreMvcWeb
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseKestrel(options => {
-                    options.Limits.MaxRequestBodySize = 1000 * 1000 * 1024; //1GB; kestrel 업로드 용량 제한
-                    if (args != null)
+                    int port = 5000;
+
+                    string in_port = args?.FirstOrDefault(p => p.ToLower() == "--port=");
+
+                    if (string.IsNullOrWhiteSpace(in_port) == false)
                     {
-                        foreach (var arg in args)
-                        {
-                            if (arg.Trim().ToLower().IndexOf("--port=") == 0)
-                            {
-                                options.ListenAnyIP(Convert.ToInt16(arg.Trim().ToLower().Replace("--port=", "")));
-                            }
-                        }
+                        port = Convert.ToInt16(in_port.Replace("--port=", ""));
                     }
+
+                    options.Limits.MaxRequestBodySize = 1000 * 1000 * 1024; //1GB; kestrel 업로드 용량 제한
+                    options.ListenAnyIP(port);
                 });
     }
 }

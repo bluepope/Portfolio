@@ -17,11 +17,25 @@ namespace CoreMvcWeb
 {
     public static class WebExtention
     {
-        public static string GetUserId(this ClaimsPrincipal principal)
+        public enum CustomClaimType
         {
-            return principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            UserId
         }
 
+        static string GetCustomClaimTypeString(CustomClaimType customClaimType)
+        {
+            switch(customClaimType)
+            {
+                case CustomClaimType.UserId: return ClaimTypes.NameIdentifier;
+                default: return null;
+            }
+        }
+
+        
+        public static string GetClaim(this ClaimsPrincipal principal, CustomClaimType claimType)
+        {
+            return principal.Claims.FirstOrDefault(x => x.Type == GetCustomClaimTypeString(claimType))?.Value;
+        }
         public static string GetClaim(this ClaimsPrincipal principal, string claimType)
         {
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
