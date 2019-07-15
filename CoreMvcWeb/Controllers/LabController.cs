@@ -11,6 +11,7 @@ using System.IO;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -75,7 +76,6 @@ namespace CoreMvcWeb.Controllers
              * 4. 나머진 똑같음
              */
             var text = string.Empty;
-            int waitTime = 1000;
 
             if (company_code == "EMS")
             {
@@ -91,10 +91,13 @@ namespace CoreMvcWeb.Controllers
                 {
                     try
                     {
+                        IWait<IWebDriver> wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
+
+
                         driver.Url = $"https://service.epost.go.kr/trace.RetrieveEmsRigiTraceList.comm?POST_CODE={invoice_no}";
                         driver.Navigate();
 
-                        Thread.Sleep(waitTime);
+                        wait.Until(driver1 => ((IJavaScriptExecutor)driver).ExecuteScript("return document.readyState").Equals("complete"));
 
                         var rows = driver.FindElementsByCssSelector(".detail_off tr");
 

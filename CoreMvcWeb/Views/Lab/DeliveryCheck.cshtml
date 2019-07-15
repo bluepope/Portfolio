@@ -25,7 +25,7 @@
         var company_code = $("#company_code").val();
         var invoice_no = $("#invoice_no").val();
 
-        $("#div1").html("<i class='fa fa-spinner fa-spin'> 불러오는 중");
+        $("#div1").html("<div class='alert alert-info'><i class='fa fa-spinner fa-spin'></i> 불러오는 중</div>");
 
         $.ajax({
             type: "GET",
