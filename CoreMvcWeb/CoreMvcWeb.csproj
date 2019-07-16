@@ -18,6 +18,7 @@
     <None Remove="TypeScript\common\DragDrop.ts" />
     <None Remove="TypeScript\common\main.ts" />
     <None Remove="TypeScript\jquery\JQueryAjaxProgress.ts" />
+    <None Remove="webdriver\chromedriver" />
     <None Remove="wwwroot\js\vue\v-number.js" />
     <None Remove="wwwroot\js\vue\vue-custom.js" />
   </ItemGroup>
@@ -29,6 +30,9 @@
   <ItemGroup>
     <Content Include="Sql\Board.xml" />
     <Content Include="Sql\Home.xml" />
+    <Content Include="webdriver\chromedriver">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
@@ -214,7 +218,9 @@
 
 
   <ItemGroup>
-    <Folder Include="webdriver\" />
+    <Content Update="usersettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
