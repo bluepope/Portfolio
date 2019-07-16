@@ -16,6 +16,8 @@ namespace CoreMvcWeb.Models.Login
 "action": "login"
 "error-codes: ['timeout-or-duplicate']"
 */
+        public static string SiteKey { get; set; }
+        public static string PrivateKey { get; set; }
 
         public bool Success { get; set; }
 

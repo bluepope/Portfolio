@@ -9,24 +9,17 @@ namespace CoreLib.DataBase
 {
     public class MySqlDapperHelper : IDisposable
     {
+        public static string ConnectionString { get; set; }
         static Dictionary<string, SqlManager> _sqlManager = new Dictionary<string, SqlManager>();
         MySqlConnection _conn = null;
         MySqlTransaction _trans = null;
-
-        /// <summary>
-        /// DB 계정
-        /// </summary>
-        public enum DataSourceName
-        {
-            Main
-        }
 
         /// <summary>
         /// Transaction 을 위한 생성자
         /// </summary>
         public MySqlDapperHelper()
         {
-            _conn = new MySqlConnection(ConnectionStringModel.Instance.ConnectionString);
+            _conn = new MySqlConnection(ConnectionString);
         }
 
         /// <summary>
@@ -94,7 +87,7 @@ namespace CoreLib.DataBase
         #region 1회성 쿼리를 위한 static method 영역
         public static IList<T> RunGetQuery<T>(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionStringModel.Instance.ConnectionString))
+            using (var conn = new MySqlConnection(ConnectionString))
             {
                 try
                 {
@@ -118,7 +111,7 @@ namespace CoreLib.DataBase
 
         public static int RunExecute(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionStringModel.Instance.ConnectionString))
+            using (var conn = new MySqlConnection(ConnectionString))
             {
                 try
                 {
@@ -144,7 +137,7 @@ namespace CoreLib.DataBase
         #region instance 용 영역
         public IList<T> GetQuery<T>(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionStringModel.Instance.ConnectionString))
+            using (var conn = new MySqlConnection(ConnectionString))
             {
                 try
                 {
@@ -168,7 +161,7 @@ namespace CoreLib.DataBase
 
         public int Execute(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionStringModel.Instance.ConnectionString))
+            using (var conn = new MySqlConnection(ConnectionString))
             {
                 try
                 {

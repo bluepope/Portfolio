@@ -12,6 +12,7 @@ using OpenQA.Selenium.Chrome;
 using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using CoreMvcWeb.Services.BatchJob;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -20,6 +21,11 @@ namespace CoreMvcWeb.Controllers
     /// </summary>
     public class LabController : Controller
     {
+        ITimerBatchService _batch;
+        public LabController(ITimerBatchService batch)
+        {
+            _batch = batch;
+        }
         public IActionResult Index()
         {
             return View();
