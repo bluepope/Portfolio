@@ -24,7 +24,6 @@ namespace CoreMvcWeb
                     int port = 5000;
 
                     string in_port = args?.FirstOrDefault(p => p.ToLower() == "--port=");
-
                     if (string.IsNullOrWhiteSpace(in_port) == false)
                     {
                         port = Convert.ToInt16(in_port.Replace("--port=", ""));
@@ -32,6 +31,10 @@ namespace CoreMvcWeb
 
                     options.Limits.MaxRequestBodySize = 1000 * 1000 * 1024; //1GB; kestrel 업로드 용량 제한
                     options.ListenAnyIP(port);
+                    options.ListenAnyIP(port + 1, (config) =>
+                    {
+                        config.UseHttps();
+                    });
                 });
     }
 }

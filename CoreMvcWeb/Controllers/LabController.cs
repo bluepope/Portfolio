@@ -21,10 +21,8 @@ namespace CoreMvcWeb.Controllers
     /// </summary>
     public class LabController : Controller
     {
-        ITimerBatchService _batch;
-        public LabController(ITimerBatchService batch)
+        public LabController()
         {
-            _batch = batch;
         }
         public IActionResult Index()
         {
@@ -77,9 +75,28 @@ namespace CoreMvcWeb.Controllers
 
             /* linux 동작시
              * 1. 구글 크롬 설치
-             * 2. 구글 크롬 드라이버 설치 http://chromedriver.chromium.org/downloads // 설치된 크롬 버전에 맞는 드라이버 필요
-             * 3. 폰트 설치 // 나눔고딕?
-             * 4. 나머진 똑같음
+             * centos 7 의 경우
+             * 1) repo 등록
+vi /etc/yum.repos.d/google-chrome.repo
+
+[google-chrome]
+name=google-chrome
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/x86_64
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+             * 2) yum install google-chrome-stable
+             * yum install http://dev.naver.com/frs/download.php/443/ttf-nanum-coding-2.0-2.noarch.rpm
+             * 2. 구글 크롬 드라이버 설치 // 설치된 크롬 버전에 맞는 드라이버 필요
+             * 3. 폰트 설치 // 나눔고딕
+cd /usr/share/fonts/
+mkdir ./nanumfont
+cd ./nanumfont
+wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
+unzip NanumFont_TTF_ALL.zip
+
+             * 4. webdriver에 실행권한 줄것 chmod 777 과 같이..
              */
             var text = string.Empty;
 

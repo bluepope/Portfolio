@@ -28,8 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Sql\Board.xml" />
-    <Content Include="Sql\Home.xml" />
+    <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\Home.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="webdriver\chromedriver">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
