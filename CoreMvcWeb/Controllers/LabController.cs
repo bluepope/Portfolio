@@ -13,6 +13,7 @@ using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using CoreMvcWeb.Services.BatchJob;
+using System.Net.Mime;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -145,6 +146,44 @@ unzip NanumFont_TTF_ALL.zip
             }
 
             return Json(new { data = text });
+        }
+
+        public IActionResult WebFileDownload()
+        {
+            return View();
+        }
+
+        public IActionResult GetWebFileDownload(string url)
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    client.OpenRead(url);
+
+                    string fileName;
+
+                    if (client.ResponseHeaders.AllKeys.Any(p => p.ToLower() == "content-disposition"))
+                    {
+                        fileName = new ContentDisposition(client.ResponseHeaders["Content-Disposition"]).FileName;
+                    }
+                    else
+                    {
+                        fileName = Path.GetFileName(url);
+                    }
+
+                    var downloadPath = Path.Combine(Directory.GetCurrentDirectory(), "DownloadFiles");
+                    Directory.CreateDirectory(downloadPath);
+
+                    client.DownloadFile(url, Path.Combine(downloadPath, fileName));
+                }
+
+                return Json(new { msg = "OK" });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { msg = ex.Message });
+            }
         }
     }
 }

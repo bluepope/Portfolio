@@ -79,6 +79,11 @@ namespace CoreMvcWeb.Controllers.ViewComponents
                     menu.ActionName = "DeliveryCheck";
                     menu.Name = "택배 조회";
                 }));
+
+                setting.SubMenuList.Add(LeftMenuModel.Create((menu) => {
+                    menu.ActionName = "WebFileDownload";
+                    menu.Name = "웹 파일 다운로드 테스트";
+                }));
             }));
 
             list.FirstOrDefault(p => p.ControllerName.ToLower() == controller.ToLower())?.SubMenuList.FirstOrDefault(p => p.ActionName.ToLower() == action.ToLower())?.setActive(true);
