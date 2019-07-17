@@ -114,8 +114,7 @@ unzip NanumFont_TTF_ALL.zip
                 {
                     try
                     {
-                        IWait<IWebDriver> wait = new OpenQA.Selenium.Support.UI.WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
-
+                        IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30.00));
 
                         driver.Url = $"https://service.epost.go.kr/trace.RetrieveEmsRigiTraceList.comm?POST_CODE={invoice_no}";
                         driver.Navigate();

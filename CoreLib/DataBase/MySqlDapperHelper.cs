@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CoreLib.DataBase
 {
@@ -91,7 +92,7 @@ namespace CoreLib.DataBase
             {
                 try
                 {
-                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList<T>();
+                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -132,6 +133,55 @@ namespace CoreLib.DataBase
 
             return RunExecute(_sqlManager[xmlPath].GetSql(sqlId), param);
         }
+
+        
+        public static async Task<IList<T>> RunGetQueryAsync<T>(string sql, object param)
+        {
+            using (var conn = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                    throw ex;
+                }
+            }
+        }
+
+        public static async Task<IList<T>> RunGetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
+        {
+            if (_sqlManager.ContainsKey(xmlPath) == false)
+                _sqlManager[xmlPath] = new SqlManager(xmlPath);
+
+            return await RunGetQueryAsync<T>(_sqlManager[xmlPath].GetSql(sqlId), param);
+        }
+
+        public static async Task<int> RunExecuteAsync(string sql, object param)
+        {
+            using (var conn = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    return await Dapper.SqlMapper.ExecuteAsync(conn, sql, param);
+                }
+                catch (Exception ex)
+                {
+                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                    throw ex;
+                }
+            }
+        }
+
+        public static async Task<int> RunExecuteFromXmlAsync(string xmlPath, string sqlId, object param)
+        {
+            if (_sqlManager.ContainsKey(xmlPath) == false)
+                _sqlManager[xmlPath] = new SqlManager(xmlPath);
+
+            return await RunExecuteAsync(_sqlManager[xmlPath].GetSql(sqlId), param);
+        }
         #endregion
 
         #region instance 용 영역
@@ -141,7 +191,7 @@ namespace CoreLib.DataBase
             {
                 try
                 {
-                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList<T>();
+                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -181,6 +231,54 @@ namespace CoreLib.DataBase
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
 
             return this.Execute(_sqlManager[xmlPath].GetSql(sqlId), param);
+        }
+
+        public async Task<IList<T>> GetQueryAsync<T>(string sql, object param)
+        {
+            using (var conn = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param)).ToList();
+                }
+                catch (Exception ex)
+                {
+                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<IList<T>> GetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
+        {
+            if (_sqlManager.ContainsKey(xmlPath) == false)
+                _sqlManager[xmlPath] = new SqlManager(xmlPath);
+
+            return await this.GetQueryAsync<T>(_sqlManager[xmlPath].GetSql(sqlId), param);
+        }
+
+        public async Task<int> ExecuteAsync(string sql, object param)
+        {
+            using (var conn = new MySqlConnection(ConnectionString))
+            {
+                try
+                {
+                    return await Dapper.SqlMapper.ExecuteAsync(conn, sql, param);
+                }
+                catch (Exception ex)
+                {
+                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<int> ExecuteFromXmlAsync(string xmlPath, string sqlId, object param)
+        {
+            if (_sqlManager.ContainsKey(xmlPath) == false)
+                _sqlManager[xmlPath] = new SqlManager(xmlPath);
+
+            return await this.ExecuteAsync(_sqlManager[xmlPath].GetSql(sqlId), param);
         }
         #endregion
 

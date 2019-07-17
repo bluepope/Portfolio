@@ -3,6 +3,7 @@ using CoreMvcWeb.Models.Board;
 using Microsoft.AspNetCore.Authorization;
 using CoreLib.DataBase;
 using System;
+using System.Threading.Tasks;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -16,7 +17,7 @@ namespace CoreMvcWeb.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult List(int p)
+        public async Task<IActionResult> List(int p)
         {
             if (p < 1)
                 p = 1;
@@ -24,17 +25,17 @@ namespace CoreMvcWeb.Controllers
             ViewData["page"] = p;
             ViewData["total_count"] = BoardModel.GetCount("GENERAL");
             
-            var model = BoardModel.GetList("GENERAL", p);
+            var model = await BoardModel.GetListAsync("GENERAL", p);
 
             return View(model);
         }
 
         [AllowAnonymous]
         [Route("/board/view")]
-        public IActionResult ContentsView(int seq, int p) //View()는 메소드로 쓸수 없음 route 로 처리
+        public async Task<IActionResult> ContentsView(int seq, int p) //View()는 메소드로 쓸수 없음 route 로 처리
         {
             ViewData["page"] = p;
-            return View(BoardModel.Get("GENERAL", seq));
+            return View(await BoardModel.GetAsync("GENERAL", seq));
         }
 
         public IActionResult Write()

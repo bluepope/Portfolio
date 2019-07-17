@@ -62,6 +62,23 @@ AUTO_INCREMENT=2
             }).FirstOrDefault();
         }
 
+        public static async Task<BoardModel> GetAsync(string board_type, int seq)
+        {
+            await MySqlDapperHelper.RunExecuteFromXmlAsync("Sql/Board.xml", "UpdateViewCount", new
+            {
+                board_type = board_type,
+                seq = seq
+            });
+
+            var model = await MySqlDapperHelper.RunGetQueryFromXmlAsync<BoardModel>("Sql/Board.xml", "GetBoard", new
+            {
+                board_type = board_type,
+                seq = seq
+            });
+
+            return model.FirstOrDefault();
+        }
+
         public static int GetCount(string board_type)
         {
             return MySqlDapperHelper.RunGetQueryFromXml<int>("Sql/Board.xml", "GetBoardCount", new
@@ -78,6 +95,18 @@ AUTO_INCREMENT=2
             var limit = $" LIMIT {(page - 1) * page_size}, {page_size}";
 
             return MySqlDapperHelper.RunGetQuery<BoardModel>(sql + limit, new
+            {
+                board_type = board_type,
+            });
+        }
+
+        public static async Task<IList<BoardModel>> GetListAsync(string board_type, int page = 1, int page_size = 20)
+        {
+            //데이터가 많아지면 LIMIT가 느려질수 있다고함, WHERE 로 모집합을 줄이고 LIMIT를 걸어야한다고....
+            var sql = MySqlDapperHelper.GetSqlFromXml("Sql/Board.xml", "GetBoardList");
+            var limit = $" LIMIT {(page - 1) * page_size}, {page_size}";
+
+            return await MySqlDapperHelper.RunGetQueryAsync<BoardModel>(sql + limit, new
             {
                 board_type = board_type,
             });
