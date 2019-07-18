@@ -14,6 +14,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using CoreMvcWeb.Services.BatchJob;
 using System.Net.Mime;
+using CoreLib.Http;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -157,28 +158,9 @@ unzip NanumFont_TTF_ALL.zip
         {
             try
             {
-                using (WebClient client = new WebClient())
-                {
-                    client.OpenRead(url);
+                var file = HttpHelper.WebDownloadFile(url);
 
-                    string fileName;
-
-                    if (client.ResponseHeaders.AllKeys.Any(p => p.ToLower() == "content-disposition"))
-                    {
-                        fileName = new ContentDisposition(client.ResponseHeaders["Content-Disposition"]).FileName;
-                    }
-                    else
-                    {
-                        fileName = Path.GetFileName(url);
-                    }
-
-                    var downloadPath = Path.Combine(Directory.GetCurrentDirectory(), "DownloadFiles");
-                    Directory.CreateDirectory(downloadPath);
-
-                    client.DownloadFile(url, Path.Combine(downloadPath, fileName));
-                }
-
-                return Json(new { msg = "OK" });
+                return Json(new { msg = "OK", file = file});
             }
             catch(Exception ex)
             {

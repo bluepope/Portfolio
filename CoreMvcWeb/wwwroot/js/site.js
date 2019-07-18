@@ -57,6 +57,7 @@ var DragDrop = (function () {
     };
     return DragDrop;
 }());
+jQuery.ajaxSetup({ cache: false });
 var AjaxCommonError = function (xhr) {
     var titleDiv = "<div class=\"titleerror\">";
     if (xhr.statusText === "abort")

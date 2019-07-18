@@ -51,7 +51,7 @@
                     var img = document.createElement("img");
                     img.src = data;
 
-                    div.append(img);
+                    div.appendChild(img);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     ajaxCommonError(xhr);
@@ -62,7 +62,7 @@
             var img = document.createElement("img");
             img.src = "GetBarcodeImage?imageType=" + imageType + "&barcodeNumber=" + barcodeNumber;
 
-            div.append(img);
+            div.appendChild(img);
         }
 
         $("#div1").append(div);

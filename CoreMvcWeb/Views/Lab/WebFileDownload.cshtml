@@ -16,6 +16,8 @@
 
 <script>
     $("#btn1").click(function () {
+        var url = $("#url").val();
+
         $("#div1").html("<div class='alert alert-info'><i class='fa fa-spinner fa-spin'></i> 불러오는 중</div>");
 
         $.ajax({
@@ -23,7 +25,7 @@
             url: "/lab/GetWebFileDownload",
             dataType: "json",
             data: {
-                url: $("#url").val()
+                url: url
             },
             success: function (data, status, xhr) {
                 if (data.msg == "OK") {
@@ -32,7 +34,6 @@
                 else {
                     $("#div1").html(data.msg);
                 }
-                
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 ajaxCommonError(xhr);
