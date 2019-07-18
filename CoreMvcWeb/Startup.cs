@@ -40,7 +40,7 @@ namespace CoreMvcWeb
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => true; //쿠키정책 사용시 허용 아니면 쿠키 사용 못함
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
@@ -92,8 +92,9 @@ namespace CoreMvcWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //인증을 사용한다는 선언
-            app.UseAuthentication();
+            app.UseStaticFiles();
+            //app.UseCookiePolicy(); //쿠키정책 사용여부
+            app.UseAuthentication(); //인증 사용
 
             if (env.IsDevelopment())
             {
@@ -104,8 +105,6 @@ namespace CoreMvcWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc(routes =>
             {

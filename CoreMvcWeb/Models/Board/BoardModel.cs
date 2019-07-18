@@ -46,15 +46,17 @@ AUTO_INCREMENT=2
         public string REG_IP { get; set; }
         public string REG_USER { get; set; }
         public string REG_USERNAME { get; set; }
+        public DateTime? REG_DATE { get; set; }
+
+        /* 필요한가? 
+        public string UPDATE_IP { get; set; }
+        public string UPDATE_USER { get; set; }
+        public string UPDATE_USERNAME { get; set; }
+        public DateTime? UPDATE_DATE { get; set; }
+        */
 
         public static BoardModel Get(string board_type, int seq)
         {
-            MySqlDapperHelper.RunExecuteFromXml("Sql/Board.xml", "UpdateViewCount", new
-            {
-                board_type = board_type,
-                seq = seq
-            });
-
             return MySqlDapperHelper.RunGetQueryFromXml<BoardModel>("Sql/Board.xml", "GetBoard", new
             {
                 board_type = board_type,
@@ -64,18 +66,12 @@ AUTO_INCREMENT=2
 
         public static async Task<BoardModel> GetAsync(string board_type, int seq)
         {
-            await MySqlDapperHelper.RunExecuteFromXmlAsync("Sql/Board.xml", "UpdateViewCount", new
-            {
-                board_type = board_type,
-                seq = seq
-            });
-
             var model = await MySqlDapperHelper.RunGetQueryFromXmlAsync<BoardModel>("Sql/Board.xml", "GetBoard", new
             {
                 board_type = board_type,
                 seq = seq
             });
-
+            
             return model.FirstOrDefault();
         }
 
@@ -112,19 +108,14 @@ AUTO_INCREMENT=2
             });
         }
 
+        public int AddViewCount()
+        {
+            return MySqlDapperHelper.RunExecuteFromXml("Sql/Board.xml", "UpdateViewCount", this);
+        }
+
         public int Insert(MySqlDapperHelper db)
         {
             return db.ExecuteFromXml("Sql/Board.xml", "InsertBoard", this);
         }
-
-        public DateTime? REG_DATE { get; set; }
-
-        /* 필요한가? 
-        public string UPDATE_IP { get; set; }
-        public string UPDATE_USER { get; set; }
-        public string UPDATE_USERNAME { get; set; }
-        public DateTime? UPDATE_DATE { get; set; }
-        */
-
     }
 }
