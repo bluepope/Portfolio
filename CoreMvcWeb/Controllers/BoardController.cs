@@ -14,12 +14,8 @@ namespace CoreMvcWeb.Controllers
     [Authorize]
     public class BoardController : Controller
     {
-
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public BoardController(IHttpContextAccessor httpContextAccessor)
+        public BoardController()
         {
-            this._httpContextAccessor = httpContextAccessor;
         }
 
         [AllowAnonymous]
