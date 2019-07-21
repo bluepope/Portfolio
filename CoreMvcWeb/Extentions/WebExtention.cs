@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Html;
+﻿using CoreMvcWeb.Models.Login;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -17,15 +18,45 @@ namespace CoreMvcWeb
 {
     public static class WebExtention
     {
-        public static string GetUserId(this ClaimsPrincipal principal)
+        public enum CustomClaimType
         {
-            return principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+            UserId
         }
 
+        static string GetCustomClaimTypeString(CustomClaimType customClaimType)
+        {
+            switch(customClaimType)
+            {
+                case CustomClaimType.UserId: return ClaimTypes.NameIdentifier;
+                default: return null;
+            }
+        }
+
+        
+        public static string GetClaim(this ClaimsPrincipal principal, CustomClaimType claimType)
+        {
+            return principal.Claims.FirstOrDefault(x => x.Type == GetCustomClaimTypeString(claimType))?.Value;
+        }
         public static string GetClaim(this ClaimsPrincipal principal, string claimType)
         {
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }
+
+        public static LoginModel GetLoginInfo(this ClaimsPrincipal principal)
+        {
+            if (principal?.Identity?.IsAuthenticated == false)
+                return null;
+
+            try
+            {
+                return JsonConvert.DeserializeObject<LoginModel>(principal.Claims.FirstOrDefault(x => x.Type == "LOGIN_JSON")?.Value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
 
         public static int IsStringNotNullCount(this HtmlHelper htmlHelper, params string[] strList)
         {

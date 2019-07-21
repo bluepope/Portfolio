@@ -3,33 +3,74 @@ using CoreMvcWeb.Models.Board;
 using Microsoft.AspNetCore.Authorization;
 using CoreLib.DataBase;
 using System;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreMvcWeb.Controllers
 {
     [Authorize]
     public class BoardController : Controller
     {
+        public BoardController()
+        {
+        }
+
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return Redirect("/board/list");
         }
 
-        public IActionResult List(int p)
+        [AllowAnonymous]
+        public async Task<IActionResult> List(int p)
         {
             if (p < 1)
                 p = 1;
 
             ViewData["page"] = p;
-
-            var model = BoardModel.GetList("GENERAL", p);
+            ViewData["total_count"] = BoardModel.GetCount("GENERAL");
+            
+            var model = await BoardModel.GetListAsync("GENERAL", p);
 
             return View(model);
         }
 
+        [AllowAnonymous]
         [Route("/board/view")]
-        public IActionResult ContentsView(int seq) //View()는 메소드로 쓸수 없음 route 로 처리
+        public async Task<IActionResult> ContentsView(int seq, int p) //View()는 메소드로 쓸수 없음 route 로 처리
         {
-            return View(BoardModel.Get("GENERAL", seq));
+            ViewData["page"] = p;
+            var user = User.GetLoginInfo();
+            var model = await BoardModel.GetAsync("GENERAL", seq);
+
+            if (!(model.REG_USER == user?.USER_ID))
+            {
+                //HttpContext.Connection.Id
+                //동일 세션의 중복 ViewCount를 막기위해 쿠키를 써봄
+                var cookieId = "BOARD_GENERAL";
+
+                if (Request.Cookies.ContainsKey(cookieId) == false)
+                {
+                    Response.Cookies.Append(cookieId, $"[{seq}]", new Microsoft.AspNetCore.Http.CookieOptions() { HttpOnly = true });
+                    model.AddViewCount();
+                }
+                else
+                {
+                    var list = JsonConvert.DeserializeObject<List<int>>(Request.Cookies[cookieId]);
+                    if (list.Any(x => x == seq) == false)
+                    {
+                        model.AddViewCount();
+                        
+                        list.Add(seq);
+                        Response.Cookies.Append(cookieId, JsonConvert.SerializeObject(list), new Microsoft.AspNetCore.Http.CookieOptions() { HttpOnly = true });
+                    }
+                }
+            }
+
+            return View(model);
         }
 
         public IActionResult Write()

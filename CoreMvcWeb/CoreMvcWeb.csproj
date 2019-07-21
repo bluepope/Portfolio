@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <TypeScriptToolsVersion>3.4</TypeScriptToolsVersion>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,11 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Sql\Board.xml" />
     <None Remove="Sql\Home.xml" />
     <None Remove="TypeScript\common\ButtonProgress.ts" />
     <None Remove="TypeScript\common\DragDrop.ts" />
     <None Remove="TypeScript\common\main.ts" />
     <None Remove="TypeScript\jquery\JQueryAjaxProgress.ts" />
+    <None Remove="webdriver\chromedriver" />
     <None Remove="wwwroot\js\vue\v-number.js" />
     <None Remove="wwwroot\js\vue\vue-custom.js" />
   </ItemGroup>
@@ -25,7 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Sql\Home.xml" />
+    <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\Home.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="webdriver\chromedriver">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
@@ -33,9 +44,11 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.11" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.1.1" />
     <PackageReference Include="NetBarcode" Version="1.0.7" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
     <PackageReference Include="Telegram.Bot" Version="14.12.0" />
   </ItemGroup>
 
@@ -205,6 +218,13 @@
     <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
     <TypeScriptCompile Include="TypeScript\common\main.ts" />
     <TypeScriptCompile Include="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="usersettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

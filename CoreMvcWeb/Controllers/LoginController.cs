@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -38,20 +39,22 @@ namespace CoreMvcWeb.Controllers
 
             try
             {
-                var item = LoginModel.GetLogin(user_id, user_pw);
+                var login = LoginModel.GetLogin(user_id, user_pw);
 
-                if (item == null) //로그인 오류
+                if (login == null) //로그인 오류
                     return Redirect("/");
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
 
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, item.USER_ID));
-                identity.AddClaim(new Claim(ClaimTypes.Name, item.USER_NAME));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, login.USER_ID));
+                identity.AddClaim(new Claim(ClaimTypes.Name, login.USER_NAME));
                 identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
+
+                identity.AddClaim(new Claim("LOGIN_JSON", JsonConvert.SerializeObject(login)));
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties {
-                    IsPersistent = true, //로그인 쿠키 영속성 (브라우저 종료시 유지) 여부
+                    IsPersistent = false, //로그인 쿠키 영속성 (브라우저 종료시 유지) 여부
                     ExpiresUtc = DateTime.UtcNow.AddDays(7), //7일간 미접속시 쿠키 만료
                     AllowRefresh = true, //갱신여부
                 });

@@ -260,6 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 
-dbconfig.json
-telegrambot-config.json
-reCAPTCHA-config.json
+usersettings.json

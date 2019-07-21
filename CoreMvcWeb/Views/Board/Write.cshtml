@@ -51,7 +51,7 @@
 
         var obj = {};
         obj["board_type"] = "GENERAL";
-        obj["dup_key"] = "@DateTime.Now.Ticks";
+        obj["dup_key"] = "@DateTime.Now.ToString("hhmmss")";
         obj["title"] = $("#title").val();
         obj["contents"] = $("#contents").summernote("code");
 
@@ -65,7 +65,7 @@
             success: function (data, status, xhr) {
                 if (data.msg == "OK") {
                     alert("저장하였습니다");
-                    location.reload();
+                    location.replace("/board/list");
                 }
                 else {
                     $btn.attr("disabled", false);

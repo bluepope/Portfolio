@@ -1,10 +1,28 @@
 ﻿@model IList<CoreMvcWeb.Models.Board.BoardModel>
 @{ 
     int page = (ViewData["page"] as int?).GetValueOrDefault(1);
+    int total_count = (ViewData["total_count"] as int?).GetValueOrDefault(0);
+    int min_page = page - 5;
+    int max_page = total_count / 20;
+
+    if (min_page < 1)
+    {
+        min_page = 1;
+    }
+
+    if (max_page < 1)
+    {
+        max_page = 1;
+    }
+
+    if (max_page > min_page + 10)
+    {
+        max_page = min_page + 10;
+    }
 }
 
 <div style="width:900px;">
-    <table class="table table-common">
+    <table class="table table-common table-hover">
         <colgroup>
             <col style="width:80px" />
             <col style="width:auto" />
@@ -24,10 +42,12 @@
         <tbody class="text-center">
             @foreach (var item in Model)
             {
+                var param = Html.Raw($"seq={item.SEQ}&p={page}");
+
                 <tr>
                     <td>@item.SEQ</td>
                     <td class="text-left">
-                        <a href="/board/view?seq=@item.SEQ">@item.TITLE</a>
+                        <a href="/board/view?@param">@item.TITLE</a>
                     </td>
                     <td>@item.REG_USERNAME</td>
                     <td>@item.REG_DATE.ToString("yyyy-MM-dd")</td>
@@ -41,11 +61,13 @@
         min_page, now_page, max_page 값으로 page 표시
         일단 대충 화면만 그려놓음
     *@
-    
-    <div style="margin-top:5px">
-        <ul class="pagination">
-            <li class="page-item @(page == 1 ? "active" : "")"><a class="page-link" href="/board/list?p=1">1</a></li>
-            <li class="page-item @(page == 2 ? "active" : "")"><a class="page-link" href="/board/list?p=2">2</a></li>
+
+    <div class="text-xs-center" style="margin-top:15px;">
+        <ul class="pagination justify-content-center">
+            @for (int i=min_page; i <= max_page; i++)
+            {
+                <li class="page-item @(i == page ? "active" : "")"><a class="page-link" href="/board/list?p=@i">@i</a></li>
+            }
         </ul>
     </div>
 
