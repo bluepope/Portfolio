@@ -64,7 +64,6 @@ namespace CoreMvcWeb
                 x.MultipartBodyLengthLimit = long.MaxValue; // In case of multipart
             });
 
-
             var userConfig = UserSettings.GetFromJson();
 
             CoreLib.DataBase.MySqlDapperHelper.ConnectionString = userConfig.ConnectionString;

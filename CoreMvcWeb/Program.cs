@@ -31,10 +31,14 @@ namespace CoreMvcWeb
 
                     options.Limits.MaxRequestBodySize = 1000 * 1000 * 1024; //1GB; kestrel 업로드 용량 제한
                     options.ListenAnyIP(port);
-                    options.ListenAnyIP(port + 1, (config) =>
+                    try
                     {
-                        config.UseHttps();
-                    });
+                        options.ListenAnyIP(port + 1, (config) =>
+                        {
+                            config.UseHttps();
+                        });
+                    }
+                    catch { }
                 });
     }
 }

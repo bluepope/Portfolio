@@ -154,13 +154,18 @@ unzip NanumFont_TTF_ALL.zip
             return View();
         }
 
-        public IActionResult GetWebFileDownload(string url)
+        public async Task<IActionResult> GetWebFileDownload(string url)
         {
             try
             {
-                var file = HttpHelper.WebDownloadFile(url);
+                using (var client = new HttpClientHelper())
+                {
+                    var file = await client.GetAsyncAndGetFile(url);
 
-                return Json(new { msg = "OK", file = file});
+                    file.SaveAs($"DownloadFiles/{file.FileName}", FileMode.Create);
+
+                    return Json(new { msg = "OK", fileName = file.FileName });
+                }
             }
             catch(Exception ex)
             {

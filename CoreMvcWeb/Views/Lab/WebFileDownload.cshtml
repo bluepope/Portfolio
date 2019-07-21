@@ -29,7 +29,7 @@
             },
             success: function (data, status, xhr) {
                 if (data.msg == "OK") {
-                    $("#div1").html("완료");
+                    $("#div1").html("완료: " + data.fileName);
                 }
                 else {
                     $("#div1").html(data.msg);
