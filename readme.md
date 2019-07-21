@@ -1,31 +1,31 @@
-# Core Mvc Æ÷Æ®Æú¸®¿À¿ë ÀÛ¾÷
+# Core Mvc í¬íŠ¸í´ë¦¬ì˜¤ìš© ìž‘ì—…
 
-# ÃÖÃÊ½ÇÇà½Ã ¿À·ù°¡ ¹ß»ýÇÏ´Â °æ¿ì root Æú´õ¿¡ »ý¼ºµÈ usersettings.json¸¦ È®ÀÎÇØÁÖ¼¼¿ä
+# ìµœì´ˆì‹¤í–‰ì‹œ ì˜¤ë¥˜ê°€ ë°œìƒí•˜ëŠ” ê²½ìš° root í´ë”ì— ìƒì„±ëœ usersettings.jsonë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”
 
-# ¿Ï·áµÈ °Í
-[x] ÄíÅ°±â¹Ý ·Î±×ÀÎ ·Î±×¾Æ¿ô - DB¿¬µ¿Àº ÇØ¾ßÇÔ
-[x] signalR - Ã¤ÆÃ, °ü¸®ÀÚ ÀüÃ¼ Àü¼Û ±â´É
-[x] °³º° Á¢±Ù±ÇÇÑ °ü¸® - Claim ¹× RoleÀ» ÀÌ¿ëÇÑ ±ÇÇÑ°ü¸®
-[x] async await ¸¦ »ç¿ëÇÑ ºñµ¿±â Ã³¸® ¹× ºñµ¿±â Å×½ºÆ® °³¹ß
-[x] telegramBot - Echo±îÁö ÇØ³õÀ½
-[x] ÆíÁý±â (summernote) ¸¦ ÀÌ¿ëÇÑ °Ô½Ã¹° µî·Ï
-[x] vue ¸¦ ÀÌ¿ëÇÑ ±âº» grid ÇüÅÂ Á¶È¸ Ãß°¡ »èÁ¦ ÀúÀå °ü¸® »ùÇÃ
-[x] ajax json ¹× form append ¸¦ ÀÌ¿ëÇÑ ÀúÀå ¹× ÆÄÀÏ ¾÷·Îµå °ü¸® 
-[x] formData¸¦ ÀÌ¿ëÇÑ Àü¼Û progress Ç¥½Ã ±â´É - typescript
-[x] barcode »ý¼º ±â´É
-[x] selenium chrome À» ÀÌ¿ëÇÑ web Å©·Ñ¸µ
-[x] http client ¸¦ ÀÌ¿ëÇÑ ´Ù¿î·Îµå (´Ü¼ø ºñµ¿±â, progress bar ÇüÅÂ ÇÊ¿äÇÒ µí)
+# ì™„ë£Œëœ ê²ƒ
+- [x] ì¿ í‚¤ê¸°ë°˜ ë¡œê·¸ì¸ ë¡œê·¸ì•„ì›ƒ - DBì—°ë™ì€ í•´ì•¼í•¨
+- [x] signalR - ì±„íŒ…, ê´€ë¦¬ìž ì „ì²´ ì „ì†¡ ê¸°ëŠ¥
+- [x] ê°œë³„ ì ‘ê·¼ê¶Œí•œ ê´€ë¦¬ - Claim ë° Roleì„ ì´ìš©í•œ ê¶Œí•œê´€ë¦¬
+- [x] async await ë¥¼ ì‚¬ìš©í•œ ë¹„ë™ê¸° ì²˜ë¦¬ ë° ë¹„ë™ê¸° í…ŒìŠ¤íŠ¸ ê°œë°œ
+- [x] telegramBot - Echoê¹Œì§€ í•´ë†“ìŒ
+- [x] íŽ¸ì§‘ê¸° (summernote) ë¥¼ ì´ìš©í•œ ê²Œì‹œë¬¼ ë“±ë¡
+- [x] vue ë¥¼ ì´ìš©í•œ ê¸°ë³¸ grid í˜•íƒœ ì¡°íšŒ ì¶”ê°€ ì‚­ì œ ì €ìž¥ ê´€ë¦¬ ìƒ˜í”Œ
+- [x] ajax json ë° form append ë¥¼ ì´ìš©í•œ ì €ìž¥ ë° íŒŒì¼ ì—…ë¡œë“œ ê´€ë¦¬ 
+- [x] formDataë¥¼ ì´ìš©í•œ ì „ì†¡ progress í‘œì‹œ ê¸°ëŠ¥ - typescript
+- [x] barcode ìƒì„± ê¸°ëŠ¥
+- [x] selenium chrome ì„ ì´ìš©í•œ web í¬ë¡¤ë§
+- [x] http client ë¥¼ ì´ìš©í•œ ë‹¤ìš´ë¡œë“œ (ë‹¨ìˆœ ë¹„ë™ê¸°, progress bar í˜•íƒœ í•„ìš”í•  ë“¯)
 
-# °³¹ßÇÒ °Í
-[ ] HttpClient ºñµ¿±â ÇüÅÂ·Î ¾÷·Îµå / ´Ù¿î·Îµå progress Ã³¸® ±â´É
-[ ] oauth2¸¦ ÀÌ¿ëÇÑ °¡ÀÔ / ·Î±×ÀÎ
-[ ] jquery.download ´Ù¿î·Îµå ±¸Çö
-[ ] reCAPTCHA ÀÎÁõ - Çß´Ù°¡ ¼Ò½º ³¯¸²; ´Ù½Ã...
-[ ] datetime picker, select2 µîÀÇ ¸ðµâ Àû¿ë
-[ ] .vue ÇüÅÂ·Î component °³¹ß
-[ ] xss °ø°Ý¿¡ ´ëÇÑ Ã³¸®
-[ ] api area °³¹ß ÈÄ wpf or winform °ú ¿¬µ¿
+# ê°œë°œí•  ê²ƒ
+- [ ] HttpClient ë¹„ë™ê¸° í˜•íƒœë¡œ ì—…ë¡œë“œ / ë‹¤ìš´ë¡œë“œ progress ì²˜ë¦¬ ê¸°ëŠ¥
+- [ ] oauth2ë¥¼ ì´ìš©í•œ ê°€ìž… / ë¡œê·¸ì¸
+- [ ] jquery.download ë‹¤ìš´ë¡œë“œ êµ¬í˜„
+- [ ] reCAPTCHA ì¸ì¦ - í–ˆë‹¤ê°€ ì†ŒìŠ¤ ë‚ ë¦¼; ë‹¤ì‹œ...
+- [ ] datetime picker, select2 ë“±ì˜ ëª¨ë“ˆ ì ìš©
+- [ ] .vue í˜•íƒœë¡œ component ê°œë°œ
+- [ ] xss ê³µê²©ì— ëŒ€í•œ ì²˜ë¦¬
+- [ ] api area ê°œë°œ í›„ wpf or winform ê³¼ ì—°ë™
 
-# º¸·ù Áß
-[ ] docker °ü¸® - docker toolbox ·Î ±âº»ÀûÀÎ Å×½ºÆ®´Â ÇÏ¿´À¸³ª wsl2 docker ³ª¿Ã¶§±îÁö ÀÏ´Ü ´ë±â
+# ë³´ë¥˜ ì¤‘
+- [ ] docker ê´€ë¦¬ - docker toolbox ë¡œ ê¸°ë³¸ì ì¸ í…ŒìŠ¤íŠ¸ëŠ” í•˜ì˜€ìœ¼ë‚˜ wsl2 docker ë‚˜ì˜¬ë•Œê¹Œì§€ ì¼ë‹¨ ëŒ€ê¸°
 
