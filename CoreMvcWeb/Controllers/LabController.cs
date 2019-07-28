@@ -15,6 +15,7 @@ using OpenQA.Selenium.Support.UI;
 using CoreMvcWeb.Services.BatchJob;
 using System.Net.Mime;
 using CoreLib.Http;
+using CoreMvcWeb.Models.Lab;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -100,7 +101,8 @@ unzip NanumFont_TTF_ALL.zip
 
              * 4. webdriver에 실행권한 줄것 chmod 777 과 같이..
              */
-            var text = string.Empty;
+            var msg = string.Empty;
+            var list = new List<DeliveryInfoModel>();
 
             if (company_code == "EMS")
             {
@@ -125,19 +127,28 @@ unzip NanumFont_TTF_ALL.zip
 
                         var rows = driver.FindElementsByCssSelector(".detail_off tr");
 
-                        foreach(var row in rows)
+                        foreach (var row in rows)
                         {
                             var cols = row.FindElements(By.CssSelector("td"));
 
-                            for(int i=0; i < cols.Count(); i++)
-                            {
-                                text += $"!{i} {cols[i].Text}";
-                            }
+                            if (cols.Count() < 4 || cols[0].Text.IsNull())
+                                continue;
+
+                            var model = new DeliveryInfoModel();
+
+                            model.COMPANY_TYPE = company_code;
+                            model.INVOICE_NO = invoice_no;
+                            model.UPDATE_DATE = cols[0].Text;
+                            model.MOVE_TYPE = cols[1].Text;
+                            model.REMARK1 = $"{cols[2].Text} {cols[3].Text}";
+                            list.Add(model);
                         }
+
+                        msg = "OK";
                     }
                     catch (Exception ex)
                     {
-                        text = ex.Message;
+                        msg = ex.Message;
                     }
                     finally
                     {
@@ -146,7 +157,7 @@ unzip NanumFont_TTF_ALL.zip
                 }
             }
 
-            return Json(new { data = text });
+            return Json(new { msg = msg, list = list });
         }
 
         public IActionResult WebFileDownload()

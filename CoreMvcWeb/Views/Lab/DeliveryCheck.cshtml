@@ -19,7 +19,21 @@
 </div>
 
 <div id="div1"></div>
+<div>
+    <table class="table table-common table-hover">
+        <thead>
+            <tr>
+                <th>순번</th>
+                <th>시간</th>
+                <th>이동구분</th>
+                <th>내역</th>
+            </tr>
+        </thead>
+        <tbody id="tbody1">
+        </tbody>
+    </table>
 
+</div>
 <script>
     $("#btn1").click(function () {
         var company_code = $("#company_code").val();
@@ -36,9 +50,31 @@
                 invoice_no: invoice_no
             },
             success: function (data, status, xhr) {
-                $("#div1").html(data.data);
+                $("#div1").html("");
+
+                if (data.msg == "OK") {
+                    $("#tbody1").html("");
+
+                    var html = "";
+                    for (var i = 0; i < data.list.length; i++) {
+
+                        html += "<tr>";
+                        html += "<td>" + (i + 1).toString() + "</td>";
+                        html += "<td>" + data.list[i].UPDATE_DATE + "</td>";
+                        html += "<td>" + data.list[i].MOVE_TYPE + "</td>";
+                        html += "<td>" + data.list[i].REMARK1 + "</td>";
+                        html += "</tr>";
+                    }
+
+                    $("#tbody1").html(html);
+                }
+                else {
+                    alert(data.msg);
+                }
+                
             },
             error: function (xhr, ajaxOptions, thrownError) {
+                $("#div1").html("");
                 ajaxCommonError(xhr);
             }
         });
