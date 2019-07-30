@@ -16,6 +16,7 @@ using CoreMvcWeb.Services.BatchJob;
 using System.Net.Mime;
 using CoreLib.Http;
 using CoreMvcWeb.Models.Lab;
+using System.Net.Http;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -171,17 +172,30 @@ unzip NanumFont_TTF_ALL.zip
             {
                 using (var client = new HttpClientHelper())
                 {
-                    var file = await client.GetAsyncAndGetFile(url);
+                    var file = await client.GetFileAsync(HttpMethod.Get, url);
 
-                    file.SaveAs($"DownloadFiles/{file.FileName}", FileMode.Create);
+                    file.SaveAs($"DownloadFiles/{file.FileName}", true, (now) => {
+                        Console.WriteLine($"download {file.FileName} : {file.TotalBytesSize} / {now}");
+                    });
 
-                    return Json(new { msg = "OK", fileName = file.FileName });
+                    var fileList = new List<HttpFile>;
+                    fileList.Add(new HttpFile()
+                    {
+                        FileName = ""
+                    });
+
+                    await client.SendMultipartAsync(HttpMethod.Post, "/Lab/WebFileDownload", null, fileList);
                 }
+
+               
+
+                return Json(new { msg = "OK", fileName = "test" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { msg = ex.Message });
             }
         }
+
     }
 }
