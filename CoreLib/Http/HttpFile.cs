@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CoreLib.Http
 {
-    public class HttpFile
+    public class HttpFile : IDisposable
     {
         /// <summary>
         /// 전송시 이름
@@ -27,16 +27,36 @@ namespace CoreLib.Http
         /// </summary>
         public long TotalBytesSize { get; set; }
 
-        
+        public HttpFile()
+        {
+
+        }
+
         public HttpFile(string name, string filePath)
         {
             this.Name = name;
 
             var file = new System.IO.FileInfo(filePath);
-
             this.FileName = file.Name;
-            //this.ResponseStream = file.Open(FileMode.Open, FileAccess.Read);
+            this.ResponseStream = file.Open(FileMode.Open, FileAccess.Read);
+            this.TotalBytesSize = file.Length;
+        }
 
+        public HttpFile(string name, string fileName, byte[] fileData)
+        {
+            this.Name = name;
+            this.FileName = fileName;
+
+            this.ResponseStream = new MemoryStream(fileData);
+            this.TotalBytesSize = fileData.LongLength;
+        }
+
+        public void Dispose()
+        {
+            this.Name = null;
+            this.FileName = null;
+            if (this.ResponseStream != null)
+                this.ResponseStream.Dispose();
         }
 
         /// <summary>
@@ -47,7 +67,7 @@ namespace CoreLib.Http
         /// <param name="progressEvent">nowSize 이벤트</param>
         public async void SaveAs(string path, bool isOverride = false, Action<long> progressEvent = null)
         {
-            const int bufferSize = 10240; //1MB
+            const int bufferSize = 20480; //20kb
             var totalBytesRead = 0L;
             var buffer = new byte[bufferSize];
             var isMoreToRead = true;

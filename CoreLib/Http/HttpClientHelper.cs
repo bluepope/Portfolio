@@ -82,9 +82,9 @@ namespace CoreLib.Http
         }
 
         //multipart 텍스트 및 파일 전송
-        public async Task<string> SendMultipartAsync(HttpMethod method, string url, object sendData, IList<HttpFile> fileList)
+        public async Task<string> SendMultipartAsync(HttpMethod method, string url, object sendData, IList<HttpFile> fileList, Action<long, long> totalProgressEvent = null, Action<string, long, long> fileProgressEvent = null)
         {
-            using (var content = new MultipartFormDataContent())
+            using (var multipartFormContent = new MultipartFormDataContent())
             {
                 if (sendData != null)
                 {
@@ -96,19 +96,33 @@ namespace CoreLib.Http
                         if (objVal != null)
                             val = objVal.ToString();
 
-                        content.Add(new StringContent(val, Encoding.UTF8, "application/json"), prop.Name);
+                        multipartFormContent.Add(new StringContent(val, Encoding.UTF8, "application/json"), prop.Name);
                     }
                 }
                 
-                if (fileList != null && fileList.Count > 0)
+                if (fileList?.Count > 0)
                 {
+                    long totalFileSize = 0;
+                    long readLength = 0;
+
                     foreach (var file in fileList)
                     {
-                        content.Add(new ProgressableStreamContent(new StreamContent(file.ResponseStream), (now, tot) => { Console.WriteLine($"{file.Name} - ({now} / {tot}) - {file.FileName}"); }), file.Name, file.FileName);
+                        totalFileSize += file.TotalBytesSize;
+
+                        var uploadContent = new ProgressableStreamContent(new StreamContent(file.ResponseStream), (now, tot) => {
+
+                            fileProgressEvent?.Invoke(file.FileName, now, tot);
+                            totalProgressEvent?.Invoke(readLength + now, totalFileSize);
+
+                            if (now == tot)
+                                readLength += now;
+                        });
+
+                        multipartFormContent.Add(uploadContent, file.Name, file.FileName);
                     }
                 }
                 
-                return await (await SendAsync(method, url, content)).Content.ReadAsStringAsync();
+                return await (await SendAsync(method, url, multipartFormContent)).Content.ReadAsStringAsync();
             }
         }
     }
