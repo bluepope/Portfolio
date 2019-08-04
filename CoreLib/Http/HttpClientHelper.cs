@@ -18,9 +18,9 @@ namespace CoreLib.Http
     /// </summary>
     public class HttpClientHelper : IDisposable
     {
-        private HttpClientHandler Handler { get; set; }
-        private CookieContainer Cookies { get; set; }
-        private HttpClient Client { get; set; }
+        private HttpClientHandler Handler { get; }
+        private CookieContainer Cookies { get; }
+        private HttpClient Client { get; }
 
         public HttpClientHelper()
         {
@@ -34,146 +34,95 @@ namespace CoreLib.Http
 
         public void Dispose()
         {
-            this.Cookies = null;
             this.Handler.Dispose();
             this.Client.Dispose();
         }
 
-        public async Task<HttpResponseMessage> GetAsyncGetResponse(string url, object jsonObject = null)
+        public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, HttpContent content)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(url);
-
-            if (jsonObject != null)
+            var request = new HttpRequestMessage()
             {
-                if (url.IndexOf("?") < 0)
-                    sb.Append("?");
+                Method = method,
+                RequestUri = new Uri(url),
+                Content = content,
+            };
 
-                foreach (var prop in jsonObject.GetType().GetProperties())
-                {
-                    var objVal = prop.GetValue(jsonObject, null);
-                    string val = string.Empty;
-
-                    if (objVal != null)
-                        val = objVal.ToString();
-
-                    sb.AppendFormat("&{0}={1}", prop.Name, System.Net.WebUtility.UrlEncode(val));
-                }
-            }
-
-            var response = await this.Client.GetAsync(url);
-
+            var response = await this.Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
-
-            return response;
-        }
-
-        public async Task<string> GetAsync(string url, object jsonObject = null)
-        {
-            var response = await GetAsyncGetResponse(url);
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
-        }
-
-        public async Task<ResponseFileStream> GetAsyncAndGetFile(string url, object jsonObject = null)
-        {
-            var response = await GetAsyncGetResponse(url);
-            response.EnsureSuccessStatusCode();
-
-            var r = new ResponseFileStream();
-            r.ResponseStream = await response.Content.ReadAsStreamAsync();
-            try
-            {
-                r.FileName = new ContentDisposition(response.Content.Headers.GetValues("content-disposition").FirstOrDefault()).FileName;
-            }
-            catch
-            {
-                r.FileName = System.IO.Path.GetFileName(url);
-            }
-
-            return r;
-        }
-
-        public async Task<HttpResponseMessage> PostAsyncGetResponse(string url, object jsonObject = null)
-        {
-            var uri = new Uri(url);
-
-            StringContent sendObj = null;
             
-            if (jsonObject != null)
-                sendObj = new StringContent(JsonConvert.SerializeObject(jsonObject), Encoding.UTF8, "application/json");
-
-            var response = await this.Client.PostAsync(uri, sendObj);
-
-            response.EnsureSuccessStatusCode();
-
             return response;
         }
 
-        //post 전송
-        public async Task<string> PostAsync(string url, object jsonObject = null)
+        public async Task<string> GetStringAsync(HttpMethod method, string url, object sendData = null)
         {
-            var response = await PostAsyncGetResponse(url, jsonObject);
-             
+            var response = await SendAsync(method, url, new StringContent(JsonConvert.SerializeObject(sendData), Encoding.UTF8, "application/json"));
+
             return await response.Content.ReadAsStringAsync();
         }
 
-        //파일 다운로드
-        public async Task<ResponseFileStream> PostAsyncAndGetFile(string url, object jsonObject = null)
-        {
-            var response = await PostAsyncGetResponse(url, jsonObject);
 
-            var r = new ResponseFileStream();
-            r.ResponseStream = await response.Content.ReadAsStreamAsync();
+        public async Task<HttpFile> GetFileAsync(HttpMethod method, string url, object sendData = null)
+        {
+            var response = await SendAsync(method, url, new StringContent(JsonConvert.SerializeObject(sendData), Encoding.UTF8, "application/json"));
+
+            var file = new HttpFile();
+            file.TotalBytesSize = response.Content.Headers.ContentLength.GetValueOrDefault(0);
+            file.ResponseStream = await response.Content.ReadAsStreamAsync();
 
             try
             {
-                r.FileName = new ContentDisposition(response.Content.Headers.GetValues("content-disposition").FirstOrDefault()).FileName;
+                file.FileName = new ContentDisposition(response.Content.Headers.GetValues("content-disposition").FirstOrDefault()).FileName;
             }
             catch
             {
-                r.FileName = System.IO.Path.GetFileName(url);
+                file.FileName = System.IO.Path.GetFileName(url);
             }
 
-            return r;
+            return file;
         }
-
 
         //multipart 텍스트 및 파일 전송
-        public async Task<string> PostMultipartAsync(string url, object jsonObject, Dictionary<string, string> filePathList)
+        public async Task<string> SendMultipartAsync(HttpMethod method, string url, object sendData, IList<HttpFile> fileList, Action<long, long> totalProgressEvent = null, Action<string, long, long> fileProgressEvent = null)
         {
-            var uri = new Uri(url);
-
-            using (var content = new MultipartFormDataContent())
+            using (var multipartFormContent = new MultipartFormDataContent())
             {
-                if (jsonObject != null)
+                if (sendData != null)
                 {
-                    foreach (var prop in jsonObject.GetType().GetProperties())
+                    foreach (var prop in sendData.GetType().GetProperties())
                     {
-                        var objVal = prop.GetValue(jsonObject, null);
+                        var objVal = prop.GetValue(sendData, null);
                         string val = null;
 
                         if (objVal != null)
                             val = objVal.ToString();
 
-                        content.Add(new StringContent(val), prop.Name);
+                        multipartFormContent.Add(new StringContent(val, Encoding.UTF8, "application/json"), prop.Name);
                     }
                 }
                 
-                if (filePathList != null && filePathList.Count > 0)
+                if (fileList?.Count > 0)
                 {
-                    foreach(var filePath in filePathList)
+                    long totalFileSize = 0;
+                    long readLength = 0;
+
+                    foreach (var file in fileList)
                     {
-                        var fileContent = new ByteArrayContent(System.IO.File.ReadAllBytes(filePath.Value));
-                        content.Add(fileContent, filePath.Key, Path.GetFileName(filePath.Value));
+                        totalFileSize += file.TotalBytesSize;
+
+                        var uploadContent = new ProgressableStreamContent(new StreamContent(file.ResponseStream), (now, tot) => {
+
+                            fileProgressEvent?.Invoke(file.FileName, now, tot);
+                            totalProgressEvent?.Invoke(readLength + now, totalFileSize);
+
+                            if (now == tot)
+                                readLength += now;
+                        });
+
+                        multipartFormContent.Add(uploadContent, file.Name, file.FileName);
                     }
                 }
-
-                var response = this.Client.PostAsync(uri, content).Result;
-                response.EnsureSuccessStatusCode();
-
-                return await response.Content.ReadAsStringAsync();
+                
+                return await (await SendAsync(method, url, multipartFormContent)).Content.ReadAsStringAsync();
             }
         }
     }

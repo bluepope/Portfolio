@@ -16,6 +16,7 @@ using CoreMvcWeb.Services.BatchJob;
 using System.Net.Mime;
 using CoreLib.Http;
 using CoreMvcWeb.Models.Lab;
+using System.Net.Http;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -165,23 +166,55 @@ unzip NanumFont_TTF_ALL.zip
             return View();
         }
 
+        public async Task<IActionResult> UploadTest()
+        {
+            var files = Request.Form.Files.GetFiles("file1");
+
+            foreach(var file in files)
+            {
+                using (var fs = new FileStream($"d:/tmp/{file.FileName}", FileMode.Create))
+                {
+                    await file.CopyToAsync(fs);
+                }
+            }
+
+            return Json(new { msg = "OK" });
+        }
+
         public async Task<IActionResult> GetWebFileDownload(string url)
         {
             try
             {
                 using (var client = new HttpClientHelper())
                 {
-                    var file = await client.GetAsyncAndGetFile(url);
+                    /* Download */
+                    var file = await client.GetFileAsync(HttpMethod.Get, url);
+                    file.SaveAs($"DownloadFiles/{file.FileName}", true, (now) => {
+                        Console.WriteLine($"download {file.FileName} : {file.TotalBytesSize} / {now}");
+                    });
 
-                    file.SaveAs($"DownloadFiles/{file.FileName}", FileMode.Create);
+                    /* Upload */
+                    var fileList = new List<HttpFile>();
+                    fileList.Add(new HttpFile("file1", "d:/Docker for Windows Installer.exe"));
+                    fileList.Add(new HttpFile("file1", "d:/VMware-VMvisor-Installer-6.7.0.update02-13006603.x86_64.iso"));
 
-                    return Json(new { msg = "OK", fileName = file.FileName });
+                    await client.SendMultipartAsync(HttpMethod.Post, "http://localhost:5000/lab/uploadtest", null, fileList, (now, tot) =>
+                    {
+                        Console.WriteLine($"total upload: {now} / {tot}");
+                    },
+                    (fileName, now, tot) =>
+                    {
+                        Console.WriteLine($"{fileName} upload: {now} / {tot}");
+                    });
                 }
+
+                return Json(new { msg = "OK", fileName = "test" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { msg = ex.Message });
             }
         }
+
     }
 }

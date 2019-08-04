@@ -228,6 +228,11 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="DownloadFiles\" />
+  </ItemGroup>
+
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>

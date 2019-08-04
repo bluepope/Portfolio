@@ -21,8 +21,14 @@ namespace CoreLib.Http
         //private bool contentConsumed;
         private Action<long, long> progress;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="content">StreamContent</param>
+        /// <param name="progress">now, total</param>
         public ProgressableStreamContent(HttpContent content, Action<long, long> progress) : this(content, defaultBufferSize, progress) { }
 
+        ///
         public ProgressableStreamContent(HttpContent content, int bufferSize, Action<long, long> progress)
         {
             if (content == null)
@@ -63,8 +69,6 @@ namespace CoreLib.Http
                         //downloader.Uploaded = uploaded += length;
                         uploaded += length;
                         progress.Invoke(uploaded, size);
-
-                        //System.Diagnostics.Debug.WriteLine($"Bytes sent {uploaded} of {size}");
 
                         stream.Write(buffer, 0, length);
                         stream.Flush();
