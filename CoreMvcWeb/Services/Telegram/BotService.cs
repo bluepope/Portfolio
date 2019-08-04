@@ -73,10 +73,29 @@ namespace CoreMvcWeb.Services.Telegram
 
             var message = update.Message;
 
+            //승인된 chat id 처리 해야하나?
+
+            //명령의 연속성은 어떻게 관리하지?
+
+
+            var list = new List<KeyboardButton[]>();
+            list.Add(new KeyboardButton[] { "row1-1", "row1-2" });
+            list.Add(new KeyboardButton[] { "row2-1", "row2-2" });
+            list.Add(new KeyboardButton[] { "row3-1", "row3-2" });
+
+            var replykey = new ReplyKeyboardMarkup(list);
+            replykey.OneTimeKeyboard = true;
+
             if (message.Type == MessageType.Text)
             {
-                // Echo each Message
-                await this.Bot.SendTextMessageAsync(message.Chat.Id, message.Text);
+                if (message.Text.Trim() == "/명령")
+                {
+                    await this.Bot.SendTextMessageAsync(message.Chat.Id, message.Text, ParseMode.Default, false, false, 0, replykey);
+                }
+                else
+                {
+                    await this.Bot.SendTextMessageAsync(message.Chat.Id, message.Text);
+                }
             }
             else if (message.Type == MessageType.Photo)
             {
