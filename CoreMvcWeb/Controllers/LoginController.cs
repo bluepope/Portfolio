@@ -39,7 +39,7 @@ namespace CoreMvcWeb.Controllers
 
             try
             {
-                var login = LoginModel.GetLogin(user_id, user_pw);
+                var login = UserinfoModel.GetLogin(user_id, user_pw);
 
                 if (login == null) //로그인 오류
                     return Redirect("/");
@@ -49,8 +49,6 @@ namespace CoreMvcWeb.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, login.USER_ID));
                 identity.AddClaim(new Claim(ClaimTypes.Name, login.USER_NAME));
                 identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
-
-                identity.AddClaim(new Claim("LOGIN_JSON", JsonConvert.SerializeObject(login)));
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties {

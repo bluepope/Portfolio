@@ -42,14 +42,14 @@ namespace CoreMvcWeb
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }
 
-        public static LoginModel GetLoginInfo(this ClaimsPrincipal principal)
+        public static UserinfoModel GetLoginInfo(this ClaimsPrincipal principal)
         {
             if (principal?.Identity?.IsAuthenticated == false)
                 return null;
 
             try
             {
-                return JsonConvert.DeserializeObject<LoginModel>(principal.Claims.FirstOrDefault(x => x.Type == "LOGIN_JSON")?.Value);
+                return JsonConvert.DeserializeObject<UserinfoModel>(principal.Claims.FirstOrDefault(x => x.Type == "LOGIN_JSON")?.Value);
             }
             catch
             {

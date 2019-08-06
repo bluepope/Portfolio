@@ -216,5 +216,31 @@ unzip NanumFont_TTF_ALL.zip
             }
         }
 
+
+        public IActionResult DbTableList()
+        {
+            return View();
+        }
+
+        public IActionResult GetDbInfo(string tableName)
+        {
+            var schemaName = "home";
+
+            if (tableName.IsNull())
+            {
+                return Json(MySqlDbTableModel.GetTableList(schemaName));
+            }
+
+            var list = MySqlDbTableModel.GetTableColumnsList(schemaName, tableName);
+            var modelClassName = $"{tableName.Substring(0, 1).ToUpper()}{tableName.Substring(1)}Model";
+
+            return Json(new
+            {
+                list = list,
+                modelString = MySqlDbTableModel.GetClassModel(list, modelClassName),
+                sqlString = MySqlDbTableModel.GetXmlSqlString(list, tableName)
+            });
+        }
+
     }
 }

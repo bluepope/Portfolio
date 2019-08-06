@@ -8,12 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DownloadFiles\**" />
+    <Content Remove="DownloadFiles\**" />
+    <EmbeddedResource Remove="DownloadFiles\**" />
+    <None Remove="DownloadFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Sql\Board.xml" />
     <None Remove="Sql\Home.xml" />
+    <None Remove="Sql\User.xml" />
     <None Remove="TypeScript\common\ButtonProgress.ts" />
     <None Remove="TypeScript\common\DragDrop.ts" />
     <None Remove="TypeScript\common\main.ts" />
@@ -29,6 +37,9 @@
 
   <ItemGroup>
     <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\User.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sql\Home.xml">
@@ -225,11 +236,6 @@
     <Content Update="usersettings.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="DownloadFiles\" />
   </ItemGroup>
 
 
