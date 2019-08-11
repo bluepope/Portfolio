@@ -93,4 +93,28 @@ SELECT
 	,now()
     ]]>
   </insert>
+
+  <select id="GetBoard">
+    <![CDATA[
+SELECT
+	A.BOARD_TYPE
+	,A.SEQ
+	,A.TITLE
+	,A.CONTENTS
+	,A.DUP_KEY
+	,A.VIEW_CNT
+	,A.STATUS_FLAG
+	,INET_NTOA(A.REG_IP) AS REG_IP
+	,A.REG_USER
+	,A.REG_USERNAME
+	,A.REG_DATE
+FROM
+  BOARD A
+WHERE
+	A.BOARD_TYPE = @board_type
+  AND A.SEQ = @seq
+ORDER BY
+    A.SEQ DESC
+    ]]>
+  </select>
 </mapper>

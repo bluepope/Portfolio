@@ -25,7 +25,7 @@ namespace CoreMvcWeb.Models.Login
 
         public static UserinfoModel GetLogin(string user_id, string pw)
         {
-            var model = MySqlDapperHelper.RunGetQueryFromXml<UserinfoModel>("/Sql/User.xml", "GetUserInfoAll",  new { user_id = user_id }).FirstOrDefault();
+            var model = MySqlDapperHelper.RunGetQueryFromXml<UserinfoModel>("Sql/User.xml", "GetUserInfoAll",  new { user_id = user_id }).FirstOrDefault();
 
             if (model == null)
             {
