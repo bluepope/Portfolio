@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS base
+FROM bluepope/centos7-aspnetcore AS base
 WORKDIR /app
 EXPOSE 5000
 

@@ -43,6 +43,12 @@ namespace CoreMvcWeb.Controllers
             return View();
         }
 
+        /*
+1. yum install -y epel-release
+2. yum whatprovides libgdiplus
+3. yum install -y libgdiplus-2.10-10.el7.x86_64
+4. ln -s /usr/lib/libdl.so.2 /usr/lib/libdl.so
+             */
         public IActionResult GetBarcodeImage(string barcodeNumber, string imageType)
         {
             if (barcodeNumber.IsNull() == false)
@@ -60,8 +66,9 @@ namespace CoreMvcWeb.Controllers
                         return File(barcode.GetByteArray(), "image/png", $"barcode_{barcodeNumber}.png");
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
 
