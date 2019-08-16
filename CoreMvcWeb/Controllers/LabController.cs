@@ -17,6 +17,7 @@ using System.Net.Mime;
 using CoreLib.Http;
 using CoreMvcWeb.Models.Lab;
 using System.Net.Http;
+using StackExchange.Redis;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -247,6 +248,33 @@ unzip NanumFont_TTF_ALL.zip
                 modelString = MySqlDbTableModel.GetClassModel(list, modelClassName),
                 sqlString = MySqlDbTableModel.GetXmlSqlString(list, tableName)
             });
+        }
+
+        public IActionResult RedisTest()
+        {
+            var connectionString = "192.168.0.200:6379";
+
+            var redisConnection = ConnectionMultiplexer.Connect(connectionString);
+            if (redisConnection.IsConnected)
+            {
+                var db = redisConnection.GetDatabase();
+                db.HashSet("hash1", new [] {
+                    new HashEntry("key1", "val1"),
+                    new HashEntry("key2", "val2"),
+                }); 
+
+                var val = db.HashGet("hash1", "key1");
+                if (val.IsNullOrEmpty)
+                {
+                    
+                }
+                db.StringSet("str1", "val11");
+
+                var val2 = db.StringGet("str1");
+                
+            }
+
+            return View();
         }
 
     }

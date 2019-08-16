@@ -30,6 +30,7 @@ namespace CoreMvcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //쿠키인증
             services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -95,6 +96,7 @@ namespace CoreMvcWeb
         {
             app.UseStaticFiles();
             //app.UseCookiePolicy(); //쿠키정책 (사용허가 승인같은거?) 사용여부
+            //app.UseSession(); //세션쓰려면 session 관련 nuget 에서 추가해야함
             app.UseAuthentication(); //인증 사용
 
             if (env.IsDevelopment())

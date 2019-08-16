@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CoreMvcWeb.Models.Login
@@ -27,6 +28,25 @@ namespace CoreMvcWeb.Models.Login
         public string Action { get; set; }
 
         [JsonProperty(PropertyName = "error-codes")]
-        public string[] ErrorCodes {get;set; }
+        public List<string> ErrorCodes {get;set; }
+
+        public static async Task<ReCaptchaModel> RecaptchaVerify(string recaptchaToken)
+        {
+            string url = $"https://www.google.com/recaptcha/api/siteverify?secret={ReCaptchaModel.PrivateKey}&response={recaptchaToken}";
+            using (var httpClient = new HttpClient())
+            {
+                try
+                {
+                    var json = await httpClient.GetStringAsync(url);
+                    return JsonConvert.DeserializeObject<ReCaptchaModel>(json);
+
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
+
     }
 }

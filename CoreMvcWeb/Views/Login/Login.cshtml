@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var sitekey = ViewData["sitekey"] as string;
 }
 <!DOCTYPE html>
 <html lang="ko" xmlns="http://www.w3.org/1999/xhtml">
@@ -47,7 +48,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         $(".btn-login").click(function () {
             var obj = new Object();
@@ -56,6 +57,8 @@
                 var $this = $(this);
                 obj[$this.attr("name")] = $this.val();
             });
+
+            var token = $("textarea[name=g-recaptcha-response]").val();
 
             $.ajax({
                 type: "POST",
@@ -90,6 +93,13 @@
                     $("#form1 button.btn-login").trigger("click");
                 }
             }
+        });
+
+    </script>
+    <script src="@($"https://www.google.com/recaptcha/api.js?render={sitekey}")"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute("@sitekey", { action: "homepage" });
         });
     </script>
 </body>

@@ -25,6 +25,7 @@ namespace CoreMvcWeb.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            ViewData["sitekey"] = ReCaptchaModel.SiteKey;
             return View();
         }
 
@@ -32,13 +33,20 @@ namespace CoreMvcWeb.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Route("/login/login")]
-        public async Task<IActionResult> GetLogin(string user_id, string user_pw)
+        public async Task<IActionResult> GetLogin(string user_id, string user_pw, string token)
         {
             if (User.Identity != null && User.Identity.IsAuthenticated == true)
                 Redirect("/");
 
             try
             {
+                var verify = await ReCaptchaModel.RecaptchaVerify(token);
+
+                if (verify.Success == false || verify.Score < 0.3F)
+                {
+                    return Json(new { msg = string.Join(',', verify.ErrorCodes) });
+                }
+
                 var login = UserinfoModel.GetLogin(user_id, user_pw);
 
                 if (login == null) //로그인 오류
