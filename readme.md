@@ -15,16 +15,14 @@
 - [x] barcode 생성 기능
 - [x] selenium chrome 을 이용한 web 크롤링
 - [x] http client 를 이용한 다운로드 (단순 비동기, progress bar 형태 필요할 듯)
+- [x] HttpClient 비동기 형태로 업로드 / 다운로드 progress 처리 기능
+- [x] google reCAPTCHA v3 인증
+- [x] docker 관리 - docker toolbox 로 기본적인 테스트는 하였으나 wsl2 docker 나올때까지 일단 대기
 
 # 개발할 것
-- [ ] HttpClient 비동기 형태로 업로드 / 다운로드 progress 처리 기능
-- [ ] oauth2를 이용한 가입 / 로그인
-- [ ] jquery.download 다운로드 구현
-- [ ] reCAPTCHA 인증 - 했다가 소스 날림; 다시...
-- [ ] datetime picker, select2 등의 모듈 적용
-- [ ] .vue 형태로 component 개발
+- [ ] oauth2를 이용한 가입 / 로그인 - google, facebook 정도만
+- [ ] .vue 형태로 component 개발 - datetime picker, select2
 - [ ] xss 공격에 대한 처리
-- [ ] api area 개발 후 wpf or winform 과 연동
 
-# 보류 중
-- [ ] docker 관리 - docker toolbox 로 기본적인 테스트는 하였으나 wsl2 docker 나올때까지 일단 대기
+# 별도 프로젝트로 제외
+- [ ] api area 개발 후 wpf or winform 과 연동
