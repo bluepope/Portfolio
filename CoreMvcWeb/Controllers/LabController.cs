@@ -15,6 +15,9 @@ using OpenQA.Selenium.Support.UI;
 using CoreMvcWeb.Services.BatchJob;
 using System.Net.Mime;
 using CoreLib.Http;
+using CoreMvcWeb.Models.Lab;
+using System.Net.Http;
+using StackExchange.Redis;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -41,6 +44,12 @@ namespace CoreMvcWeb.Controllers
             return View();
         }
 
+        /*
+1. yum install -y epel-release
+2. yum whatprovides libgdiplus
+3. yum install -y libgdiplus-2.10-10.el7.x86_64
+4. ln -s /usr/lib/libdl.so.2 /usr/lib/libdl.so
+             */
         public IActionResult GetBarcodeImage(string barcodeNumber, string imageType)
         {
             if (barcodeNumber.IsNull() == false)
@@ -58,8 +67,9 @@ namespace CoreMvcWeb.Controllers
                         return File(barcode.GetByteArray(), "image/png", $"barcode_{barcodeNumber}.png");
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                 }
             }
 
@@ -100,7 +110,8 @@ unzip NanumFont_TTF_ALL.zip
 
              * 4. webdriver에 실행권한 줄것 chmod 777 과 같이..
              */
-            var text = string.Empty;
+            var msg = string.Empty;
+            var list = new List<DeliveryInfoModel>();
 
             if (company_code == "EMS")
             {
@@ -125,19 +136,28 @@ unzip NanumFont_TTF_ALL.zip
 
                         var rows = driver.FindElementsByCssSelector(".detail_off tr");
 
-                        foreach(var row in rows)
+                        foreach (var row in rows)
                         {
                             var cols = row.FindElements(By.CssSelector("td"));
 
-                            for(int i=0; i < cols.Count(); i++)
-                            {
-                                text += $"!{i} {cols[i].Text}";
-                            }
+                            if (cols.Count() < 4 || cols[0].Text.IsNull())
+                                continue;
+
+                            var model = new DeliveryInfoModel();
+
+                            model.COMPANY_TYPE = company_code;
+                            model.INVOICE_NO = invoice_no;
+                            model.UPDATE_DATE = cols[0].Text;
+                            model.MOVE_TYPE = cols[1].Text;
+                            model.REMARK1 = $"{cols[2].Text} {cols[3].Text}";
+                            list.Add(model);
                         }
+
+                        msg = "OK";
                     }
                     catch (Exception ex)
                     {
-                        text = ex.Message;
+                        msg = ex.Message;
                     }
                     finally
                     {
@@ -146,12 +166,27 @@ unzip NanumFont_TTF_ALL.zip
                 }
             }
 
-            return Json(new { data = text });
+            return Json(new { msg = msg, list = list });
         }
 
         public IActionResult WebFileDownload()
         {
             return View();
+        }
+
+        public async Task<IActionResult> UploadTest()
+        {
+            var files = Request.Form.Files.GetFiles("file1");
+
+            foreach(var file in files)
+            {
+                using (var fs = new FileStream($"d:/tmp/{file.FileName}", FileMode.Create))
+                {
+                    await file.CopyToAsync(fs);
+                }
+            }
+
+            return Json(new { msg = "OK" });
         }
 
         public async Task<IActionResult> GetWebFileDownload(string url)
@@ -160,17 +195,87 @@ unzip NanumFont_TTF_ALL.zip
             {
                 using (var client = new HttpClientHelper())
                 {
-                    var file = await client.GetAsyncAndGetFile(url);
+                    /* Download */
+                    var file = await client.GetFileAsync(HttpMethod.Get, url);
+                    file.SaveAs($"DownloadFiles/{file.FileName}", true, (now) => {
+                        Console.WriteLine($"download {file.FileName} : {file.TotalBytesSize} / {now}");
+                    });
 
-                    file.SaveAs($"DownloadFiles/{file.FileName}", FileMode.Create);
+                    /* Upload */
+                    var fileList = new List<HttpFile>();
+                    fileList.Add(new HttpFile("file1", "d:/Docker for Windows Installer.exe"));
+                    fileList.Add(new HttpFile("file1", "d:/VMware-VMvisor-Installer-6.7.0.update02-13006603.x86_64.iso"));
 
-                    return Json(new { msg = "OK", fileName = file.FileName });
+                    await client.SendMultipartAsync(HttpMethod.Post, "http://localhost:5000/lab/uploadtest", null, fileList, (now, tot) =>
+                    {
+                        Console.WriteLine($"total upload: {now} / {tot}");
+                    },
+                    (fileName, now, tot) =>
+                    {
+                        Console.WriteLine($"{fileName} upload: {now} / {tot}");
+                    });
                 }
+
+                return Json(new { msg = "OK", fileName = "test" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { msg = ex.Message });
             }
         }
+
+
+        public IActionResult DbTableList()
+        {
+            return View();
+        }
+
+        public IActionResult GetDbInfo(string tableName)
+        {
+            var schemaName = "home";
+
+            if (tableName.IsNull())
+            {
+                return Json(MySqlDbTableModel.GetTableList(schemaName));
+            }
+
+            var list = MySqlDbTableModel.GetTableColumnsList(schemaName, tableName);
+            var modelClassName = $"{tableName.Substring(0, 1).ToUpper()}{tableName.Substring(1)}Model";
+
+            return Json(new
+            {
+                list = list,
+                modelString = MySqlDbTableModel.GetClassModel(list, modelClassName),
+                sqlString = MySqlDbTableModel.GetXmlSqlString(list, tableName)
+            });
+        }
+
+        public IActionResult RedisTest()
+        {
+            var connectionString = "192.168.0.200:6379";
+
+            var redisConnection = ConnectionMultiplexer.Connect(connectionString);
+            if (redisConnection.IsConnected)
+            {
+                var db = redisConnection.GetDatabase();
+                db.HashSet("hash1", new [] {
+                    new HashEntry("key1", "val1"),
+                    new HashEntry("key2", "val2"),
+                }); 
+
+                var val = db.HashGet("hash1", "key1");
+                if (val.IsNullOrEmpty)
+                {
+                    
+                }
+                db.StringSet("str1", "val11");
+
+                var val2 = db.StringGet("str1");
+                
+            }
+
+            return View();
+        }
+
     }
 }

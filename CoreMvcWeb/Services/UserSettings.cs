@@ -12,7 +12,7 @@ namespace CoreMvcWeb.Services
 {
     public class UserSettings
     {
-        public string ConnectionString { get; set; }
+        public Dictionary<string, string> ConnectionString { get; set; }
         public BotConfiguration TelegramBot { get; set; }
         public dynamic ReCaptcha { get; set; }
 

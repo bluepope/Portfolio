@@ -30,6 +30,7 @@ namespace CoreMvcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //쿠키인증
             services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -66,7 +67,8 @@ namespace CoreMvcWeb
 
             var userConfig = UserSettings.GetFromJson();
 
-            CoreLib.DataBase.MySqlDapperHelper.ConnectionString = userConfig.ConnectionString;
+            CoreLib.DataBase.MySqlDapperHelper.ConnectionString = userConfig.ConnectionString["MySql"];
+            CoreLib.DataBase.PgSqlDapperHelper.ConnectionString = userConfig.ConnectionString["PostgreSql"];
 
             if (userConfig.TelegramBot != null)
             {
@@ -77,6 +79,8 @@ namespace CoreMvcWeb
                     options.ProxySocks5Port = userConfig.TelegramBot.ProxySocks5Port;
                     options.WebHookUrl = userConfig.TelegramBot.WebHookUrl;
                 });
+
+                services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
             }
 
             if (userConfig.ReCaptcha != null)
@@ -85,14 +89,14 @@ namespace CoreMvcWeb
                 Models.Login.ReCaptchaModel.PrivateKey = userConfig.ReCaptcha.PrivateKey;
             }
             //services.AddSingleton<ITimerBatchService, TimerBatchService>(); //타이머 싱글톤
-            //services.AddSingleton<IBotService, BotService>(); //최초 생성 후 유지
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseStaticFiles();
-            //app.UseCookiePolicy(); //쿠키정책 사용여부
+            //app.UseCookiePolicy(); //쿠키정책 (사용허가 승인같은거?) 사용여부
+            //app.UseSession(); //세션쓰려면 session 관련 nuget 에서 추가해야함
             app.UseAuthentication(); //인증 사용
 
             if (env.IsDevelopment())
@@ -119,7 +123,7 @@ namespace CoreMvcWeb
             });
 
             //서버 시작시 서비스 호출
-            //app.ApplicationServices.GetService<IBotService>(); //텔레그램 봇 생성
+            app.ApplicationServices.GetService<IBotService>(); //텔레그램 봇 생성
             //app.ApplicationServices.GetService<ITimerBatchService>(); //타이머 생성
         }
     }

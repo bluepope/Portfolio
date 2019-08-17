@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -8,12 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DownloadFiles\**" />
+    <Content Remove="DownloadFiles\**" />
+    <EmbeddedResource Remove="DownloadFiles\**" />
+    <None Remove="DownloadFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Sql\Board.xml" />
     <None Remove="Sql\Home.xml" />
+    <None Remove="Sql\User.xml" />
     <None Remove="TypeScript\common\ButtonProgress.ts" />
     <None Remove="TypeScript\common\DragDrop.ts" />
     <None Remove="TypeScript\common\main.ts" />
@@ -29,6 +37,9 @@
 
   <ItemGroup>
     <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\User.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Sql\Home.xml">
@@ -49,6 +60,7 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="2.1.1" />
     <PackageReference Include="NetBarcode" Version="1.0.7" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
     <PackageReference Include="Telegram.Bot" Version="14.12.0" />
   </ItemGroup>
 

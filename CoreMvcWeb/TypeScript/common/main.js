@@ -1,3 +1,4 @@
+jQuery.ajaxSetup({ cache: false }); //ajax 캐시 사용안함
 var AjaxCommonError = function (xhr) {
     var titleDiv = "<div class=\"titleerror\">";
     if (xhr.statusText === "abort")
@@ -14,21 +15,4 @@ var AjaxCommonError = function (xhr) {
     else
         alert(xhr.statusText);
 };
-/*
- * $.ajax({
-            type: "POST",
-            url: "/login/login",
-            dataType: "json",
-            data: {
-                reception_seq: 1
-            },
-            success: function (data, status, xhr) {
-                _d = data;
-                alert(data.msg);
-            },
-            error: function (xhr, textStatus, thrownError) {
-
-            }
-        });
-*/ 
 //# sourceMappingURL=main.js.map
