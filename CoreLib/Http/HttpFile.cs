@@ -97,11 +97,6 @@ namespace CoreLib.Http
                 }
                 while (isMoreToRead);
             }
-
-            using (System.IO.FileStream output = new System.IO.FileStream(path, fileMode))
-            {
-                await this.ResponseStream.CopyToAsync(output);
-            }
         }
     }
 }

@@ -202,6 +202,7 @@ unzip NanumFont_TTF_ALL.zip
                     });
 
                     /* Upload */
+                    /*
                     var fileList = new List<HttpFile>();
                     fileList.Add(new HttpFile("file1", "d:/Docker for Windows Installer.exe"));
                     fileList.Add(new HttpFile("file1", "d:/VMware-VMvisor-Installer-6.7.0.update02-13006603.x86_64.iso"));
@@ -214,6 +215,7 @@ unzip NanumFont_TTF_ALL.zip
                     {
                         Console.WriteLine($"{fileName} upload: {now} / {tot}");
                     });
+                    */
                 }
 
                 return Json(new { msg = "OK", fileName = "test" });
