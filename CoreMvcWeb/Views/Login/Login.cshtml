@@ -58,7 +58,7 @@
                 obj[$this.attr("name")] = $this.val();
             });
 
-            var token = $("textarea[name=g-recaptcha-response]").val();
+            obj["token"] = $("textarea[name=g-recaptcha-response]").val();
 
             $.ajax({
                 type: "POST",
@@ -71,6 +71,7 @@
                     }
                     else {
                         alert(data.msg);
+                        grecaptcha.execute("@sitekey", { action: "homepage" });
                     }
                 },
                 error: function (xhr, textStatus, thrownError) {

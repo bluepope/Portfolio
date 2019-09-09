@@ -15,6 +15,7 @@ using Newtonsoft.Json.Serialization;
 using CoreMvcWeb.Services.Telegram;
 using CoreMvcWeb.Services.BatchJob;
 using CoreMvcWeb.Services;
+using CoreMvcWeb.Services.Server;
 
 namespace CoreMvcWeb
 {
@@ -30,13 +31,24 @@ namespace CoreMvcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddTransient //모든 요청에 대해 생성 -- TagHelper 등으로 생성시 요청마다 
+            //services.AddScoped //연결시 1회
+            //services.AddSingleton //딱 1번
+
             //쿠키인증
             services.AddAuthentication(options =>
             {
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie(options => { options.LoginPath = "/Login"; });
+            }).AddCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.EventsType = typeof(CustomCookieAuthenticationEvents);
+            });
+
+            //쿠키인증시 백엔드 변경점을 체크하기 위한 커스텀 인증 이벤트
+            services.AddScoped<CustomCookieAuthenticationEvents>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

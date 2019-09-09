@@ -20,12 +20,12 @@ namespace CoreMvcWeb.Models.Login
         public string USER_NAME { get; set; }
         public DateTime REG_DATE { get; set; }
         public DateTime? UPDATE_DATE { get; set; }
-        public string AUTH { get; set; }
+        public string ROLES { get; set; }
 
 
         public static UserinfoModel GetLogin(string user_id, string pw)
         {
-            var model = MySqlDapperHelper.RunGetQueryFromXml<UserinfoModel>("Sql/User.xml", "GetUserInfoAll",  new { user_id = user_id }).FirstOrDefault();
+            var model = MySqlDapperHelper.RunGetQueryFromXml<UserinfoModel>("Sql/User.xml", "GetUserInfoAll",  new { user_id = user_id.ToLower() }).FirstOrDefault();
 
             if (model == null)
             {

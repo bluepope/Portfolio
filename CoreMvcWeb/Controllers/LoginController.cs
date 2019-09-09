@@ -56,7 +56,8 @@ namespace CoreMvcWeb.Controllers
 
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, login.USER_ID));
                 identity.AddClaim(new Claim(ClaimTypes.Name, login.USER_NAME));
-                identity.AddClaim(new Claim(ClaimTypes.Role, "ADMIN"));
+                identity.AddClaim(new Claim(ClaimTypes.Role, login.ROLES));
+                identity.AddClaim(new Claim("NextCheckDate", DateTime.Now.AddMinutes(1).ToString("yyyyMMddHHmmss"), typeof(DateTime).ToString()));
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties {
