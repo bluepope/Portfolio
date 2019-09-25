@@ -23,6 +23,7 @@
 - [ ] oauth2를 이용한 가입 / 로그인 - google, facebook 정도만
 - [ ] .vue 형태로 component 개발 - datetime picker, select2
 - [ ] xss 공격에 대한 처리
+- [ ] jenkins 연동 ci 테스트 -> 자동화된 docker 배포 가능한가?
 
 # 별도 프로젝트로 제외
 - [ ] api area 개발 후 wpf or winform 과 연동

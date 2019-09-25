@@ -20,24 +20,29 @@ namespace CoreMvcWeb
     {
         public enum CustomClaimType
         {
-            UserId
+            UserId,
+            NextCheckDate
         }
 
-        static string GetCustomClaimTypeString(CustomClaimType customClaimType)
+        public static string GetCustomClaimTypeString(CustomClaimType customClaimType)
         {
             switch(customClaimType)
             {
                 case CustomClaimType.UserId: return ClaimTypes.NameIdentifier;
+                case CustomClaimType.NextCheckDate: return "NextCheckDate";
                 default: return null;
             }
         }
 
-        
-        public static string GetClaim(this ClaimsPrincipal principal, CustomClaimType claimType)
+        public static Claim GetClaim(this ClaimsPrincipal principal, string claimType)
+        {
+            return principal.Claims.FirstOrDefault(x => x.Type == claimType);
+        }
+        public static string GetClaimValue(this ClaimsPrincipal principal, CustomClaimType claimType)
         {
             return principal.Claims.FirstOrDefault(x => x.Type == GetCustomClaimTypeString(claimType))?.Value;
         }
-        public static string GetClaim(this ClaimsPrincipal principal, string claimType)
+        public static string GetClaimValue(this ClaimsPrincipal principal, string claimType)
         {
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }

@@ -20,7 +20,7 @@ namespace CoreMvcWeb.Models.Lab
         public string COLUMN_COMMENT { get; set; }
         public string COLUMN_KEY { get; set; }
 
-        public static IList<MySqlDbTableModel> GetTableList(string schemaName)
+        public static IEnumerable<MySqlDbTableModel> GetTableList(string schemaName)
         {
             return MySqlDapperHelper.RunGetQuery<MySqlDbTableModel>(@"
 SELECT
@@ -35,7 +35,7 @@ ORDER BY
 ", new { schemaName = schemaName.ToLower() });
         }
 
-        public static IList<MySqlDbTableModel> GetTableColumnsList(string schemaName, string tableName)
+        public static IEnumerable<MySqlDbTableModel> GetTableColumnsList(string schemaName, string tableName)
         {
             return MySqlDapperHelper.RunGetQuery<MySqlDbTableModel>(@"
 SELECT
@@ -59,7 +59,7 @@ ORDER BY
             });
         }
 
-        public static string GetClassModel(IList<MySqlDbTableModel> list, string modelName)
+        public static string GetClassModel(IEnumerable<MySqlDbTableModel> list, string modelName)
         {
             var sb = new StringBuilder();
 
@@ -80,7 +80,7 @@ ORDER BY
             return sb.ToString();
         }
 
-        public static string GetXmlSqlString(IList<MySqlDbTableModel> list, string tableName)
+        public static string GetXmlSqlString(IEnumerable<MySqlDbTableModel> list, string tableName)
         {
             tableName = tableName.Substring(0, 1).ToUpper() + tableName.Substring(1);
             var sb = new StringBuilder();

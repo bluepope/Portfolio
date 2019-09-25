@@ -23,7 +23,7 @@ namespace CoreMvcWeb.Models.Lab
         public string STATUS_FLAG { get; set; }
 
 
-        public async static Task<IList<DeliveryInfoModel>> GetList(string company_type, string invoice_no)
+        public async static Task<IEnumerable<DeliveryInfoModel>> GetList(string company_type, string invoice_no)
         {
             return await MySqlDapperHelper.RunGetQueryFromXmlAsync<DeliveryInfoModel>("/Sql/Lab.xml", "GetDeliveryList", new {
                 company_type = company_type,
