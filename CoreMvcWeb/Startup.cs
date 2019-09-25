@@ -79,9 +79,10 @@ namespace CoreMvcWeb
 
             var userConfig = UserSettings.GetFromJson();
 
+            CoreLib.DataBase.SqlDapperHelper.ConnectionString = userConfig.ConnectionString["MsSql"];
             CoreLib.DataBase.MySqlDapperHelper.ConnectionString = userConfig.ConnectionString["MySql"];
             CoreLib.DataBase.PgSqlDapperHelper.ConnectionString = userConfig.ConnectionString["PostgreSql"];
-
+            
             if (userConfig.TelegramBot != null)
             {
                 services.Configure<BotConfiguration>(options =>

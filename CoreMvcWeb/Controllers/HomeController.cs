@@ -15,6 +15,7 @@ namespace CoreMvcWeb.Controllers
         }
         public IActionResult Index()
         {
+            //var r =  CoreLib.DataBase.SqlDapperHelper.RunGetQuery<int>("SELECT COUNT(1) FROM dbo.Table1", null);
             return View();
         }
 
