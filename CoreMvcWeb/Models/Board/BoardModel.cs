@@ -84,7 +84,7 @@ AUTO_INCREMENT=2
             
         }
 
-        public static IList<BoardModel> GetList(string board_type, int page = 1, int page_size = 20)
+        public static IEnumerable<BoardModel> GetList(string board_type, int page = 1, int page_size = 20)
         {
             //데이터가 많아지면 LIMIT가 느려질수 있다고함, WHERE 로 모집합을 줄이고 LIMIT를 걸어야한다고....
             var sql = MySqlDapperHelper.GetSqlFromXml("Sql/Board.xml", "GetBoardList");
@@ -96,7 +96,7 @@ AUTO_INCREMENT=2
             });
         }
 
-        public static async Task<IList<BoardModel>> GetListAsync(string board_type, int page = 1, int page_size = 20)
+        public static async Task<IEnumerable<BoardModel>> GetListAsync(string board_type, int page = 1, int page_size = 20)
         {
             //데이터가 많아지면 LIMIT가 느려질수 있다고함, WHERE 로 모집합을 줄이고 LIMIT를 걸어야한다고....
             var sql = MySqlDapperHelper.GetSqlFromXml("Sql/Board.xml", "GetBoardList");

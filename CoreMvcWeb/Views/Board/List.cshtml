@@ -1,4 +1,4 @@
-﻿@model IList<CoreMvcWeb.Models.Board.BoardModel>
+﻿@model IEnumerable<CoreMvcWeb.Models.Board.BoardModel>
 @{ 
     int page = (ViewData["page"] as int?).GetValueOrDefault(1);
     int total_count = (ViewData["total_count"] as int?).GetValueOrDefault(0);

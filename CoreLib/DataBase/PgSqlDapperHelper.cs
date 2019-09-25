@@ -92,13 +92,13 @@ namespace CoreLib.DataBase
             return _sqlManager[xmlPath].GetSql(sqlId);
         }
         #region 1회성 쿼리를 위한 static method 영역
-        public static IList<T> RunGetQuery<T>(string sql, object param)
+        public static IEnumerable<T> RunGetQuery<T>(string sql, object param)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList();
+                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null);
                 }
                 catch (Exception ex)
                 {
@@ -108,7 +108,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public static IList<T> RunGetQueryFromXml<T>(string xmlPath, string sqlId, object param)
+        public static IEnumerable<T> RunGetQueryFromXml<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -141,13 +141,13 @@ namespace CoreLib.DataBase
         }
 
         
-        public static async Task<IList<T>> RunGetQueryAsync<T>(string sql, object param)
+        public static async Task<IEnumerable<T>> RunGetQueryAsync<T>(string sql, object param)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param)).ToList();
+                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param));
                 }
                 catch (Exception ex)
                 {
@@ -157,7 +157,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public static async Task<IList<T>> RunGetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
+        public static async Task<IEnumerable<T>> RunGetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -191,13 +191,13 @@ namespace CoreLib.DataBase
         #endregion
 
         #region instance 용 영역
-        public IList<T> GetQuery<T>(string sql, object param)
+        public IEnumerable<T> GetQuery<T>(string sql, object param)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null).ToList();
+                    return Dapper.SqlMapper.Query<T>(conn, sql, param, null, true, null, null);
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +207,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public IList<T> GetQueryFromXml<T>(string xmlPath, string sqlId, object param)
+        public IEnumerable<T> GetQueryFromXml<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);
@@ -239,13 +239,13 @@ namespace CoreLib.DataBase
             return this.Execute(_sqlManager[xmlPath].GetSql(sqlId), param);
         }
 
-        public async Task<IList<T>> GetQueryAsync<T>(string sql, object param)
+        public async Task<IEnumerable<T>> GetQueryAsync<T>(string sql, object param)
         {
             using (var conn = new NpgsqlConnection(ConnectionString))
             {
                 try
                 {
-                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param)).ToList();
+                    return (await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param));
                 }
                 catch (Exception ex)
                 {
@@ -255,7 +255,7 @@ namespace CoreLib.DataBase
             }
         }
 
-        public async Task<IList<T>> GetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
+        public async Task<IEnumerable<T>> GetQueryFromXmlAsync<T>(string xmlPath, string sqlId, object param)
         {
             if (_sqlManager.ContainsKey(xmlPath) == false)
                 _sqlManager[xmlPath] = new SqlManager(xmlPath);

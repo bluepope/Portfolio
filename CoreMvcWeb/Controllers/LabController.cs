@@ -109,6 +109,7 @@ wget http://cdn.naver.com/naver/NanumFont/fontfiles/NanumFont_TTF_ALL.zip
 unzip NanumFont_TTF_ALL.zip
 
              * 4. webdriver에 실행권한 줄것 chmod 777 과 같이..
+             * https://chromedriver.chromium.org/downloads
              */
             var msg = string.Empty;
             var list = new List<DeliveryInfoModel>();
