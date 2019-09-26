@@ -16,6 +16,9 @@ using CoreMvcWeb.Services.Telegram;
 using CoreMvcWeb.Services.BatchJob;
 using CoreMvcWeb.Services;
 using CoreMvcWeb.Services.Server;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace CoreMvcWeb
 {
@@ -31,6 +34,11 @@ namespace CoreMvcWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Cross Origin 허용
+            services.AddCors((options) => {
+                //options.AddPolicy("", new Microsoft.AspNetCore.Cors.Infrastructure.CorsPolicy() {  });
+            });
+
             //services.AddTransient //모든 요청에 대해 생성 -- TagHelper 등으로 생성시 요청마다 
             //services.AddScoped //연결시 1회
             //services.AddSingleton //딱 1번
@@ -111,6 +119,17 @@ namespace CoreMvcWeb
             //app.UseCookiePolicy(); //쿠키정책 (사용허가 승인같은거?) 사용여부
             //app.UseSession(); //세션쓰려면 session 관련 nuget 에서 추가해야함
             app.UseAuthentication(); //인증 사용
+
+            //var provider = new FileExtensionContentTypeProvider();
+            //provider.Mappings[".png"] = "application/x-msdownload";
+            //provider.Mappings.Remove(".png");
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+                RequestPath = "/MyImages",
+                //ContentTypeProvider = provider
+            });
 
             if (env.IsDevelopment())
             {
