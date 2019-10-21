@@ -15,7 +15,7 @@ namespace SpectreCssTest.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Write()
         {
             return View();
         }
