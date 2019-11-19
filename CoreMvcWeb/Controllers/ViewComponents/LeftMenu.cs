@@ -89,6 +89,11 @@ namespace CoreMvcWeb.Controllers.ViewComponents
                     menu.ActionName = "DbTableList";
                     menu.Name = "MySql 테이블 모델 만들기";
                 }));
+
+                setting.SubMenuList.Add(LeftMenuModel.Create((menu) => {
+                    menu.ActionName = "FormContentTest";
+                    menu.Name = "FormContent테스트";
+                }));
             }));
 
             list.FirstOrDefault(p => p.ControllerName.ToLower() == controller.ToLower())?.SubMenuList.FirstOrDefault(p => p.ActionName.ToLower() == action.ToLower())?.setActive(true);

@@ -87,7 +87,7 @@ namespace CoreMvcWeb
 
             var userConfig = UserSettings.GetFromJson();
 
-            CoreLib.DataBase.SqlDapperHelper.ConnectionString = userConfig.ConnectionString["MsSql"];
+            //CoreLib.DataBase.SqlDapperHelper.ConnectionString = userConfig.ConnectionString["MsSql"];
             CoreLib.DataBase.MySqlDapperHelper.ConnectionString = userConfig.ConnectionString["MySql"];
             CoreLib.DataBase.PgSqlDapperHelper.ConnectionString = userConfig.ConnectionString["PostgreSql"];
             
@@ -119,7 +119,7 @@ namespace CoreMvcWeb
             //app.UseCookiePolicy(); //쿠키정책 (사용허가 승인같은거?) 사용여부
             //app.UseSession(); //세션쓰려면 session 관련 nuget 에서 추가해야함
             app.UseAuthentication(); //인증 사용
-
+            
             //var provider = new FileExtensionContentTypeProvider();
             //provider.Mappings[".png"] = "application/x-msdownload";
             //provider.Mappings.Remove(".png");

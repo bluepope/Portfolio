@@ -60,6 +60,7 @@ namespace CoreMvcWeb.Controllers
                 identity.AddClaim(new Claim("NextCheckDate", DateTime.Now.AddMinutes(1).ToString("yyyyMMddHHmmss"), typeof(DateTime).ToString()));
 
                 var principal = new ClaimsPrincipal(identity);
+                
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties {
                     IsPersistent = false, //로그인 쿠키 영속성 (브라우저 종료시 유지) 여부
                     ExpiresUtc = DateTime.UtcNow.AddDays(7), //7일간 미접속시 쿠키 만료

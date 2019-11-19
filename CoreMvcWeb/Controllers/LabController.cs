@@ -18,6 +18,8 @@ using CoreLib.Http;
 using CoreMvcWeb.Models.Lab;
 using System.Net.Http;
 using StackExchange.Redis;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CoreMvcWeb.Controllers
 {
@@ -274,11 +276,160 @@ unzip NanumFont_TTF_ALL.zip
                 db.StringSet("str1", "val11");
 
                 var val2 = db.StringGet("str1");
-                
             }
 
             return View();
         }
 
+        public IActionResult FormContentTest()
+        {
+            return View();
+        }
+
+        public IActionResult GetFormContentTest(MTest1 input)
+        {
+            var list = new List<KeyValuePair<string, string>>();
+            
+            foreach(var item in Request.Form)
+            {
+                list.Add(new KeyValuePair<string, string>(item.Key, item.Value));
+            }
+
+            return Json(new
+            {
+                text1 = JsonConvert.SerializeObject(list)
+            }); ;
+        }
+
+        public async Task<IActionResult> SendHttpFormContent()
+        {
+            //sample
+            /*
+            "col1":"val1"
+            "col2":"1"
+            "colList[0][sub1]":"v1"
+            "colList[0][sub2]":"11"
+            "colList[0][subList][0][sub1]":"sub1"
+            "colList[0][subList][0][sub2]":"111"
+            "colList[1][sub1]":"v2"
+            "colList[1][sub2]":"12"
+
+            "col1","val1"
+            "col2","1"
+            "colList[0][sub1]","v1"
+            "colList[0][sub2]","11"
+            "colList[0][subList][0][sub1]","sub11"
+            "colList[0][subList][0][sub2]","111"
+            "colList[1][sub1]","v22"
+            "colList[1][sub2]","12"
+             */
+
+            var model = new MTest1();
+
+            model.col1 = "val1";
+            model.col2 = 1;
+            model.colList = new List<MSubTest1>();
+
+            var sub = new MSubTest1() { sub1 = "v1", sub2 = 11 };
+            sub.subList = new List<MSubTest1>();
+            sub.subList.Add(new MSubTest1() { sub1 = "sub11", sub2 = 111 });
+            model.colList.Add(sub);
+
+            model.colList.Add(new MSubTest1() { sub1 = "v22", sub2 = 12 });
+
+            var list = GetFormContent(model);
+
+            using (var client = new HttpClient())
+            {
+                await client.PostAsync("http://localhost:5000/Lab/GetFormContentTest", new FormUrlEncodedContent(list));
+            }
+
+            return Json(new
+            {
+                text1 = JsonConvert.SerializeObject(list)
+            }); ;
+        }
+
+        public List<KeyValuePair<string, string>> GetFormContent(object obj, string prefix = "")
+        {
+            var list = new List<KeyValuePair<string, string>>();
+            string name;
+
+            if (obj is null)
+                return list;
+
+            if (obj.GetType().GetGenericArguments().Length > 0)
+            {
+                int idx = 0;
+                foreach (var item in (IEnumerable<object>)obj)
+                {
+                    foreach (var prop in item.GetType().GetProperties())
+                    {
+                        if (string.IsNullOrWhiteSpace(prefix))
+                        {
+                            name = $"{prop.Name}[{idx}]";
+                        }
+                        else
+                        {
+                            name = $"{prefix}[{idx}][{prop.Name}]";
+                        }
+
+                        if (prop.PropertyType.GetGenericArguments().Length > 0)
+                        {
+                            list.AddRange(GetFormContent(prop.GetValue(item), name));
+                        }
+                        else
+                        {
+                            list.Add(new KeyValuePair<string, string>(name, prop.GetValue(item)?.ToString()));
+                        }
+                    }
+                    idx++;
+                }
+            }
+            else
+            {
+                foreach(var prop in obj.GetType().GetProperties())
+                {
+                    if (string.IsNullOrWhiteSpace(prefix))
+                    {
+                        name = prop.Name;
+                    }
+                    else
+                    {
+                        name = $"{prefix}[{prop.Name}]";
+                    }
+
+                    if (prop.PropertyType.GetGenericArguments().Length > 0)
+                    {
+                        list.AddRange(GetFormContent(prop.GetValue(obj), name));
+                    }
+                    else
+                    {
+                        list.Add(new KeyValuePair<string, string>(name, prop.GetValue(obj)?.ToString()));
+                    }
+                }
+            }
+
+            return list;
+        }
+
+    }
+
+
+
+    public class MTest1
+    {
+        public string col1 { get; set; }
+        public int col2 { get; set; }
+
+        public List<MSubTest1> colList { get; set; }
+    }
+
+    public class MSubTest1
+    {
+        public string sub1 { get; set; }
+        public int sub2 { get; set; }
+
+        public List<MSubTest1> subList { get; set; }
     }
 }
