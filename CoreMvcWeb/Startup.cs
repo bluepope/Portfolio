@@ -126,7 +126,7 @@ namespace CoreMvcWeb
 
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot", "images")),
                 RequestPath = "/MyImages",
                 //ContentTypeProvider = provider
             });

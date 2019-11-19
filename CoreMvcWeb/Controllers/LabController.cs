@@ -126,7 +126,7 @@ unzip NanumFont_TTF_ALL.zip
                 options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
                 options.AddArgument("lang=ko-kr");
 
-                using (var driver = new ChromeDriver(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "webdriver"), options))
+                using (var driver = new ChromeDriver(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "webdriver"), options))
                 {
                     try
                     {

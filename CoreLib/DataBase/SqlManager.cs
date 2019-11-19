@@ -15,7 +15,7 @@ namespace CoreLib.DataBase
 
         public SqlManager(string xmlPath)
         {
-            _filePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), xmlPath);
+            _filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xmlPath);
             LoadSql();
         }
 

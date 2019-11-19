@@ -18,7 +18,7 @@ namespace CoreMvcWeb.Services
 
         public static UserSettings GetFromJson()
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "usersettings.json");
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "usersettings.json");
 
             if (File.Exists(filePath) == false)
             {
