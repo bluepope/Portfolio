@@ -235,7 +235,7 @@
 
   <ItemGroup>
     <Content Update="usersettings.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

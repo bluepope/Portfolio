@@ -288,16 +288,16 @@ unzip NanumFont_TTF_ALL.zip
 
         public IActionResult GetFormContentTest(MTest1 input)
         {
+            /*
             var list = new List<KeyValuePair<string, string>>();
-            
             foreach(var item in Request.Form)
             {
                 list.Add(new KeyValuePair<string, string>(item.Key, item.Value));
             }
-
+            */
             return Json(new
             {
-                text1 = JsonConvert.SerializeObject(list)
+                text1 = JsonConvert.SerializeObject(input)
             }); ;
         }
 
@@ -337,85 +337,14 @@ unzip NanumFont_TTF_ALL.zip
 
             model.colList.Add(new MSubTest1() { sub1 = "v22", sub2 = 12 });
 
-            var list = GetFormContent(model);
-
-            using (var client = new HttpClient())
+            using (var client = new HttpClientHelper())
             {
-                await client.PostAsync("http://localhost:5000/Lab/GetFormContentTest", new FormUrlEncodedContent(list));
+                var r = await client.SendMultipartAsync(HttpMethod.Post, "http://localhost:5000/Lab/GetFormContentTest", model, null);
+
+                return Content(r, "text/json");
             }
-
-            return Json(new
-            {
-                text1 = JsonConvert.SerializeObject(list)
-            }); ;
         }
-
-        public List<KeyValuePair<string, string>> GetFormContent(object obj, string prefix = "")
-        {
-            var list = new List<KeyValuePair<string, string>>();
-            string name;
-
-            if (obj is null)
-                return list;
-
-            if (obj.GetType().GetGenericArguments().Length > 0)
-            {
-                int idx = 0;
-                foreach (var item in (IEnumerable<object>)obj)
-                {
-                    foreach (var prop in item.GetType().GetProperties())
-                    {
-                        if (string.IsNullOrWhiteSpace(prefix))
-                        {
-                            name = $"{prop.Name}[{idx}]";
-                        }
-                        else
-                        {
-                            name = $"{prefix}[{idx}][{prop.Name}]";
-                        }
-
-                        if (prop.PropertyType.GetGenericArguments().Length > 0)
-                        {
-                            list.AddRange(GetFormContent(prop.GetValue(item), name));
-                        }
-                        else
-                        {
-                            list.Add(new KeyValuePair<string, string>(name, prop.GetValue(item)?.ToString()));
-                        }
-                    }
-                    idx++;
-                }
-            }
-            else
-            {
-                foreach(var prop in obj.GetType().GetProperties())
-                {
-                    if (string.IsNullOrWhiteSpace(prefix))
-                    {
-                        name = prop.Name;
-                    }
-                    else
-                    {
-                        name = $"{prefix}[{prop.Name}]";
-                    }
-
-                    if (prop.PropertyType.GetGenericArguments().Length > 0)
-                    {
-                        list.AddRange(GetFormContent(prop.GetValue(obj), name));
-                    }
-                    else
-                    {
-                        list.Add(new KeyValuePair<string, string>(name, prop.GetValue(obj)?.ToString()));
-                    }
-                }
-            }
-
-            return list;
-        }
-
     }
-
-
 
     public class MTest1
     {

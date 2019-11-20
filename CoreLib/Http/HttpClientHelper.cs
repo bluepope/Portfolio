@@ -28,8 +28,13 @@ namespace CoreLib.Http
             this.Handler = new HttpClientHandler() { CookieContainer = this.Cookies };
             this.Client = new HttpClient(this.Handler);
 
-            this.Client.DefaultRequestHeaders.Add("Accept-Language", "ko-KR,en-US");
-            this.Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+
+            Client.DefaultRequestHeaders.Add("Accept-Language", "ko-KR,en-US");
+            Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+            Client.DefaultRequestHeaders.Accept.Clear();
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public void Dispose()
@@ -40,12 +45,25 @@ namespace CoreLib.Http
 
         public async Task<HttpResponseMessage> SendAsync(HttpMethod method, string url, HttpContent content)
         {
-            var request = new HttpRequestMessage()
+            var request = new HttpRequestMessage();
+            request.Method = method;
+
+            if (request.Method == HttpMethod.Get)
             {
-                Method = method,
-                RequestUri = new Uri(url),
-                Content = content,
-            };
+                var data = await content.ReadAsStringAsync();
+
+                if (string.IsNullOrWhiteSpace(data))
+                    request.RequestUri = new Uri(url);
+                else if (url.IndexOf('?') < 0)
+                    request.RequestUri = new Uri($"{url}?{data}");
+                else
+                    request.RequestUri = new Uri($"{url}&{data}");
+            }
+            else
+            {
+                request.RequestUri = new Uri(url);
+                request.Content = content;
+            }
 
             var response = await this.Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             response.EnsureSuccessStatusCode();
@@ -55,7 +73,7 @@ namespace CoreLib.Http
 
         public async Task<string> GetStringAsync(HttpMethod method, string url, object sendData = null)
         {
-            var response = await SendAsync(method, url, new StringContent(JsonConvert.SerializeObject(sendData), Encoding.UTF8, "application/json"));
+            var response = await SendAsync(method, url, new FormUrlEncodedContent(ConvertFormData(sendData)));
 
             return await response.Content.ReadAsStringAsync();
         }
@@ -63,7 +81,7 @@ namespace CoreLib.Http
 
         public async Task<HttpFile> GetFileAsync(HttpMethod method, string url, object sendData = null)
         {
-            var response = await SendAsync(method, url, new StringContent(JsonConvert.SerializeObject(sendData), Encoding.UTF8, "application/json"));
+            var response = await SendAsync(method, url, new FormUrlEncodedContent(ConvertFormData(sendData)));
 
             var file = new HttpFile();
             file.TotalBytesSize = response.Content.Headers.ContentLength.GetValueOrDefault(0);
@@ -88,16 +106,8 @@ namespace CoreLib.Http
             {
                 if (sendData != null)
                 {
-                    foreach (var prop in sendData.GetType().GetProperties())
-                    {
-                        var objVal = prop.GetValue(sendData, null);
-                        string val = null;
-
-                        if (objVal != null)
-                            val = objVal.ToString();
-
-                        multipartFormContent.Add(new StringContent(val, Encoding.UTF8, "application/json"), prop.Name);
-                    }
+                    foreach (var item in ConvertFormData(sendData))
+                        multipartFormContent.Add(new StringContent(item.Value, Encoding.UTF8, "application/x-www-form-urlencoded"), item.Key);
                 }
                 
                 if (fileList?.Count > 0)
@@ -124,6 +134,69 @@ namespace CoreLib.Http
                 
                 return await (await SendAsync(method, url, multipartFormContent)).Content.ReadAsStringAsync();
             }
+        }
+
+        public List<KeyValuePair<string, string>> ConvertFormData(object obj, string prefix = "")
+        {
+            var list = new List<KeyValuePair<string, string>>();
+            string name;
+
+            if (obj is null)
+                return list;
+
+            if (obj.GetType().GetGenericArguments().Length > 0)
+            {
+                int idx = 0;
+                foreach (var item in (IEnumerable<object>)obj)
+                {
+                    foreach (var prop in item.GetType().GetProperties())
+                    {
+                        if (string.IsNullOrWhiteSpace(prefix))
+                        {
+                            name = $"{prop.Name}[{idx}]";
+                        }
+                        else
+                        {
+                            name = $"{prefix}[{idx}][{prop.Name}]";
+                        }
+
+                        if (prop.PropertyType.GetGenericArguments().Length > 0)
+                        {
+                            list.AddRange(ConvertFormData(prop.GetValue(item), name));
+                        }
+                        else
+                        {
+                            list.Add(new KeyValuePair<string, string>(name, prop.GetValue(item)?.ToString()));
+                        }
+                    }
+                    idx++;
+                }
+            }
+            else
+            {
+                foreach (var prop in obj.GetType().GetProperties())
+                {
+                    if (string.IsNullOrWhiteSpace(prefix))
+                    {
+                        name = prop.Name;
+                    }
+                    else
+                    {
+                        name = $"{prefix}[{prop.Name}]";
+                    }
+
+                    if (prop.PropertyType.GetGenericArguments().Length > 0)
+                    {
+                        list.AddRange(ConvertFormData(prop.GetValue(obj), name));
+                    }
+                    else
+                    {
+                        list.Add(new KeyValuePair<string, string>(name, prop.GetValue(obj)?.ToString()));
+                    }
+                }
+            }
+
+            return list;
         }
     }
 }
