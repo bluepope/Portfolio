@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreMvcWeb", "CoreMvcWeb\CoreMvcWeb.csproj", "{F15B204F-5569-45E0-8862-281A5D6A0854}"
 EndProject
@@ -12,7 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpectreCssTest", "SpectreCssTest\SpectreCssTest.csproj", "{359E83B8-BBB6-46D8-AF22-42015C00EB8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpectreCssTest", "SpectreCssTest\SpectreCssTest.csproj", "{359E83B8-BBB6-46D8-AF22-42015C00EB8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluePope.HomeWeb", "BluePope.HomeWeb\BluePope.HomeWeb.csproj", "{F1108101-B4BE-4EAD-97AF-6436B5B9E896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluePope.Lib", "BluePope.Lib\BluePope.Lib.csproj", "{D42DEC78-06C1-4FAB-B7CC-B1966C055181}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,14 @@ Global
 		{359E83B8-BBB6-46D8-AF22-42015C00EB8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{359E83B8-BBB6-46D8-AF22-42015C00EB8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{359E83B8-BBB6-46D8-AF22-42015C00EB8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1108101-B4BE-4EAD-97AF-6436B5B9E896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1108101-B4BE-4EAD-97AF-6436B5B9E896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1108101-B4BE-4EAD-97AF-6436B5B9E896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1108101-B4BE-4EAD-97AF-6436B5B9E896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D42DEC78-06C1-4FAB-B7CC-B1966C055181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42DEC78-06C1-4FAB-B7CC-B1966C055181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42DEC78-06C1-4FAB-B7CC-B1966C055181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42DEC78-06C1-4FAB-B7CC-B1966C055181}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
