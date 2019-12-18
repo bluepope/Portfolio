@@ -21,7 +21,7 @@ namespace BluePope
         public enum CustomClaimType
         {
             UserId,
-            NextCheckDate
+            NextCheckTime
         }
 
         public static string GetCustomClaimTypeString(CustomClaimType customClaimType)
@@ -29,7 +29,7 @@ namespace BluePope
             return customClaimType switch
             {
                 CustomClaimType.UserId => ClaimTypes.NameIdentifier,
-                CustomClaimType.NextCheckDate => "NextCheckTime",
+                CustomClaimType.NextCheckTime => "NextCheckTime",
                 _ => null
             };
         }

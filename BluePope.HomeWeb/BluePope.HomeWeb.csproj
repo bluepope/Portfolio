@@ -2,10 +2,75 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>HomeWeb</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Sql\Board.xml" />
+    <None Remove="Sql\Home.xml" />
+    <None Remove="Sql\User.xml" />
+    <None Remove="TypeScript\common\ButtonProgress.ts" />
+    <None Remove="TypeScript\common\DragDrop.ts" />
+    <None Remove="TypeScript\common\main.ts" />
+    <None Remove="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\Home.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\User.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BluePope.Lib\BluePope.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="TypeScript\common\ButtonProgress.ts" />
+    <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
+    <TypeScriptCompile Include="TypeScript\common\main.ts" />
+    <TypeScriptCompile Include="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="wwwroot\lib\chosen\chosen.jquery.js" />
+    <None Include="wwwroot\lib\chosen\chosen.jquery.min.js" />
+    <None Include="wwwroot\lib\chosen\chosen.proto.js" />
+    <None Include="wwwroot\lib\chosen\chosen.proto.min.js" />
+    <None Include="wwwroot\lib\ElaAdmin\css\style.css.map" />
+    <None Include="wwwroot\lib\ElaAdmin\fonts\icomoon\icomoon.svg" />
+    <None Include="wwwroot\lib\ElaAdmin\js\main.js" />
+    <None Include="wwwroot\lib\gmap\gmapApi.js" />
+    <None Include="wwwroot\lib\gmap\gmaps.js" />
+    <None Include="wwwroot\lib\gmap\gmaps.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NetBarcode" Version="1.0.7" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Telegram.Bot" Version="15.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="usersettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 

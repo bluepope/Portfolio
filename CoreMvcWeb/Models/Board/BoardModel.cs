@@ -4,31 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoreMvcWeb.Models.Board
+namespace BluePope.HomeWeb.Models.Board
 {
-    #region "Home.BOARD 테이블"
-    /*
-CREATE TABLE `BOARD` (
-	`SEQ` INT(11) NOT NULL AUTO_INCREMENT,
-	`BOARD_TYPE` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`TITLE` VARCHAR(200) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`CONTENTS` MEDIUMTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`DUP_KEY` BIGINT(20) NOT NULL,
-	`VIEW_CNT` INT(11) NOT NULL,
-	`STATUS_FLAG` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`REG_IP` VARCHAR(20) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`REG_USER` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`REG_USERNAME` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`REG_DATE` DATETIME NOT NULL,
-	PRIMARY KEY (`SEQ`)
-)
-COLLATE='utf8mb4_unicode_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=2
-;
-    */
-    #endregion
-
     public class BoardModel
     {
         /// <summary>

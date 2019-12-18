@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CoreMvcWeb.Models.Board;
+﻿using CoreMvcWeb.Models.Board;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using CoreLib.DataBase;
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;

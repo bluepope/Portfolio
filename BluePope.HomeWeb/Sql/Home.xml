@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mapper>
+  <select id="GetTestData">
+    <![CDATA[
+SELECT
+  COL1
+  ,COL2
+FROM
+  TEST1
+WHERE
+  COL1 >= @col1
+    ]]>
+  </select>
+</mapper>
