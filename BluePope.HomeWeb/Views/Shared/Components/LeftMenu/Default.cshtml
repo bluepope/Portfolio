@@ -1,29 +1,37 @@
-﻿<div class="accordion-container">
-    
-    <div class="accordion">
-        <input id="accordion-qna" type="checkbox" name="spectre-accordion-checkbox" hidden="" checked="checked"  />
-        <label class="accordion-header c-hand" for="accordion-qna">Questions</label>
-        <div class="accordion-body">
-            <ul class="menu menu-nav">
-                <!--
-       <li class="menu-item"><a href="/home/write"></a></li>
-    -->
+﻿
 
-                <li class="menu-item">
-                    <a href="../getting-started/custom.html">전체 질문</a>
-                </li>
+    <ul class="nav navbar-nav">
+        <li class="menu-title">게시판</li><!-- /.menu-title -->
+        <li><a href="/board/list"><i class="menu-icon fa fa-laptop"></i>일반</a></li>
+
+        <li class="menu-title">실험실</li><!-- /.menu-title -->
+        <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>RealTime</a>
+            <ul class="sub-menu children dropdown-menu">
+                <li><i class="fa fa-puzzle-piece"></i><a href="/realtime/chat">채팅</a></li>
             </ul>
-        </div>
-    </div>
-    <div class="accordion">
-        <input id="accordion-discussion" type="checkbox" name="spectre-accordion-checkbox" hidden="" checked="checked" />
-        <label class="accordion-header c-hand" for="accordion-discussion">토론</label>
-        <div class="accordion-body">
-            <ul class="menu menu-nav">
-                <li class="menu-item">
-                    <a href="../elements/typography.html">토론</a>
-                </li>
+        </li>
+
+        <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Client Side</a>
+            <ul class="sub-menu children dropdown-menu">
+                <li><i class="fa fa-id-badge"></i><a href="/clientside/vue">VueJs</a></li>
+                <li><i class="fa fa-bars"></i><a href="/clientside/ajaxTest">Ajax Test</a></li>
+                <li><i class="fa fa-id-card-o"></i><a href="/clientside/DragAndDropMultipleupload">드래그앤드롭</a></li>
             </ul>
-        </div>
-    </div>
-</div>
+        </li>
+
+
+        <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>실험실</a>
+            <ul class="sub-menu children dropdown-menu">
+                <li><i class="menu-icon fa fa-fort-awesome"></i><a href="/lab/BarCodeGenerator">바코드 생성</a></li>
+                <li><i class="menu-icon ti-themify-logo"></i><a href="/lab/DeliveryCheck">택배 조회</a></li>
+                <li><i class="fa fa-exclamation-triangle"></i><a href="/lab/WebFileDownload">웹 파일 다운로드 테스트</a></li>
+                <li><i class="fa fa-spinner"></i><a href="/lab/DbTableList">MySql 테이블 모델 만들기</a></li>
+                <li><i class="fa fa-fire"></i><a href="/lab/FormContentTest">FormContent</a></li>
+            </ul>
+        </li>
+
+        <li><a href="page-register.html"><i class="menu-icon fa fa-sign-in"></i> Register</a></li>
+    </ul>

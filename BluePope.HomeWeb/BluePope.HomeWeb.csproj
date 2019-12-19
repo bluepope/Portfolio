@@ -71,6 +71,139 @@
     <Content Update="usersettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Views\Home\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Telegram\ChatList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Telegram\ChatList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Board\ContentsView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Board\List.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Board\Write.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\ClientSide\AjaxTest.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\ClientSide\DragAndDropMultipleupload.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\ClientSide\vue.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Lab\BarCodeGenerator.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Lab\DbTableList.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Lab\DeliveryCheck.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Lab\FormContentTest.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Lab\WebFileDownload.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Login\Login.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\RealTime\Chat.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Telegram\ChatList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Lab\BarCodeGenerator.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Lab\BarCodeGenerator.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Lab\DbTableList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Lab\DbTableList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Lab\DeliveryCheck.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Lab\DeliveryCheck.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Lab\FormContentTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Lab\FormContentTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Lab\WebFileDownload.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Lab\WebFileDownload.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Login\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Login\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Board\ContentsView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Board\ContentsView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Board\List.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Board\List.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Board\Write.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Board\Write.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\ClientSide\AjaxTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\ClientSide\AjaxTest.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\ClientSide\DragAndDropMultipleupload.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\ClientSide\DragAndDropMultipleupload.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\ClientSide\vue.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\ClientSide\vue.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\RealTime\Chat.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\RealTime\Chat.cshtml" />
   </ItemGroup>
 
 

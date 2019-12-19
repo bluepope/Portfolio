@@ -1,0 +1,83 @@
+﻿@section Scripts
+{ 
+    <link href="~/lib/summernote/summernote-bs4.css" rel="stylesheet" />
+    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
+    <script src="~/lib/summernote/lang/summernote-ko-KR.min.js"></script>
+}
+<div style="width:900px;">
+    <table class="table table-common">
+        <colgroup>
+            <col style="width:90px" />
+            <col style="width:auto" />
+        </colgroup>
+        <tr>
+            <th>제목</th>
+            <td><input id="title" type="text" class="form-control" /></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td>
+                <div id="contents"></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="text-center">
+                <button id="btnSave" type="button" class="btn btn-sm btn-primary" data-click-flag="N">저장</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    $.summernote.options.lang = "ko-KR";
+    $.summernote.options.height = 500;
+    $("#contents").summernote();
+
+    /*
+    function OnEvent() {
+        window.onbeforeunload = function () {
+            return "작성중인 내용이 사라집니다";
+        };
+        //window.onbeforeunload = null;
+    }
+    */
+
+    $("#btnSave").click(function () {
+        if (confirm("저장하시겠습니까?") == false)
+            return;
+
+        var $btn = $(this);
+        $btn.attr("disabled", true);
+
+        var obj = {};
+        obj["board_type"] = "GENERAL";
+        obj["dup_key"] = "@DateTime.Now.ToString("hhmmss")";
+        obj["title"] = $("#title").val();
+        obj["contents"] = $("#contents").summernote("code");
+
+        $.ajax({
+            type: "POST",
+            url: "Save",
+            dataType: "json",
+            data: {
+                input: obj
+            },
+            success: function (data, status, xhr) {
+                if (data.msg == "OK") {
+                    alert("저장하였습니다");
+                    location.replace("/board/list");
+                }
+                else {
+                    $btn.attr("disabled", false);
+                    alert(data.msg);
+                }
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $btn.attr("disabled", false);
+
+                ajaxCommonError(xhr);
+            }
+        });
+    });
+</script>
