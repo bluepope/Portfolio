@@ -141,7 +141,13 @@ namespace BluePope.HomeWeb
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<Hubs.Chat.ChatHub>("/hubs/chatHub");
             });
+
+            //서버 시작시 서비스 호출
+            //app.ApplicationServices.GetService<IBotService>(); //텔레그램 봇 생성
+            //app.ApplicationServices.GetService<ITimerBatchService>(); //타이머 생성
         }
     }
 }

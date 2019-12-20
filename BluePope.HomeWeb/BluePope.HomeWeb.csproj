@@ -39,6 +39,27 @@
 
   <ItemGroup>
     <None Include="bundleconfig.json" />
+    <None Include="wwwroot\lib\select2\dist\js\i18n\ko.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.full.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.full.min.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.min.js" />
+    <None Include="wwwroot\lib\vue\dist\README.md" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.dev.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.prod.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.browser.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.browser.min.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.min.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.dev.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.prod.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.esm.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.min.js" />
+    <None Include="wwwroot\lib\vue\LICENSE" />
   </ItemGroup>
 
   <ItemGroup>
