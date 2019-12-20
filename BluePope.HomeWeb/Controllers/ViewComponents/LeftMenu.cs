@@ -18,12 +18,13 @@ namespace BluePope.HomeWeb.Controllers.ViewComponents
             ChatHub = chatHub;
         }
         
-        public async Task<IViewComponentResult> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
             var controller = ViewContext.RouteData.Values["Controller"] as string;
             var action = ViewContext.RouteData.Values["Action"] as string;
             
             return View("Default");
         }
+
     }
 }

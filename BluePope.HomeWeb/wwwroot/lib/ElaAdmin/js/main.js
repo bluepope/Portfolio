@@ -7,7 +7,7 @@ $(document).ready(function($) {
 	// Menu Trigger
 	$('#menuToggle').on('click', function(event) {
 		var windowWidth = $(window).width();   		 
-		if (windowWidth<1010) { 
+		if (windowWidth < 1025) { 
 			$('body').removeClass('open'); 
 			if (windowWidth<760){ 
 				$('#left-panel').slideToggle(); 
@@ -31,7 +31,7 @@ $(document).ready(function($) {
 	// Load Resize 
 	$(window).on("load resize", function(event) { 
 		var windowWidth = $(window).width();  		 
-		if (windowWidth<1010) {
+		if (windowWidth<1025) {
 			$('body').addClass('small-device'); 
 		} else {
 			$('body').removeClass('small-device');  

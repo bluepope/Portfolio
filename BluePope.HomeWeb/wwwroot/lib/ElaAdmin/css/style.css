@@ -1384,149 +1384,6 @@ header .form-inline {
 .action-menu .dropdown-toggle::after {
   display: none; }
 
-.flotBar1,
-.flotLine1 {
-  height: 75px; }
-
-.traffic-chart .ct-area {
-  fill-opacity: .7; }
-
-.traffic-chart .ct-series-a .ct-area,
-.traffic-chart .ct-series-a .ct-slice-donut-solid,
-.traffic-chart .ct-series-a .ct-slice-pie {
-  fill: #66bb6a; }
-
-.traffic-chart .ct-series-b .ct-area,
-.traffic-chart .ct-series-b .ct-slice-donut-solid,
-.traffic-chart .ct-series-b .ct-slice-pie {
-  fill: #ef5350; }
-
-.traffic-chart .ct-series-c .ct-area,
-.traffic-chart .ct-series-c .ct-slice-donut-solid,
-.traffic-chart .ct-series-c .ct-slice-pie {
-  fill: #5c6bc0; }
-
-.flotRealtime2 {
-  height: 445px; }
-
-.traffic-chart {
-  height: 34vh; }
-
-#flotBar2 {
-  height: 168px; }
-
-.gauge.g1 svg {
-  fill: #ffa726 !important; }
-
-#area_chart {
-  max-height: 280px; }
-
-#flotLine5 {
-  height: 50px; }
-
-#flotPie1 {
-  height: 90px; }
-  #flotPie1 .pieLabel {
-    display: none; }
-  #flotPie1 .legend tr {
-    padding-bottom: 5px; }
-  #flotPie1 .legendColorBox {
-    float: left;
-    margin: 2px 5px 0 0; }
-    #flotPie1 .legendColorBox > div {
-      border: none !important; }
-  #flotPie1 .legendLabel {
-    color: #868e96;
-    font-family: 'Open Sans';
-    font-size: 12px; }
-
-/* Stats Table */
-.table-stats table {
-  font-family: 'Open Sans'; }
-  .table-stats table th,
-  .table-stats table td {
-    border: none;
-    border-bottom: 1px solid #e8e9ef;
-    color: #868e96;
-    font-size: 12px;
-    font-weight: normal;
-    padding: .75em 1.25em;
-    text-transform: uppercase; }
-    .table-stats table th img,
-    .table-stats table td img {
-      margin-right: 10px;
-      max-width: 45px; }
-    .table-stats table th .name,
-    .table-stats table td .name {
-      color: #343a40;
-      font-size: 14px;
-      text-transform: capitalize; }
-  .table-stats table td {
-    color: #343a40;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: capitalize;
-    vertical-align: middle; }
-
-/* Timeline */
-.timeline li {
-  font-family: 'Open Sans';
-  list-style: none;
-  padding: 5px 0;
-  position: relative; }
-  .timeline li i {
-    border-radius: 50%;
-    color: #fff;
-    font-size: 12px;
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    text-align: center; }
-  .timeline li span {
-    color: #868e96;
-    display: block;
-    font-size: 14px; }
-    .timeline li span a {
-      color: #343a40; }
-  .timeline li .time {
-    font-size: 12px;
-    padding-bottom: 15px; }
-  .timeline li img {
-    margin: 10px 5px 15px 0;
-    max-height: 40px; }
-.timeline .media-body {
-  border-bottom: 1px solid #e8e9ef; }
-
-/* Weather */
-.widget .card-footer {
-  border-top-color: #e8e9ef; }
-.widget .weather-footer li {
-  float: left;
-  position: relative;
-  width: 33.33%; }
-  .widget .weather-footer li:before {
-    content: '';
-    background: #e8e9ef;
-    height: 32px;
-    width: 1px;
-    top: 5px;
-    right: 7.5px;
-    position: absolute; }
-  .widget .weather-footer li:last-child:before {
-    display: none; }
-  .widget .weather-footer li span {
-    display: block; }
-.widget .pt-0 {
-  padding-top: 0 !important; }
-.widget .social .rounded-circle {
-  max-width: 130px;
-  margin-top: -65px; }
-.widget .social .weather-footer i {
-  color: #868e96;
-  font-size: 20px;
-  line-height: 1;
-  margin-top: -3px; }
-
 /* Tabs */
 .nav-tabs a.active {
   color: #555;
@@ -2250,16 +2107,20 @@ footer.site-footer {
         padding-left: 0; }
       aside.left-panel .navbar .navbar-nav li.menu-item-has-children {
         overflow: hidden; }
-        aside.left-panel .navbar .navbar-nav li.menu-item-has-children a:before {
-          content: '';
-          display: none; }
+        
+      body.small-device > aside.left-panel:not(.open-menu) .navbar .navbar-nav li.menu-item-has-children a:before {
+            content: '';
+            display: none;
+        }
         aside.left-panel .navbar .navbar-nav li.menu-item-has-children ul {
           padding-left: 0; }
         aside.left-panel .navbar .navbar-nav li.menu-item-has-children .sub-menu {
-          display: block;
-          left: inherit;
-          right: -160px;
-          top: 0; }
+            display: block;
+            left: inherit;
+            max-width: 170px;
+            right: -160px;
+            top: 0;
+        }
           aside.left-panel .navbar .navbar-nav li.menu-item-has-children .sub-menu li a {
             display: block;
             font-size: 14px;
@@ -2468,9 +2329,10 @@ footer.site-footer {
         text-align: left;
         font-size: 14px; }
     #left-panel .navbar .navbar-nav li.menu-item-has-children.show .sub-menu {
-      position: static !important;
-      padding-left: 50px; }
-
+        position: static !important;
+        max-width: 200px;
+        padding-left: 50px;
+    }
   .orders {
     overflow: hidden; }
 
