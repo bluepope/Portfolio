@@ -22,7 +22,7 @@ namespace BluePope.HomeWeb.Controllers.ViewComponents
         {
             var controller = ViewContext.RouteData.Values["Controller"] as string;
             var action = ViewContext.RouteData.Values["Action"] as string;
-            
+
             return View("Default");
         }
 

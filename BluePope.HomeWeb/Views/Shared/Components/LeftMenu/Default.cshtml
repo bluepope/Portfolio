@@ -1,44 +1,46 @@
-﻿
+﻿@{
+    var controller = (ViewContext.RouteData.Values["Controller"] as string).ToLower();
+    var action = (ViewContext.RouteData.Values["Action"] as string).ToLower();
+}
+<ul class="nav navbar-nav">
+    <li class="menu-title">게시판</li><!-- /.menu-title -->
+    <li><a href="/board/list"><i class="menu-icon fa fa-laptop"></i>일반</a></li>
 
-    <ul class="nav navbar-nav">
-        <li class="menu-title">게시판</li><!-- /.menu-title -->
-        <li><a href="/board/list"><i class="menu-icon fa fa-laptop"></i>일반</a></li>
+    <li class="menu-title">실험실</li><!-- /.menu-title -->
+    <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-cogs"></i>RealTime</a>
+        <ul class="sub-menu children dropdown-menu">
+            <li><i class="fa fa-puzzle-piece"></i><a href="/realtime/chat">채팅</a></li>
+        </ul>
+    </li>
 
-        <li class="menu-title">실험실</li><!-- /.menu-title -->
-        <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>RealTime</a>
-            <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-puzzle-piece"></i><a href="/realtime/chat">채팅</a></li>
-            </ul>
-        </li>
-
-        <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Client Side</a>
-            <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-id-badge"></i><a href="/clientside/vue">VueJs</a></li>
-                <li><i class="fa fa-bars"></i><a href="/clientside/ajaxTest">Ajax Test</a></li>
-                <li><i class="fa fa-id-card-o"></i><a href="/clientside/DragAndDropMultipleupload">드래그앤드롭</a></li>
-            </ul>
-        </li>
+    <li class="menu-item-has-children dropdown @(controller == "clientside" ? "active show" : "")">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-table"></i>Client Side</a>
+        <ul class="sub-menu children dropdown-menu @(controller == "clientside" ? "show" : "")">
+            <li class="@(action == "vue" ? "active" : "")"><i class="fa fa-id-badge"></i><a href="/clientside/vue">VueJs</a></li>
+            <li><i class="fa fa-bars"></i><a href="/clientside/ajaxTest">Ajax Test</a></li>
+            <li><i class="fa fa-id-card-o"></i><a href="/clientside/DragAndDropMultipleupload">드래그앤드롭</a></li>
+        </ul>
+    </li>
 
 
-        <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>실험실</a>
-            <ul class="sub-menu children dropdown-menu">
-                <li><i class="fa fa-fort-awesome"></i><a href="/lab/BarCodeGenerator">바코드 생성</a></li>
-                <li><i class="ti-themify-logo"></i><a href="/lab/DeliveryCheck">택배 조회</a></li>
-                <li><i class="fa fa-exclamation-triangle"></i><a href="/lab/WebFileDownload">웹 파일 다운로드 테스트</a></li>
-                <li><i class="fa fa-spinner"></i><a href="/lab/DbTableList">MySql 테이블 모델 만들기</a></li>
-                <li><i class="fa fa-fire"></i><a href="/lab/FormContentTest">FormContent</a></li>
-            </ul>
-            <!--
-    <ul class="sub-menu children dropdown-menu">
-        
-    </ul>
-
-    -->
-        </li>
+    <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <i class="menu-icon fa fa-tasks"></i>실험실</a>
+        <ul class="sub-menu children dropdown-menu">
+            <li><i class="fa fa-fort-awesome"></i><a href="/lab/BarCodeGenerator">바코드 생성</a></li>
+            <li><i class="ti-themify-logo"></i><a href="/lab/DeliveryCheck">택배 조회</a></li>
+            <li><i class="fa fa-exclamation-triangle"></i><a href="/lab/WebFileDownload">웹 파일 다운로드 테스트</a></li>
+            <li><i class="fa fa-spinner"></i><a href="/lab/DbTableList">MySql 테이블 모델 만들기</a></li>
+            <li><i class="fa fa-fire"></i><a href="/lab/FormContentTest">FormContent</a></li>
+        </ul>
         <!--
+        <ul class="sub-menu children dropdown-menu">
+
+        </ul>
+
+        -->
+    </li>
+    <!--
     <li><a href="page-register.html"><i class="menu-icon fa fa-sign-in"></i> Register</a></li>
     -->
-    </ul>
+</ul>

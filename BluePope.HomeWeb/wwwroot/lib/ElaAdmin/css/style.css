@@ -119,9 +119,9 @@ aside.left-panel {
         font-weight: 700;
         line-height: 30px;
         margin-top: 10px;
-        padding: 0;
         text-transform: uppercase;
         width: 100%;
+        padding: 5px 25px 5px 25px;
     }
 
     .navbar .navbar-nav {
@@ -131,13 +131,17 @@ aside.left-panel {
     }
 
         .navbar .navbar-nav > li {
-            padding-left: 25px;
-            padding-right: 25px;
+            width:100%;
         }
 
-            .navbar .navbar-nav > li.active {
-                background: #fafafa;
-            }
+        .navbar .navbar-nav li.active > a,
+        .navbar .navbar-nav li.active > a:focus,
+        .navbar .navbar-nav li.active > a:hover,
+        .navbar .navbar-nav li.active > a > i,
+        .navbar .navbar-nav li.active > i {
+            font-weight: bold !important;
+            color: #ff2e44 !important;
+        }
 
         .navbar .navbar-nav li {
             width: 100%;
@@ -153,12 +157,12 @@ aside.left-panel {
             }
 
             .navbar .navbar-nav li > a {
-                background: none !important;
+                background: none;
                 color: #607d8b;
                 display: inline-block;
                 font-size: 14px;
                 line-height: 26px;
-                padding: 5px 0;
+                padding: 5px 25px 5px 25px;
                 position: relative;
                 width: 100%;
             }
@@ -170,7 +174,7 @@ aside.left-panel {
                 .navbar .navbar-nav li > a .menu-icon {
                     color: #607d8b;
                     float: left;
-                    margin-top: 8px;
+                    margin-top: 9px;
                     width: 35px;
                     text-align: left;
                     z-index: 9;
@@ -200,7 +204,7 @@ aside.left-panel {
                         content: "";
                         position: absolute;
                         top: 16px;
-                        right: 0;
+                        right: 35px;
                         width: 8px;
                         height: 8px;
                         border-style: solid;
@@ -222,7 +226,7 @@ aside.left-panel {
                     -webkit-box-shadow: none;
                     box-shadow: none;
                     overflow-y: hidden;
-                    padding: 0 0 0 15px;
+                    padding: 0 25px 0 35px;
                 }
 
                     .navbar .navbar-nav li.menu-item-has-children .sub-menu li {
@@ -267,12 +271,6 @@ aside.left-panel {
                     opacity: 1;
                     position: static !important;
                 }
-
-        .navbar .navbar-nav > .active > a,
-        .navbar .navbar-nav > .active > a:focus,
-        .navbar .navbar-nav > .active > a:hover {
-            color: #03a9f3;
-        }
 
 .navbar-nav li span.count {
     background: #a9d86e;
@@ -972,8 +970,6 @@ footer.site-footer {
                 }
 
             aside.left-panel .navbar .navbar-nav li > a {
-                max-width: 60px;
-                padding-left: 0;
             }
 
             aside.left-panel .navbar .navbar-nav li.menu-item-has-children {
@@ -995,6 +991,7 @@ footer.site-footer {
         width: 200px;
         right: -200px;
         top: 0;
+        padding: 5px 25px 5px 25px;
     }
 
         aside.left-panel .navbar .navbar-nav li.menu-item-has-children .sub-menu li a {
@@ -1052,6 +1049,7 @@ footer.site-footer {
             width: 100%;
             max-width: 100%;
             font-size: 14px;
+            padding: 5px 25px 5px 25px;
         }
 
             aside.left-panel.open-menu .navbar .navbar-nav li > a .menu-icon {
@@ -1107,6 +1105,10 @@ footer.site-footer {
             display: block !important;
         }
 
+        .navbar .navbar-nav li.menu-item-has-children .sub-menu i {
+            top: 14px;
+        }
+
         .navbar .main-menu {
             float: none;
             padding-bottom: 70px;
@@ -1145,6 +1147,7 @@ footer.site-footer {
         #left-panel .navbar .navbar-nav li > a {
             max-width: inherit;
             font-size: 14px;
+            padding: 5px 25px 5px 35px;
         }
 
             #left-panel .navbar .navbar-nav li > a .menu-icon {
@@ -1155,7 +1158,7 @@ footer.site-footer {
         #left-panel .navbar .navbar-nav li.menu-item-has-children.show .sub-menu {
             position: static !important;
             width: 100%;
-            padding-left: 0px;
+            padding: 5px 25px 5px 35px;
         }
 }
 
