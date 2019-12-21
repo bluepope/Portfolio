@@ -1,4 +1,110 @@
-﻿.table-common {
+﻿body {
+    font-size: 12px;
+}
+
+#main-wrapper > .header {
+    background-color: #656F7B;
+}
+
+.navbar-collapse .nav-link > i {
+    color: #fff;
+}
+
+.navbar-nav > .nav-item > .nav-link {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.page-wrapper {
+    padding-left: 20px;
+}
+
+.sidebar-nav > ul > li.active > a,
+.sidebar-nav > ul > li.active > a i,
+.sidebar-nav ul li a.active {
+    color: #D73D49;
+    font-weight: bold;
+}
+
+.header .top-navbar {
+    min-height: 40px;
+}
+
+    .header .top-navbar .navbar-header {
+        line-height: 35px;
+    }
+
+        .header .top-navbar .navbar-header .navbar-brand b {
+            line-height: 35px;
+        }
+
+    .header .top-navbar .navbar-nav > .nav-item > .nav-link {
+        line-height: 30px;
+    }
+
+.sidebar-nav ul li a {
+    color: #5A5A5A;
+}
+
+#sidebarnav > li > a {
+    border-top: 1px solid #F0F0F0;
+    font-size: 16px;
+}
+
+#sidebarnav > li.active > a {
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.mini-sidebar .sidebar-nav #sidebarnav > li.active a {
+    border-bottom: none;
+}
+
+
+#sidebarnav > li > ul > li > a {
+    font-size: 13px !important;
+}
+
+.alert {
+    margin-bottom: 0;
+}
+
+.alert-top-button {
+    color: #3B3B3B;
+    background-color: #fff;
+    border-color: #C3C4C5;
+    font-size: 14px;
+    padding: 4px 12px 4px 12px;
+    font-weight: bold;
+}
+
+.navbar-collapse .dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.mini-sidebar .sidebar-nav #sidebarnav > li:hover a {
+    background-color: #E0E3EA;
+}
+
+.menu-noti {
+    padding: 3px 10px;
+    line-height: 13px;
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 90%;
+    border-radius: 60px;
+    background-color: #D4222E;
+}
+
+#sidebarnav > li > a .menu-noti {
+    margin-top: 4px;
+}
+
+.form-control {
+    font-size: 12px;
+}
+
+.table-common {
     width: 100%;
     margin: 0px;
     border-collapse: collapse;
@@ -103,6 +209,11 @@
     border-radius: 3px;
 }
 
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 900px;
+    }
+}
 
 input.date {
     display: none;
@@ -123,4 +234,163 @@ input.date {
 
 .select2-container {
     width: 100%;
+}
+
+.list-group-item {
+    padding: 5px;
+}
+
+code, kbd, pre, samp {
+    font-size: 100%;
+    font-family: 'Malgun Gothic';
+    margin-bottom: 0;
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    color: #000;
+}
+
+.text-cancel {
+    text-decoration: line-through;
+    color: #f53030;
+}
+
+label {
+    margin-bottom: 0;
+}
+
+.calandar {
+}
+
+    .calandar .weekday1 {
+        color: red;
+    }
+
+    .calandar .weekday7 {
+        color: blue;
+    }
+
+    .calandar .cal-info {
+        height: 70px;
+        position: relative;
+    }
+
+        .calandar .cal-info a {
+            cursor: pointer;
+        }
+
+        .calandar .cal-info > .cal-day {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .calandar .cal-info > .cal-status {
+            position: absolute;
+            top: 35px;
+            left: 0px;
+            width: 100%;
+            height: 40px;
+            font-size: 12px;
+            font-weight: normal;
+            text-align: center;
+        }
+
+        .calandar .cal-info > .cal-time {
+            position: absolute;
+            top: 7px;
+            left: 35px;
+            width: 90px;
+            height: 25px;
+            text-align: left;
+        }
+
+
+    .calandar .holiday {
+        color: red;
+    }
+
+    .calandar .action {
+        color: orange;
+    }
+
+    .calandar .action-noapply {
+        font-weight: bold;
+        color: orangered;
+    }
+
+    .calandar .alarm {
+        font-weight: bold;
+        color: blue;
+    }
+
+.applyer-list > li {
+    height: 30px;
+}
+
+.system-link {
+    background-color: #E0E3EA;
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    padding: 0;
+}
+
+    .dropdown-menu > li > a {
+        font-size: 12px;
+        padding: 3px 5px 3px 5px;
+    }
+
+
+    .dropdown-menu > li:hover {
+        background-color: #656F7B;
+    }
+
+        .dropdown-menu > li:hover > a {
+            color: white;
+        }
+
+
+.blinking {
+    -webkit-animation: blink 1s ease-in-out infinite alternate;
+    -moz-animation: blink 1s ease-in-out infinite alternate;
+    animation: blink 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes blink {
+    0% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes blink {
+    0% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

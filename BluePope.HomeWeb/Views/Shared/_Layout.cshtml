@@ -1,52 +1,56 @@
-﻿<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="">
- <!--<![endif]-->
+﻿<!DOCTYPE html>
+<html>
 <head>
     <partial name="~/Views/Shared/CommonHeader.cshtml" />
-</head>
 
-<body>
-    <aside id="left-panel" class="left-panel">
-        <nav class="navbar navbar-expand-sm navbar-default">
-            <div class="main-menu collapse navbar-collapse">
+    @RenderSection("Scripts", required: false)
+</head>
+<body class="fix-header fix-sidebar">
+    <div id="main-wrapper">
+        <div class="header">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">
+                        <b><img src="/images/logo.png" alt="logo" /></b>
+                        <span><img src="/images/logo-text.png" alt="text" /></span>
+                    </a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav mr-auto mt-md-0">
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up" href="javascript:void(0)"><i class="fa fa-list"></i></a> </li>
+                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down" href="javascript:void(0)"><i class="fa fa-list"></i></a> </li>
+                    </ul>
+                    <ul class="navbar-nav my-lg-0">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="alert alert-top-button"><i class="fa fa-user-circle"></i> @User.Identity.Name 님</span></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="dropdown-user">
+                                        <li><a href="/login/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li><a class="btn btn-sm btn-primary" href="/login/login">Login</a></li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="left-sidebar">
+            <div class="scroll-sidebar">
                 @await Component.InvokeAsync("LeftMenu")
             </div>
-        </nav>
-    </aside>
-
-    <div id="right-panel" class="right-panel">
-        <header id="header" class="header">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">HyunMo</a>
-                <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
-
-                <div class="header-menu">
-                    @await Component.InvokeAsync("HeaderMenu")
-                    
-                </div>
-            </div>
-        </header>
-        <div class="content">
+        </div>
+        <!-- End Left Sidebar  -->
+        <!-- Page wrapper  -->
+        <div class="page-wrapper">
             @RenderBody()
         </div>
-        <div class="clearfix"></div>
-
-        <footer class="site-footer">
-            <div class="footer-inner bg-white">
-                <div class="row">
-                    <div class="col-sm-6">
-                        Copyright &copy; 2018 Ela Admin
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        Designed by <a href="https://colorlib.com">Colorlib</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <!-- End Page wrapper  -->
     </div>
 </body>
 </html>
