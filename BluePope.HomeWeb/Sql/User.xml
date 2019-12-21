@@ -11,7 +11,7 @@ SELECT
   ,UPDATE_DATE
   ,ROLES
 FROM
-  USERINFO
+  T_USER
 WHERE
   USER_ID = @USER_ID
     ]]>
@@ -30,7 +30,8 @@ WHERE
 	,A.REG_USER
 	,A.REG_USERNAME
 	,A.REG_DATE
-FROM board A
+FROM
+	T_board A
 WHERE
 	A.SEQ = @SEQ
     ]]>
@@ -38,7 +39,7 @@ WHERE
 
   <insert id="Insertboard">
     <![CDATA[
-INSERT INTO board (
+INSERT INTO T_BOARD (
 	SEQ
 	,BOARD_TYPE
 	,TITLE
@@ -68,7 +69,7 @@ SELECT
 
   <update id="Updateboard">
     <![CDATA[
-UPDATE board
+UPDATE T_BOARD
 SET
 	BOARD_TYPE = @BOARD_TYPE
 	,TITLE = @TITLE
@@ -87,7 +88,7 @@ WHERE
 
   <delete id="Deleteboard">
     <![CDATA[
-DELETE FROM board
+DELETE FROM T_BOARD
 WHERE
 	SEQ = @SEQ
     ]]>

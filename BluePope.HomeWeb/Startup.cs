@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BluePope.HomeWeb.Models.Login;
+using BluePope.HomeWeb.Models.User;
 using BluePope.HomeWeb.Services;
 using BluePope.HomeWeb.Services.Server;
 using BluePope.HomeWeb.Services.Telegram;
@@ -53,14 +54,6 @@ namespace BluePope.HomeWeb
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
             });
 
-            //services.AddTransient //모든 요청에 대해 생성 -- TagHelper 등으로 생성시 요청마다 
-            //services.AddScoped //연결시 1회 - 컨트롤러 생성자 생각
-            //services.AddSingleton //1회 생성 후 유지됨
-
-
-            //쿠키인증시 백엔드 변경점을 체크하기 위한 커스텀 인증 이벤트
-            services.AddScoped<CustomCookieAuthenticationEvents>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -78,10 +71,9 @@ namespace BluePope.HomeWeb
                 x.MultipartBodyLengthLimit = long.MaxValue; // In case of multipart
             });
 
+            //사용자 설정 가져오기
             var userConfig = UserSettings.GetFromJson();
-
             MySqlDapperHelper.ConnectionString = userConfig.ConnectionString["MySql"];
-
             if (userConfig.TelegramBot != null)
             {
                 services.Configure<BotConfiguration>(options =>
@@ -100,6 +92,23 @@ namespace BluePope.HomeWeb
                 MReCaptcha.SiteKey = userConfig.ReCaptcha.SiteKey;
                 MReCaptcha.PrivateKey = userConfig.ReCaptcha.PrivateKey;
             }
+
+            //services.AddTransient //모든 요청에 대해 생성 -- TagHelper 등으로 생성시 요청마다 
+            //services.AddScoped //연결시 1회 - 컨트롤러 생성자 생각
+            //services.AddSingleton //1회 생성 후 유지됨
+
+            //쿠키인증시 백엔드 변경점을 체크하기 위한 커스텀 인증 이벤트
+            services.AddScoped<CustomCookieAuthenticationEvents>();
+
+            //httpcontext inject
+            services.AddHttpContextAccessor();
+
+            //로그인정보
+            services.AddScoped<IUserinfo, MLoginUser>();
+
+            //Db
+            services.AddScoped<IMySqlDapperHelper, MySqlDapperHelper>();
+
             //services.AddSingleton<ITimerBatchService, TimerBatchService>(); //타이머 싱글톤
         }
 
@@ -133,9 +142,8 @@ namespace BluePope.HomeWeb
             //app.UseCookiePolicy(); //쿠키정책 (사용허가 승인같은거?) 사용여부
             //app.UseSession(); //세션쓰려면 session 관련 nuget 에서 추가해야함
 
-
+            app.UseAuthentication(); //이게 먼저와야 인증 처리됨
             app.UseAuthorization();
-            app.UseAuthentication();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

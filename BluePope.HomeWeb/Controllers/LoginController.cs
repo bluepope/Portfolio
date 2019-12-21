@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BluePope.HomeWeb.Models.Login;
+using BluePope.HomeWeb.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -14,15 +15,15 @@ namespace BluePope.HomeWeb.Controllers
     [Authorize]
     public class LoginController : Controller
     {
-        [AllowAnonymous]
-        public IActionResult Index()
+        IUserinfo _user;
+
+        public LoginController(IUserinfo loginUser)
         {
-            return Redirect("/login/login");
+            _user = loginUser;
         }
 
         [AllowAnonymous]
-        [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index()
         {
             ViewData["sitekey"] = MReCaptcha.SiteKey;
             return View();
@@ -31,19 +32,18 @@ namespace BluePope.HomeWeb.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("/login/login")]
-        public async Task<IActionResult> GetLogin(string user_id, string user_pw, string token)
+        public async Task<IActionResult> Login(string user_id, string user_pw, string token)
         {
             if (User.Identity != null && User.Identity.IsAuthenticated == true)
                 Redirect("/");
-
+            
             try
             {
                 var verify = await MReCaptcha.RecaptchaVerify(token);
 
                 if (verify.Success == false || verify.Score < 0.3F)
                 {
-                    return Json(new { msg = string.Join(',', verify.ErrorCodes) });
+                    //return Json(new { msg = string.Join(',', verify.ErrorCodes) });
                 }
 
                 var login = await MUserinfo.GetLogin(user_id, user_pw);
@@ -74,7 +74,7 @@ namespace BluePope.HomeWeb.Controllers
             }
         }
 
-        public async Task<IActionResult> LogOut()
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

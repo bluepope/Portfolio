@@ -7,8 +7,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using BluePope.Lib.DataBase;
 using BluePope.HomeWeb.Models.Board;
-using BluePope.HomeWeb.Models.Login;
 using Newtonsoft.Json;
+using BluePope.HomeWeb.Models.User;
 
 namespace BluePope.HomeWeb.Controllers
 {

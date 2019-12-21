@@ -1,4 +1,6 @@
-﻿using BluePope.Lib.Crypter;
+﻿using BluePope.HomeWeb.Models.User;
+using BluePope.Lib.Crypter;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +10,12 @@ namespace BluePope.HomeWeb.Models.Login
 {
     public class MLoginUser : IUserinfo
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         /// <summary>
         /// 고유 아이디
         /// </summary>
-        public int UNIQUE_ID { get; set; }
+        public uint UNIQUE_ID { get; set; }
         /// <summary>
         /// 아이디
         /// </summary>
@@ -22,9 +26,14 @@ namespace BluePope.HomeWeb.Models.Login
         public string ROLES { get; set; }
         public string EMAIL { get; set; }
 
-        public MLoginUser()
+        public MLoginUser(IHttpContextAccessor httpContextAccessor)
         {
-            
+            _httpContextAccessor = httpContextAccessor;
+
+            if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated == false)
+                return;
+
+            this.USER_NAME = _httpContextAccessor.HttpContext.User.Identity.Name;
         }
     }
 }

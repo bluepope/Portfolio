@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BluePope.Lib.DataBase
 {
-    public class MySqlDapperHelper : IDisposable
+    public class MySqlDapperHelper : IMySqlDapperHelper, IDisposable
     {
         public static string ConnectionString { get; set; }
         static Dictionary<string, SqlManager> _sqlManager = new Dictionary<string, SqlManager>();
