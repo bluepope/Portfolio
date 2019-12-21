@@ -17,7 +17,7 @@ namespace BluePope.HomeWeb.Controllers
     {
         MUserinfo _login;
 
-        public BoardController(MUserinfo login)
+        public BoardController()//MUserinfo login
         {
         }
 

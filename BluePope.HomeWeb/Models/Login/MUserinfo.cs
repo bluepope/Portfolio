@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BluePope.HomeWeb.Models.Login
 {
-    public class MUserinfo
+    public class MUserinfo : IUserinfo
     {
         /// <summary>
         /// 고유 아이디
@@ -22,7 +22,7 @@ namespace BluePope.HomeWeb.Models.Login
         public DateTime REG_DATE { get; set; }
         public DateTime? UPDATE_DATE { get; set; }
         public string ROLES { get; set; }
-
+        public string EMAIL { get; set; }
 
         public async static Task<MUserinfo> GetLogin(string user_id, string pw)
         {

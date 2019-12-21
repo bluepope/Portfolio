@@ -56,7 +56,7 @@ namespace BluePope.HomeWeb.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, login.USER_ID));
                 identity.AddClaim(new Claim(ClaimTypes.Name, login.USER_NAME));
                 identity.AddClaim(new Claim(ClaimTypes.Role, login.ROLES));
-                identity.AddClaim(new Claim("NextCheckDate", DateTime.Now.AddMinutes(1).ToString("yyyyMMddHHmmss"), typeof(DateTime).ToString()));
+                identity.AddClaim(new Claim(WebExtention.GetCustomClaimTypeString(WebExtention.CustomClaimType.NextCheckTime), DateTime.Now.AddMinutes(1).ToString("yyyyMMddHHmmss"), typeof(DateTime).ToString()));
 
                 var principal = new ClaimsPrincipal(identity);
                 

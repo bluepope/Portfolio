@@ -20,14 +20,12 @@ $(document).ready(function ($) {
 		}
 
 	});
-
+	/*
 	$(".menu-item-has-children.dropdown").each(function () {
-		$(this).on('click', function () {
-			var $temp_text = $(this).children('.dropdown-toggle').html();
-			$(this).children('.sub-menu').prepend('<li class="subtitle">' + $temp_text + '</li>');
-		});
+		var $temp_text = $(this).children('.dropdown-toggle').html();
+		$(this).children('.sub-menu').prepend('<li class="subtitle">' + $temp_text + '</li>');
 	});
-
+	*/
 	// Load Resize 
 	$(window).on("load resize", function (event) {
 		var w = $(window).width();

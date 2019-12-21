@@ -9,13 +9,10 @@ using System.Threading.Tasks;
 
 namespace BluePope.HomeWeb.Controllers.ViewComponents
 {
-    public class LeftMenu : ViewComponent
+    public class HeaderMenu : ViewComponent
     {
-        //static IHubContext<ChatHub> ChatHub;
-
-        public LeftMenu()//IHubContext<ChatHub> chatHub
+        public HeaderMenu()
         {
-            //ChatHub = chatHub;
         }
         
         public IViewComponentResult Invoke()
