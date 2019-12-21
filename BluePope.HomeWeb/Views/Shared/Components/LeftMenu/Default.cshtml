@@ -15,7 +15,7 @@
                     {
                         <li>
                             <a class="@(subMenu.isActive ? "active" : "")" href="/@item.ControllerName/@subMenu.ActionName">
-                                · @subMenu.Name
+                                <i class="fa fa-caret-right "></i> @subMenu.Name
                                 @if (subMenu.NotiCount > 0)
                                 {
                                     <span class="badge badge-danger menu-noti">@subMenu.NotiCount</span>
