@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mapper>
+  <select id="GetUserInfoAll">
+    <![CDATA[
+SELECT
+  UNIQUE_ID
+  ,USER_ID
+  ,PASSWORD
+  ,USER_NAME
+  ,REG_DATE
+  ,UPDATE_DATE
+  ,ROLES
+FROM
+  T_USER
+WHERE
+  USER_ID = @USER_ID
+    ]]>
+  </select>
+
+  <select id="Getboard">
+  <![CDATA[
+	A.SEQ
+	,A.BOARD_TYPE
+	,A.TITLE
+	,A.CONTENTS
+	,A.DUP_KEY
+	,A.VIEW_CNT
+	,A.STATUS_FLAG
+	,A.REG_IP
+	,A.REG_USER
+	,A.REG_USERNAME
+	,A.REG_DATE
+FROM
+	T_board A
+WHERE
+	A.SEQ = @SEQ
+    ]]>
+  </select>
+
+  <insert id="Insertboard">
+    <![CDATA[
+INSERT INTO T_BOARD (
+	SEQ
+	,BOARD_TYPE
+	,TITLE
+	,CONTENTS
+	,DUP_KEY
+	,VIEW_CNT
+	,STATUS_FLAG
+	,REG_IP
+	,REG_USER
+	,REG_USERNAME
+	,REG_DATE
+)
+SELECT
+	@SEQ
+	,@BOARD_TYPE
+	,@TITLE
+	,@CONTENTS
+	,@DUP_KEY
+	,@VIEW_CNT
+	,@STATUS_FLAG
+	,@REG_IP
+	,@REG_USER
+	,@REG_USERNAME
+	,@REG_DATE
+    ]]>
+  </insert>
+
+  <update id="Updateboard">
+    <![CDATA[
+UPDATE T_BOARD
+SET
+	BOARD_TYPE = @BOARD_TYPE
+	,TITLE = @TITLE
+	,CONTENTS = @CONTENTS
+	,DUP_KEY = @DUP_KEY
+	,VIEW_CNT = @VIEW_CNT
+	,STATUS_FLAG = @STATUS_FLAG
+	,REG_IP = @REG_IP
+	,REG_USER = @REG_USER
+	,REG_USERNAME = @REG_USERNAME
+	,REG_DATE = @REG_DATE
+WHERE
+	SEQ = @SEQ
+    ]]>
+  </update>
+
+  <delete id="Deleteboard">
+    <![CDATA[
+DELETE FROM T_BOARD
+WHERE
+	SEQ = @SEQ
+    ]]>
+  </delete>
+</mapper>

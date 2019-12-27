@@ -1,0 +1,9 @@
+﻿@inject IUserinfo loginUser
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@loginUser.USER_NAME
+<div>
+    Admin: @User.IsInRole("ADMIN")
+</div>

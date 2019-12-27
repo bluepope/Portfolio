@@ -1,0 +1,183 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>HomeWeb</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\</OutputPath>
+    <WarningLevel>2</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Sql\Board.xml" />
+    <None Remove="Sql\User.xml" />
+    <None Remove="TypeScript\common\ButtonProgress.ts" />
+    <None Remove="TypeScript\common\DragDrop.ts" />
+    <None Remove="TypeScript\common\main.ts" />
+    <None Remove="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sql\Board.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sql\User.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
+    <None Include="Views\Shared\Components\LeftMenu\Default.cshtml" />
+    <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\advance-widget.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\amchart.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\badge.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\booking-system.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\breadcrumb.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\button.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\calendar.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\card.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\carousel.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\chart.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\chartist.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\chat.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\compose-email.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\data-table.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\datamap.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\error.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\favourite_menu.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\flot-chart.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\font.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\fonts.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\footer.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\form-validation.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\forms.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\global.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\gmap.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\header.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\invoice-edit.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\invoice.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\knob.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\login.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\menu-upload.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\mixins.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\modal.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\morris-chart.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\nestable.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\order-list.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\order-progress.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\pagination.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\panel.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\preloader.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\products_1.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\products_2.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\products_3.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\profile-widget.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\profile.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\progress-bar.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\recent-comments.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\recent-message.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\responsive.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\scrollable.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\search.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\sidebar.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\social-media-stats.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\style.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\tab.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\table-export.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\table.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\timeline.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\todo-list.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\ui-block-quote.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\ui-element-basic.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\ui-user-card.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\variable.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\vector-map.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\vertical-carousel.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\weather.less" />
+    <None Include="wwwroot\lib\ElaAdmin\css\less\widget-stat.less" />
+    <None Include="wwwroot\lib\ElaAdmin\js\scripts.js" />
+    <None Include="wwwroot\lib\ElaAdmin\js\sidebarmenu.js" />
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont3e6e.svg" />
+    <None Include="wwwroot\lib\font-awesome\fonts\fontawesome-webfont3e6e.woff2" />
+    <None Include="wwwroot\lib\jquery.fileDownload\jquery.fileDownload.js" />
+    <None Include="wwwroot\lib\jquery.fileDownload\jquery.fileDownload.min.js" />
+    <None Include="wwwroot\lib\select2\dist\js\i18n\ko.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.full.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.full.min.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.js" />
+    <None Include="wwwroot\lib\select2\dist\js\select2.min.js" />
+    <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.js" />
+    <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.min.js" />
+    <None Include="wwwroot\lib\sticky-kit\sticky-kit.min.js" />
+    <None Include="wwwroot\lib\vue\dist\README.md" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.dev.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.common.prod.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.browser.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.browser.min.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.esm.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.min.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.dev.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.common.prod.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.esm.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.js" />
+    <None Include="wwwroot\lib\vue\dist\vue.runtime.min.js" />
+    <None Include="wwwroot\lib\vue\LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BluePope.Lib\BluePope.Lib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="TypeScript\common\ButtonProgress.ts" />
+    <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
+    <TypeScriptCompile Include="TypeScript\common\main.ts" />
+    <TypeScriptCompile Include="TypeScript\jquery\JQueryAjaxProgress.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NetBarcode" Version="1.0.7" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Telegram.Bot" Version="15.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="webdriver\chromedriver">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile>wwwroot\js\site.js</TypeScriptOutFile>
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+
+</Project>

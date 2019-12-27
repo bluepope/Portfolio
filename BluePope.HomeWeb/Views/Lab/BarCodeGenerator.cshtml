@@ -1,0 +1,71 @@
+﻿@{ 
+    var barcodeNumber = "8801234543125";
+}
+<div>
+    <table class="table table-common">
+        <tr>
+            <th>생성구분</th>
+            <td>
+                @Html.TextBox("barcodeNumber", barcodeNumber, new { @class = "form-control", maxLength = 13 })
+            </td>
+            <th>생성타입</th>
+            <td>
+                <select id="imageType" class="form-control">
+                    <option value="base64">base64(png)</option>
+                    <option value="png">png</option>
+                </select>
+            </td>
+            <td>
+                <button id="btn1" class="btn btn-sm btn-primary float-left" style="margin-left:15px;">바코드 생성</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="div1"></div>
+
+<script>
+    $("#btn1").click(function () {
+        var barcodeNumber = $("#barcodeNumber").val();
+        var imageType = $("#imageType").val();
+
+        var div = document.createElement("div");
+        div.classList.add("alert");
+        div.classList.add("alert-success");
+        div.innerHTML = "바코드 생성";
+
+        if (barcodeNumber.length < 2) {
+            alert("바코드를 입력해주세요");
+        }
+
+        if (imageType == "base64") {
+            $.ajax({
+                type: "GET",
+                url: "GetBarcodeImage",
+                dataType: "text",
+                data: {
+                    imageType: imageType,
+                    barcodeNumber: barcodeNumber
+                },
+                success: function (data, status, xhr) {
+                    var img = document.createElement("img");
+                    img.src = data;
+
+                    div.appendChild(img);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    ajaxCommonError(xhr);
+                }
+            });
+        }
+        else {
+            var img = document.createElement("img");
+            img.src = "GetBarcodeImage?imageType=" + imageType + "&barcodeNumber=" + barcodeNumber;
+
+            div.appendChild(img);
+        }
+
+        $("#div1").append(div);
+
+    });
+</script>

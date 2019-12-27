@@ -1,0 +1,37 @@
+﻿<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/png" sizes="24x24" href="/favicon.ico">
+<title>Portpolio</title>
+
+@* Css 영역 *@
+@if (Context.Connection.IsLocal())
+{
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+}
+else
+{
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+}
+<link href="~/lib/ElaAdmin/css/helper.css" rel="stylesheet" />
+<link href="~/lib/ElaAdmin/css/style.css" rel="stylesheet" />
+<link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/css/site.css" rel="stylesheet" />
+
+@* script 영역 *@
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+<!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/slimscroll/jquery.slimscroll.js"></script>
+<script src="~/lib/sticky-kit/sticky-kit.min.js"></script>
+
+<script src="~/lib/ElaAdmin/js/sidebarmenu.js"></script>
+<script src="~/lib/ElaAdmin/js/scripts.js"></script>
+
+<script src="~/lib/vue/dist/vue.min.js"></script>
+
+<script src="~/js/site.js" asp-append-version="true"></script>
