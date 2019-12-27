@@ -237,7 +237,8 @@ unzip NanumFont_TTF_ALL.zip
 
             if (tableName.IsNull())
             {
-                return Json(MMySqlDbTable.GetTableList(schemaName));
+                var m = await MMySqlDbTable.GetTableList(schemaName);
+                return Json(m);
             }
 
             var list = await MMySqlDbTable.GetTableColumnsList(schemaName, tableName);

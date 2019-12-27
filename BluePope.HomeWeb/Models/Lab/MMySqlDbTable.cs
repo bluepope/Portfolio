@@ -26,6 +26,9 @@ namespace BluePope.HomeWeb.Models.Lab
         {
             get
             {
+                if (this.DATA_TYPE.IsNull())
+                    return null;
+
                 string data_type = this.DATA_TYPE.ToLower();
                     
                 if (data_type.In("smallint", "tinyint"))

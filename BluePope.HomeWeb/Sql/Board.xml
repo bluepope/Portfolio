@@ -2,7 +2,7 @@
 <mapper>
   <update id="UpdateViewCount">
     <![CDATA[
-UPDATE BOARD
+UPDATE T_BOARD
 SET VIEW_CNT = VIEW_CNT + 1
 WHERE
   BOARD_TYPE = @board_type
@@ -25,7 +25,7 @@ SELECT
 	,A.REG_USERNAME
 	,A.REG_DATE
 FROM
-  BOARD A
+  T_BOARD A
 WHERE
 	A.BOARD_TYPE = @board_type
   AND A.SEQ = @seq
@@ -39,7 +39,7 @@ ORDER BY
 SELECT
 	COUNT(A.SEQ) AS CNT
 FROM
-  BOARD A
+  T_BOARD A
 WHERE
 	A.BOARD_TYPE = @board_type
     ]]>
@@ -58,7 +58,7 @@ SELECT
 	,A.REG_USERNAME
 	,A.REG_DATE
 FROM
-  BOARD A
+  T_BOARD A
 WHERE
 	A.BOARD_TYPE = @board_type
 ORDER BY
@@ -109,7 +109,7 @@ SELECT
 	,A.REG_USERNAME
 	,A.REG_DATE
 FROM
-  BOARD A
+  T_BOARD A
 WHERE
 	A.BOARD_TYPE = @board_type
   AND A.SEQ = @seq

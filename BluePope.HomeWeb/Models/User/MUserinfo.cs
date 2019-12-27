@@ -26,7 +26,7 @@ namespace BluePope.HomeWeb.Models.User
 
         public async static Task<MUserinfo> GetLogin(string user_id, string pw)
         {
-            var model = (await MySqlDapperHelper.Instance.GetQueryFromXmlAsync<MUserinfo>("Sql/User.xml", "GetUserInfoAll", new { user_id = user_id.ToLower() })).FirstOrDefault();
+            var model = (await MySqlDapperHelper.Instance.GetQueryFromXmlAsync<MUserinfo>("Sql/User.xml", "GetUserInfoAll", new { user_id = user_id.IsNull("").ToLower() })).FirstOrDefault();
 
             if (model == null)
             {
