@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BluePope.Lib.DataBase
 {
-    public interface IMySqlDapperHelper
+    public interface IDapperHelper
     {
         /// <summary>
         /// 트랜잭션 시작

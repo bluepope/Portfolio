@@ -16,14 +16,15 @@
 - [x] selenium chrome 을 이용한 web 크롤링
 - [x] http client 를 이용한 다운로드 (단순 비동기, progress bar 형태 필요할 듯)
 - [x] HttpClient 비동기 형태로 업로드 / 다운로드 progress 처리 기능
-- [x] google reCAPTCHA v3 인증
 - [x] docker 관리 - docker toolbox 로 기본적인 테스트는 하였으나 wsl2 docker 나올때까지 일단 대기
-
+- [x] Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation 추가하고 디버그시에만 실시간 cshtml 컴파일 반영 처리 (Project 파일 및 Statup 파일)
+- [x] xss 공격에 대한 처리 - Ganss.XSS.HtmlSanitizer 적용
 # 개발할 것
 - [ ] oauth2를 이용한 가입 / 로그인 - google, facebook 정도만
-- [ ] .vue 형태로 component 개발 - datetime picker, select2
-- [ ] xss 공격에 대한 처리
+- [ ] .vue 형태로 component 개발 - datetime picker, select2 --> typescript로 개발 해봐야함
 - [ ] jenkins 연동 ci 테스트 -> 자동화된 docker 배포 가능한가?
+- [ ] google reCAPTCHA v3 인증 --> ajax 로그인시 반영이 어렵네..
+- [ ] docker 적용시 ssl 적용 문제
 
 # 별도 프로젝트로 제외
 - [ ] api area 개발 후 wpf or winform 과 연동

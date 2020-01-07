@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants></DefineConstants>
     <OutputPath>bin\</OutputPath>
     <WarningLevel>2</WarningLevel>
   </PropertyGroup>
@@ -118,6 +118,25 @@
     <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.js" />
     <None Include="wwwroot\lib\slimscroll\jquery.slimscroll.min.js" />
     <None Include="wwwroot\lib\sticky-kit\sticky-kit.min.js" />
+    <None Include="wwwroot\lib\summernote\font\summernote.woff2" />
+    <None Include="wwwroot\lib\summernote\lang\summernote-ko-KR.js" />
+    <None Include="wwwroot\lib\summernote\lang\summernote-ko-KR.min.js" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.js" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.min.js" />
+    <None Include="wwwroot\lib\summernote\summernote-bs4.min.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.js" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.min.js" />
+    <None Include="wwwroot\lib\summernote\summernote-lite.min.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote.js" />
+    <None Include="wwwroot\lib\summernote\summernote.js.map" />
+    <None Include="wwwroot\lib\summernote\summernote.min.js" />
+    <None Include="wwwroot\lib\summernote\summernote.min.js.map" />
+    <None Include="wwwroot\lib\sweetalert2\dist\sweetalert2.all.js" />
+    <None Include="wwwroot\lib\sweetalert2\dist\sweetalert2.all.min.js" />
+    <None Include="wwwroot\lib\sweetalert2\dist\sweetalert2.js" />
+    <None Include="wwwroot\lib\sweetalert2\dist\sweetalert2.min.js" />
     <None Include="wwwroot\lib\vue\dist\README.md" />
     <None Include="wwwroot\lib\vue\dist\vue.common.dev.js" />
     <None Include="wwwroot\lib\vue\dist\vue.common.js" />
@@ -143,11 +162,11 @@
   <ItemGroup>
     <TypeScriptCompile Include="TypeScript\common\ButtonProgress.ts" />
     <TypeScriptCompile Include="TypeScript\common\DragDrop.ts" />
-    <TypeScriptCompile Include="TypeScript\common\main.ts" />
     <TypeScriptCompile Include="TypeScript\jquery\JQueryAjaxProgress.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="4.0.217" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" Condition="'$(Configuration)' == 'Debug'" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.7.4">
       <PrivateAssets>all</PrivateAssets>
@@ -155,7 +174,7 @@
     </PackageReference>
     <PackageReference Include="NetBarcode" Version="1.0.7" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Telegram.Bot" Version="15.1.0" />
+    <PackageReference Include="Telegram.Bot" Version="15.2.0" />
   </ItemGroup>
 
   <ItemGroup>

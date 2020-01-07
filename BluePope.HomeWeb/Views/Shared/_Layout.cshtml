@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject IUserInfo login
+<!DOCTYPE html>
 <html>
 <head>
     <partial name="~/Views/Shared/CommonHeader.cshtml" />
@@ -27,7 +28,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="alert alert-top-button"><i class="fa fa-user-circle"></i> @User.Identity.Name 님</span></a>
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="alert alert-top-button"><i class="fa fa-user-circle"></i> @login.USER_NAME 님</span></a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="dropdown-user">
                                         <li><a href="/login/logout"><i class="fa fa-power-off"></i> Logout</a></li>

@@ -20,15 +20,25 @@ namespace BluePope
     {
         public enum CustomClaimType
         {
-            UserId,
+            U_Id,
+            Email,
+            UserName,
             NextCheckTime
+        }
+
+
+        public static void AddClaim(this ClaimsIdentity claimIdentity, CustomClaimType customClaimType, string value, string type)
+        {
+            claimIdentity.AddClaim(new Claim(GetCustomClaimTypeString(customClaimType), value, type));
         }
 
         public static string GetCustomClaimTypeString(CustomClaimType customClaimType)
         {
             return customClaimType switch
             {
-                CustomClaimType.UserId => ClaimTypes.NameIdentifier,
+                CustomClaimType.U_Id => ClaimTypes.NameIdentifier,
+                CustomClaimType.Email => "Email",
+                CustomClaimType.UserName => "UserName",
                 CustomClaimType.NextCheckTime => "NextCheckTime",
                 _ => null
             };
@@ -46,22 +56,6 @@ namespace BluePope
         {
             return principal.Claims.FirstOrDefault(x => x.Type == claimType)?.Value;
         }
-        /*
-        public static MUser GetLoginInfo(this ClaimsPrincipal principal)
-        {
-            if (principal?.Identity?.IsAuthenticated == false)
-                return null;
-
-            try
-            {
-                return System.Text.Json.JsonSerializer.Deserialize<MUser>(principal.Claims.FirstOrDefault(x => x.Type == "LOGIN_JSON")?.Value);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-        */
         public static bool IsInRoleOrAdmin(this IPrincipal principal, params string[] roles)
         {
             if (principal.IsInRole("ADMIN"))
@@ -102,6 +96,18 @@ namespace BluePope
             }
 
             return false;
+        }
+
+        public static string GetRemoteIpAddress(this ConnectionInfo connection)
+        {
+            if (connection.IsLocal())
+            {
+                return "127.0.0.1";
+            }
+            else
+            {
+                return connection.RemoteIpAddress.MapToIPv4().ToString();
+            }
         }
     }
 }

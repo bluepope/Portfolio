@@ -1,0 +1,62 @@
+﻿@{
+    var sitekey = ViewData["sitekey"] as string;
+}
+<div class="row justify-content-center">
+    <div class="login-content card">
+        <div class="login-form">
+            <div class="alert alert-primary">회원 가입</div>
+            <form id="form1" method="post" action="/login/signup">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input name="email" type="email" class="form-control" placeholder="Email을 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input name="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input name="password2" type="password" class="form-control" placeholder="확인 비밀번호를 입력해주세요">
+                </div>
+
+                <div class="form-group">
+                    <label>닉네임</label>
+                    <input name="user_name" type="text" class="form-control" placeholder="사용하실 별명을 입력해주세요">
+                </div>
+
+                <button id="btn1" type="button" class="btn btn-success btn-flat" style="margin-top:15px">가입시켜주세용</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btn1").click(function () {
+        var input = {};
+
+        $("#form1 input").each(function () {
+            var name = $(this).attr("name");
+
+            input[name] = $(this).val();
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/login/signup",
+            dataType: "json",
+            data: input,
+            success: function (data, status, xhr) {
+                if (data.msg === "OK") {
+                    location.href = "/";
+                }
+                else {
+                    alert(data.msg);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                AjaxCommonError(xhr);
+            }
+        });
+    });
+</script>

@@ -39,7 +39,10 @@ namespace BluePope.HomeWeb
                                 config.UseHttps();
                             });
                         }
-                        catch { }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
                     });
                 });
     }

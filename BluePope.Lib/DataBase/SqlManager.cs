@@ -15,7 +15,7 @@ namespace BluePope.Lib.DataBase
 
         public SqlManager(string xmlPath)
         {
-            _filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, xmlPath);
+            _filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sql", xmlPath);
             LoadSql();
         }
 
@@ -31,7 +31,7 @@ namespace BluePope.Lib.DataBase
             {
                 _sqlDictionary[node.Attributes["id"].Value.ToLower()] = node.InnerText.Trim();
             }
-            
+
             xml = null;
         }
 

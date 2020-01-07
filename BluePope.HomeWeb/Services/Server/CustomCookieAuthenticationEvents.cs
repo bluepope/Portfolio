@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using BluePope.HomeWeb.Models.User;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System;
 using System.Globalization;
@@ -26,10 +27,14 @@ namespace BluePope.HomeWeb.Services.Server
 
             if (string.IsNullOrWhiteSpace(nextCheckDate) || DateTime.ParseExact(nextCheckDate, "yyyyMMddHHmmss", CultureInfo.CurrentCulture) < DateTime.Now)
             {
-                var claimType = WebExtention.GetCustomClaimTypeString(WebExtention.CustomClaimType.NextCheckTime);
+                var u_id = userPrincipal.GetClaim(ClaimTypes.NameIdentifier).Value.ToUint();
+                var email = userPrincipal.GetClaim(ClaimTypes.Name).Value;
 
-                if (1==1) //로그인 사용자에게 문제가 없다면
+                var model = await MUserinfo.Get(u_id);
+
+                if (model?.EMAIL == email && model?.STATUS >= 0) //로그인 사용자에게 문제가 없다면
                 {
+                    var claimType = WebExtention.GetCustomClaimTypeString(WebExtention.CustomClaimType.NextCheckTime);
                     var claimValue = DateTime.Now.AddMinutes(refreshMin).ToString("yyyyMMddHHmmss");
                     var checkClaim = userPrincipal.GetClaim(claimType);
                     var identity = (userPrincipal.Identity as ClaimsIdentity);

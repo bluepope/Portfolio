@@ -7,21 +7,22 @@ using System.Threading.Tasks;
 
 namespace BluePope.HomeWeb.Models.User
 {
-    public interface IUserinfo
+    public interface IUserInfo
     {
         /// <summary>
         /// 고유 아이디
         /// </summary>
-        public uint UNIQUE_ID { get; set; }
-        /// <summary>
-        /// 아이디
-        /// </summary>
-        public string USER_ID { get; set; }
-        public string USER_NAME { get; set; }
-        public string EMAIL { get; set; }
-        public DateTime REG_DATE { get; set; }
-        public DateTime? UPDATE_DATE { get; set; }
-        public string ROLES { get; set; }
+        uint U_ID { get; set; }
+        string EMAIL { get; set; }
+        string USER_NAME { get; set; }
+        string ROLES { get; set; }
+        int POINT { get; set; }
+        short STATUS { get; set; }
+
+        DateTime REG_DATE { get; set; }
+        DateTime? UPDATE_DATE { get; set; }
+        DateTime? LAST_LOGIN_DATE { get; set; }
+        string REMARK1 { get; set; }
 
     }
 }

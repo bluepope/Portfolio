@@ -4,27 +4,25 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace BluePope.HomeWeb.Models.Login
 {
-    public class MLoginUser : IUserinfo
+    public class MLoginUser : IUserInfo
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-
-        /// <summary>
-        /// 고유 아이디
-        /// </summary>
-        public uint UNIQUE_ID { get; set; }
-        /// <summary>
-        /// 아이디
-        /// </summary>
-        public string USER_ID { get; set; }
+        public uint U_ID { get; set; }
+        public string EMAIL { get; set; }
         public string USER_NAME { get; set; }
+        public string ROLES { get; set; }
+        public int POINT { get; set; }
+        public short STATUS { get; set; }
         public DateTime REG_DATE { get; set; }
         public DateTime? UPDATE_DATE { get; set; }
-        public string ROLES { get; set; }
-        public string EMAIL { get; set; }
+        public DateTime? LAST_LOGIN_DATE { get; set; }
+        public string REMARK1 { get; set; }
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public MLoginUser(IHttpContextAccessor httpContextAccessor)
         {
@@ -33,7 +31,11 @@ namespace BluePope.HomeWeb.Models.Login
             if (_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated == false)
                 return;
 
-            this.USER_NAME = _httpContextAccessor.HttpContext.User.Identity.Name;
+            var claimsPrincipal = _httpContextAccessor.HttpContext.User as ClaimsPrincipal;
+
+            this.U_ID = Convert.ToUInt16(claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.U_Id));
+            this.EMAIL = claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.Email);
+            this.USER_NAME = claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.UserName);
         }
     }
 }

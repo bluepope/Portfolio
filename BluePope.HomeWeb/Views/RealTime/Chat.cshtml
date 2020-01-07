@@ -1,8 +1,9 @@
-﻿@{
+﻿@inject IUserInfo login
+@{
     ViewData["Title"] = "Chat";
 
     //var login = User.GetLoginInfo();
-    var userName = User?.Identity?.Name ?? "비로그인 유저";
+    var userName = login?.USER_NAME ?? "비로그인 유저";
 }
 <script src="~/lib/signalr/signalr.min.js"></script>
 
@@ -10,16 +11,16 @@
     <div class="col-12">
         <table>
             <tr>
-                <th>사용자 명 (login?.USER_ID)</th>
+                <th>사용자 명</th>
                 <td>@Html.TextBox("userInput", userName, new { @class = "signalr-chat" })</td>
-                @if (User != null && User.Identity.IsAuthenticated)
+                @if (login != null)
                 {
                     <td rowspan="2">
                         <input type="button" id="sendButton" value="메시지 전송" class="btn btn-sm btn-primary" />
                     </td>
                 }
             </tr>
-            @if (User != null && User.Identity.IsAuthenticated)
+            @if (login != null)
             {
                 <tr>
                     <th>메시지 작성</th>

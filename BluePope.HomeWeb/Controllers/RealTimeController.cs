@@ -16,7 +16,8 @@ namespace BluePope.HomeWeb.Controllers
 
         public RealTimeController(IHubContext<ChatHub> chatHub)
         {
-            ChatHub = chatHub;
+            if (ChatHub == null)
+                ChatHub = chatHub;
         }
 
         public IActionResult Index()

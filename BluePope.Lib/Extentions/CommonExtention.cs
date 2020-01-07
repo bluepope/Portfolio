@@ -24,6 +24,18 @@ namespace BluePope
             else
                 return null;
         }
+        public static uint ToUint(this string str)
+        {
+            uint.TryParse(str.Replace(",", ""), out uint r);
+            return r;
+        }
+        public static uint? ToUintOrNull(this string str)
+        {
+            if (uint.TryParse(str.Replace(",", ""), out uint r))
+                return r;
+            else
+                return null;
+        }
 
         public static long ToLong(this string str)
         {
@@ -67,6 +79,7 @@ namespace BluePope
                 return null;
 
             var sb = new StringBuilder(str);
+
             sb.Replace("-", "");
             sb.Replace("/", "");
             sb.Replace(".", "");

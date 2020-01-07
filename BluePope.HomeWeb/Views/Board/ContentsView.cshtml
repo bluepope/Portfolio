@@ -1,4 +1,5 @@
-﻿@model BluePope.HomeWeb.Models.Board.MBoard
+﻿@inject IUserInfo login
+@model BluePope.HomeWeb.Models.Board.MBoard
 @{
     var page = ViewData["page"] as int?;
 
@@ -29,13 +30,26 @@
         </tbody>
     </table>
 
+
+    @if (Model.REG_UID == login?.U_ID)
+    {
+        <div class="text-right">
+            <button class="btn btn-sm btn-info btnEdit">수정하기</button>
+            <button class="btn btn-sm btn-danger btnDelete">삭제하기</button>
+
+            <script>
+                $(".btnEdit").click(function () {
+                    alert("수정 프로세스");
+                });
+                $(".btnDelete").click(function () {
+                    alert("삭제 프로세스");
+                });
+            </script>
+        </div>
+    }
+
+
     <div class="text-center" style="margin-top:15px;">
         <a href="/board/list?@param" class="btn btn-sm btn-secondary">목록</a>
-
-        if (Model.REG_USER == login?.USER_ID)
-        {
-            //편집 버튼
-            //삭제 버튼
-        }
     </div>
 </div>

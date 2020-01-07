@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BluePope.HomeWeb.Models.Login;
 using BluePope.HomeWeb.Models.User;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,12 +38,17 @@ namespace BluePope.HomeWeb
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                options.HttpsPort = 443;
+            });
 #else
             services
                 .AddControllersWithViews()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 #endif
-
             /*
             //Cross Origin 허용
             services.AddCors((options) => {
@@ -111,10 +118,10 @@ namespace BluePope.HomeWeb
             services.AddHttpContextAccessor();
 
             //로그인정보
-            services.AddScoped<IUserinfo, MLoginUser>();
+            services.AddScoped<IUserInfo, MLoginUser>();
 
             //Db
-            services.AddScoped<IMySqlDapperHelper, MySqlDapperHelper>();
+            services.AddScoped<IDapperHelper, MySqlDapperHelper>();
 
             //services.AddSingleton<ITimerBatchService, TimerBatchService>(); //타이머 싱글톤
         }
@@ -122,14 +129,20 @@ namespace BluePope.HomeWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (!env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseForwardedHeaders(new ForwardedHeadersOptions
+                {
+                    ForwardedHeaders = ForwardedHeaders.All,
+                    RequireHeaderSymmetry = false,
+                    ForwardLimit = null,
+                    KnownNetworks = { new IPNetwork(IPAddress.Parse("::ffff:172.17.0.1"), 104) }
+                });
+
+                app.UseHsts();
+                app.UseHttpsRedirection();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseExceptionHandler("/Error");
 
             /*
             var provider = new FileExtensionContentTypeProvider();

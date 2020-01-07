@@ -1,0 +1,99 @@
+﻿@{
+    var sitekey = ViewData["sitekey"] as string;
+}
+<div class="row justify-content-center">
+    <div class="login-content card">
+        <div class="login-form">
+            <h4>Login</h4>
+            <form id="form1" method="post" action="/login/login">
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input name="email" type="email" class="form-control" placeholder="Email을 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input name="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요">
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input name="remember" type="checkbox" value="true"> 날.. 기억해줘....
+                    </label>
+
+                    <label class="float-right">
+                        <a href="#">호옥시 비밀번호를 잃어버리셨나요?</a>
+                    </label>
+                </div>
+
+                <button type="button" class="btn btn-success btn-flat btn-login" style="margin-top:15px">로그인할거야</button>
+                @*
+                    <div class="social-login-content">
+                        <div class="social-button">
+                            <button type="button" class="btn social facebook btn-flat btn-addon mb-3"><i class="ti-facebook"></i>Sign in with facebook</button>
+                            <button type="button" class="btn social twitter btn-flat btn-addon mt-2"><i class="ti-twitter"></i>Sign in with twitter</button>
+                        </div>
+                    </div>
+                *@
+                <a href="/login/signup" class="btn btn-info" style="margin-top:15px">가입할꺼야</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".btn-login").click(function () {
+         var input = {};
+
+        $("#form1 input").each(function () {
+            var name = $(this).attr("name");
+
+            input[name] = $(this).val();
+        });
+
+        input["token"] = $("textarea[name=g-recaptcha-response]").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/login/login",
+            dataType: "json",
+            data: input,
+            success: function (data, status, xhr) {
+                if (data.msg === "OK") {
+                    location.replace("/");
+                }
+                else {
+                    alert(data.msg);
+                    grecaptcha.execute("@sitekey", { action: "homepage" });
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                AjaxCommonError(xhr);
+                grecaptcha.execute("@sitekey", { action: "homepage" });
+            }
+        });
+    });
+
+    $("#form1 input[name=user_id]").keydown(function (evt) {
+        if (evt.keyCode == 13) {
+            if ($(this).val().length > 0) {
+                $("#form1 input[name=user_pwd]").focus();
+            }
+        }
+    });
+
+    $("#form1 input[name=user_pwd]").keydown(function (evt) {
+        if (evt.keyCode == 13) {
+            if ($(this).val().length > 0) {
+                $("#form1 button.btn-login").trigger("click");
+            }
+        }
+    });
+
+</script>
+<script src="@($"https://www.google.com/recaptcha/api.js?render={sitekey}")"></script>
+<script>
+    grecaptcha.ready(function () {
+        grecaptcha.execute("@sitekey", { action: "homepage" });
+    });
+</script>

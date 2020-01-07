@@ -1,9 +1,13 @@
-﻿@inject IUserinfo loginUser
+﻿@inject IUserInfo login
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@loginUser.USER_NAME
+@login?.USER_NAME
 <div>
     Admin: @User.IsInRole("ADMIN")
+</div>
+
+<div>
+    접속자 IP: @Context.Connection.GetRemoteIpAddress()
 </div>

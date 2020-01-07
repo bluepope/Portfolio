@@ -1,10 +1,4 @@
-﻿@section Scripts
-{ 
-    <link href="~/lib/summernote/summernote-bs4.css" rel="stylesheet" />
-    <script src="~/lib/summernote/summernote-bs4.min.js"></script>
-    <script src="~/lib/summernote/lang/summernote-ko-KR.min.js"></script>
-}
-<div style="width:900px;">
+﻿<div style="width:900px;">
     <table class="table table-common">
         <colgroup>
             <col style="width:90px" />
@@ -29,8 +23,6 @@
 </div>
 
 <script>
-    $.summernote.options.lang = "ko-KR";
-    $.summernote.options.height = 500;
     $("#contents").summernote();
 
     /*
@@ -51,13 +43,12 @@
 
         var obj = {};
         obj["board_type"] = "GENERAL";
-        obj["dup_key"] = "@DateTime.Now.ToString("hhmmss")";
         obj["title"] = $("#title").val();
         obj["contents"] = $("#contents").summernote("code");
 
         $.ajax({
             type: "POST",
-            url: "Save",
+            url: "write",
             dataType: "json",
             data: {
                 input: obj

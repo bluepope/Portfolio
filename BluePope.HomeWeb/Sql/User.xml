@@ -1,96 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <mapper>
-  <select id="GetUserInfoAll">
+  <select id="GetUserInfo">
     <![CDATA[
 SELECT
-  UNIQUE_ID
-  ,USER_ID
-  ,PASSWORD
-  ,USER_NAME
-  ,REG_DATE
-  ,UPDATE_DATE
-  ,ROLES
-FROM
-  T_USER
-WHERE
-  USER_ID = @USER_ID
-    ]]>
-  </select>
-
-  <select id="Getboard">
-  <![CDATA[
-	A.SEQ
-	,A.BOARD_TYPE
-	,A.TITLE
-	,A.CONTENTS
-	,A.DUP_KEY
-	,A.VIEW_CNT
-	,A.STATUS_FLAG
-	,A.REG_IP
-	,A.REG_USER
-	,A.REG_USERNAME
+	A.U_ID
+	,A.EMAIL
+	,A.USER_NAME
 	,A.REG_DATE
+	,A.UPDATE_DATE
+	,A.ROLES
+	,A.POINT
+	,A.STATUS
+	,A.LAST_LOGIN_DATE
+	,A.REMARK1
 FROM
-	T_board A
+  T_USER A
 WHERE
-	A.SEQ = @SEQ
+  U_ID = @U_ID
     ]]>
   </select>
 
-  <insert id="Insertboard">
+  <select id="GetLoginInfo">
     <![CDATA[
-INSERT INTO T_BOARD (
-	SEQ
-	,BOARD_TYPE
-	,TITLE
-	,CONTENTS
-	,DUP_KEY
-	,VIEW_CNT
-	,STATUS_FLAG
-	,REG_IP
-	,REG_USER
-	,REG_USERNAME
-	,REG_DATE
-)
 SELECT
-	@SEQ
-	,@BOARD_TYPE
-	,@TITLE
-	,@CONTENTS
-	,@DUP_KEY
-	,@VIEW_CNT
-	,@STATUS_FLAG
-	,@REG_IP
-	,@REG_USER
-	,@REG_USERNAME
-	,@REG_DATE
+	A.U_ID
+	,A.EMAIL
+	,A.PASSWORD
+	,A.USER_NAME
+	,A.REG_DATE
+	,A.UPDATE_DATE
+	,A.ROLES
+	,A.POINT
+	,A.STATUS
+	,A.LAST_LOGIN_DATE
+	,A.REMARK1
+FROM
+  T_USER A
+WHERE
+  EMAIL = @email
+	AND STATUS <= 0
     ]]>
+  </select>
+
+  <select id="GetSignUp_Uid">
+    <![CDATA[
+SELECT IFNULL((SELECT MAX(U_ID) + 1 FROM T_USER), 1)
+    ]]>
+  </select>
+
+  <select id="GetCheckEmail">
+    <![CDATA[
+SELECT COUNT(EMAIL) CNT
+FROM T_USER
+WHERE EMAIL = @email
+    ]]>
+  </select>
+
+  <select id="GetCheckUserName">
+    <![CDATA[
+SELECT COUNT(USER_NAME) CNT
+FROM T_USER
+WHERE USER_NAME = @user_name
+    ]]>
+  </select>
+
+  <insert id="InsertSignUp">
+<![CDATA[
+INSERT INTO T_USER (
+	U_ID
+	,EMAIL
+	,PASSWORD
+	,USER_NAME
+	,REG_DATE
+	,STATUS
+)
+VALUES (
+	@U_ID
+	,@EMAIL
+	,@PASSWORD
+	,@USER_NAME
+	,now()
+	,0
+)
+]]>
   </insert>
-
-  <update id="Updateboard">
-    <![CDATA[
-UPDATE T_BOARD
-SET
-	BOARD_TYPE = @BOARD_TYPE
-	,TITLE = @TITLE
-	,CONTENTS = @CONTENTS
-	,DUP_KEY = @DUP_KEY
-	,VIEW_CNT = @VIEW_CNT
-	,STATUS_FLAG = @STATUS_FLAG
-	,REG_IP = @REG_IP
-	,REG_USER = @REG_USER
-	,REG_USERNAME = @REG_USERNAME
-	,REG_DATE = @REG_DATE
-WHERE
-	SEQ = @SEQ
-    ]]>
-  </update>
-
-  <delete id="Deleteboard">
-    <![CDATA[
-DELETE FROM T_BOARD
-WHERE
-	SEQ = @SEQ
-    ]]>
-  </delete>
 </mapper>

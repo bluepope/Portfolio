@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using BluePope.HomeWeb.Models.User;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,13 @@ namespace BluePope.HomeWeb.Hubs.Chat
 {
     public class ChatHub : Hub
     {
+        readonly IUserInfo _login;
+
+        public ChatHub(IUserInfo login)
+        {
+            _login = login;
+        }
+
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
@@ -56,7 +64,7 @@ namespace BluePope.HomeWeb.Hubs.Chat
             {
                 await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
                 await base.OnConnectedAsync();
-                await Clients.All.SendAsync("ReceiveMessage", "System", $"{Context.User.Identity.Name}님 입장 알림");
+                await Clients.All.SendAsync("ReceiveMessage", "System", $"{_login.USER_NAME}님 입장 알림");
             }
 
         }
@@ -64,7 +72,7 @@ namespace BluePope.HomeWeb.Hubs.Chat
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
-            await Clients.All.SendAsync("ReceiveMessage", "System", $"{Context.User.Identity.Name}님 퇴장 알림");
+            await Clients.All.SendAsync("ReceiveMessage", "System", $"{_login.USER_NAME}님 퇴장 알림");
             await base.OnDisconnectedAsync(exception);
         }
     }

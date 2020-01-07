@@ -15,10 +15,15 @@ namespace BluePope.HomeWeb.Controllers
     [Authorize]
     public class BoardController : Controller
     {
-        MUserinfo _login;
+        readonly IUserInfo _login;
+        readonly IHttpContextAccessor _httpContextAccessor;
+        readonly IDapperHelper _db;
 
-        public BoardController()//MUserinfo login
+        public BoardController(IDapperHelper db, IUserInfo login, IHttpContextAccessor httpContextAccessor)
         {
+            _db = db;
+            _login = login;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [AllowAnonymous]
@@ -48,7 +53,7 @@ namespace BluePope.HomeWeb.Controllers
             ViewData["page"] = p;
             var model = await MBoard.GetAsync("GENERAL", seq);
 
-            if (!(model.REG_USER == _login?.USER_ID))
+            if (!(model.REG_UID == _login?.U_ID))
             {
                 //HttpContext.Connection.Id
                 //동일 세션의 중복 ViewCount를 막기위해 쿠키를 써봄
@@ -75,12 +80,15 @@ namespace BluePope.HomeWeb.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public IActionResult Write()
         {
             return View();
         }
 
-        public async Task<IActionResult> Save(MBoard input)
+        [HttpPost]
+        [Route("/board/write")]
+        public async Task<IActionResult> WritePost(MBoard input)
         {
             using (var db = new MySqlDapperHelper())
             {
@@ -88,12 +96,11 @@ namespace BluePope.HomeWeb.Controllers
 
                 try
                 {
-                    //input.TITLE 및 input.CONTENTS 검증 필요
-                    //특히 contents 는 xss와 같은 script태그나 img 태그 공격도 체크해야함....
+                    input.CONTENTS = new Ganss.XSS.HtmlSanitizer().Sanitize(input.CONTENTS);
 
-                    input.REG_IP = HttpContext.Connection.RemoteIpAddress.ToString();
-                    input.REG_USER = User.Identity.Name; //USER의 고유 ID를 Claim에 저장하고 가져오는 방법????
-                    input.REG_USERNAME = User.Identity.Name;
+                    input.REG_UID = _login.U_ID; //USER의 고유 ID를 Claim에 저장하고 가져오는 방법????
+                    input.REG_USERNAME = _login.USER_NAME;
+                    input.REG_IP = HttpContext.Connection.GetRemoteIpAddress();
 
                     await input.Insert(db);
 
