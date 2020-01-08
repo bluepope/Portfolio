@@ -29,7 +29,10 @@
 # 별도 프로젝트로 제외
 - [ ] api area 개발 후 wpf or winform 과 연동
 
-#usersettings.json 예시
+# Db 관련
+Properties 내 CreateDbTable.sql 을 참고하여주세요
+
+# usersettings.json 예시
 {
   "ConnectionString": {
     "MySql": "Server=xx;Port=xx;Database=xx;Uid=xx;Pwd=xx;",
@@ -46,5 +49,5 @@
   }
 }
 
-#iis 실행을 원하시는 경우
+# iis 실행을 원하시는 경우
  - Program.cs 에서 UseKestrel 관련 구문 삭제해주세요
