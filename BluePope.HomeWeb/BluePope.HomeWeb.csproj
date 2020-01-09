@@ -34,6 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.dockerignore" Link=".dockerignore">
+      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
+    </None>
     <None Include="bundleconfig.json" />
     <None Include="Views\Shared\Components\LeftMenu\Default.cshtml" />
     <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
