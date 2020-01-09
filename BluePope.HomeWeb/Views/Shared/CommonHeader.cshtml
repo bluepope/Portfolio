@@ -7,15 +7,19 @@
 @if (Context.Connection.IsLocal())
 {
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/ElaAdmin/css/helper.css" rel="stylesheet" />
+    <link href="~/lib/ElaAdmin/css/style.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 }
 else
 {
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/ElaAdmin/css/helper.css" rel="stylesheet" />
+    <link href="~/lib/ElaAdmin/css/style.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
 }
-<link href="~/lib/ElaAdmin/css/helper.css" rel="stylesheet" />
-<link href="~/lib/ElaAdmin/css/style.css" rel="stylesheet" />
-<link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-<link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
 
 @* script 영역 *@
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,5 +47,15 @@ else
 <script src="~/lib/summernote/summernote-bs4.min.js"></script>
 <script src="~/lib/summernote/lang/summernote-ko-KR.min.js"></script>
 
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/js/init.js" asp-append-version="true"></script>
+
+@if (Context.Connection.IsLocal())
+{
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/init.js" asp-append-version="true"></script>
+}
+else
+{
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/init.min.js" asp-append-version="true"></script>
+}
+
