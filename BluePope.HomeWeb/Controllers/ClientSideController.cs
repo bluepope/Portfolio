@@ -36,6 +36,8 @@ namespace BluePope.HomeWeb.Controllers
             return View();
         }
 
+        [RequestSizeLimit(52428800)] //50MB
+        //[DisableRequestSizeLimit] --unlimited
         public async Task<IActionResult> SaveAjaxData(MTestJson input, string json_data)
         {
             try
