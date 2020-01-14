@@ -181,6 +181,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="aspnetapp.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="webdriver\chromedriver">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
