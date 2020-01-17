@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace BluePope.HomeWeb
+namespace BluePope.HomeWeb2
 {
     public class Program
     {
@@ -21,14 +21,6 @@ namespace BluePope.HomeWeb
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseKestrel(options =>
-                    {
-                        options.ListenAnyIP(5000);
-                        options.ListenAnyIP(5001, config =>
-                        {
-                            config.UseHttps("aspnetapp.pfx");
-                        });
-                    });
                 });
     }
 }

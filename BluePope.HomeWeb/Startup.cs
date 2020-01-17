@@ -38,12 +38,6 @@ namespace BluePope.HomeWeb
                 .AddControllersWithViews()
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
-
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
-                options.HttpsPort = 443;
-            });
 #else
             services
                 .AddControllersWithViews()
