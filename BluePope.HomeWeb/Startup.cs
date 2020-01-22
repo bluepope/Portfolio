@@ -39,10 +39,16 @@ namespace BluePope.HomeWeb
                 .AddRazorRuntimeCompilation()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 #else
+            services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 443;
+            });
+
             services
                 .AddControllersWithViews()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 #endif
+
             /*
             //Cross Origin Çã¿ë
             services.AddCors((options) => {
