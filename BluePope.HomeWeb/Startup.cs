@@ -134,8 +134,9 @@ namespace BluePope.HomeWeb
                 });
 
                 app.UseHsts();
-                app.UseHttpsRedirection();
             }
+
+            app.UseHttpsRedirection();
             app.UseExceptionHandler("/Error");
 
             /*
