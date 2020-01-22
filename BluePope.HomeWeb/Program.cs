@@ -21,14 +21,18 @@ namespace BluePope.HomeWeb
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseKestrel(options =>
+                    
+                    if (System.IO.File.Exists("aspnetapp.pfx"))
                     {
-                        options.ListenAnyIP(5000);
-                        options.ListenAnyIP(5001, config =>
+                        webBuilder.UseKestrel(options =>
                         {
-                            config.UseHttps("aspnetapp.pfx");
+                            options.ListenAnyIP(5000);
+                            options.ListenAnyIP(5001, config =>
+                            {
+                                config.UseHttps("aspnetapp.pfx");
+                            });
                         });
-                    });
+                    }
                 });
     }
 }
