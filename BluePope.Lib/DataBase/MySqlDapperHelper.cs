@@ -81,17 +81,14 @@ namespace BluePope.Lib.DataBase
         #region instance 용 영역
         public async Task<IEnumerable<T>> GetQueryAsync<T>(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionString))
+            try
             {
-                try
-                {
-                    return await Dapper.SqlMapper.QueryAsync<T>(conn, sql, param);
-                }
-                catch (Exception ex)
-                {
-                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
-                    throw ex;
-                }
+                return await Dapper.SqlMapper.QueryAsync<T>(_conn, sql, param);
+            }
+            catch (Exception ex)
+            {
+                ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                throw ex;
             }
         }
 
@@ -105,17 +102,14 @@ namespace BluePope.Lib.DataBase
 
         public async Task<int> ExecuteAsync(string sql, object param)
         {
-            using (var conn = new MySqlConnection(ConnectionString))
+            try
             {
-                try
-                {
-                    return await Dapper.SqlMapper.ExecuteAsync(conn, sql, param);
-                }
-                catch (Exception ex)
-                {
-                    ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
-                    throw ex;
-                }
+                return await Dapper.SqlMapper.ExecuteAsync(_conn, sql, param);
+            }
+            catch (Exception ex)
+            {
+                ErrorSqlLog(sql, JsonConvert.SerializeObject(param), ex.Message);
+                throw ex;
             }
         }
 
