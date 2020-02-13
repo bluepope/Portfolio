@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluePope.HomeWeb", "BluePop
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluePope.Lib", "BluePope.Lib\BluePope.Lib.csproj", "{36C363B7-A079-4DB9-9664-49625FBC277E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BluePope.HomeReact", "BluePope.HomeReact\BluePope.HomeReact.csproj", "{34FDEE4E-FD9F-41DC-BFA0-D4CF89E537F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BluePope.HomeReact", "BluePope.HomeReact\BluePope.HomeReact.csproj", "{34FDEE4E-FD9F-41DC-BFA0-D4CF89E537F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,9 +35,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{34FDEE4E-FD9F-41DC-BFA0-D4CF89E537F5} = {045042C8-0B48-406C-926C-E4CA8A6E9A28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95E80667-6B72-4BB9-B7B1-A4A9F25BBC5A}
