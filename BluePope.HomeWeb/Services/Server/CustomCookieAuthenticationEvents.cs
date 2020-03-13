@@ -30,7 +30,7 @@ namespace BluePope.HomeWeb.Services.Server
                 var u_id = userPrincipal.GetClaim(ClaimTypes.NameIdentifier).Value.ToUint();
                 var email = userPrincipal.GetClaim(ClaimTypes.Name).Value;
 
-                var model = await MUserinfo.Get(u_id);
+                var model = await MUserinfo.GetAsync(u_id);
 
                 if (model?.EMAIL == email && model?.STATUS >= 0) //로그인 사용자에게 문제가 없다면
                 {

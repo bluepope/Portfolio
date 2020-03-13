@@ -41,12 +41,12 @@ namespace BluePope.HomeWeb.Models.User
             return string.Join('@', emailArr);
         }
 
-        public async static Task<MUserinfo> Get(uint u_id)
+        public async static Task<MUserinfo> GetAsync(uint u_id)
         {
             return (await MySqlDapperHelper.Instance.GetQueryFromXmlAsync<MUserinfo>("User.xml", "GetUserInfo", new { u_id = u_id })).FirstOrDefault();
         }
 
-        public async static Task<MUserinfo> GetLogin(string email, string pw)
+        public async static Task<MUserinfo> GetLoginAsync(string email, string pw)
         {
             email = EmailReplace(email);
 
@@ -69,7 +69,7 @@ namespace BluePope.HomeWeb.Models.User
             }
         }
 
-        internal async Task<int> SignUp(IDapperHelper db)
+        internal async Task<int> SignUpAsync(IDapperHelper db)
         {
             EMAIL = EmailReplace(EMAIL);
 
@@ -87,7 +87,7 @@ namespace BluePope.HomeWeb.Models.User
             if ((await db.GetQueryFromXmlAsync<int>("User.xml", "GetCheckEmail", this)).FirstOrDefault() > 0)
                 throw new Exception("이미 사용중인 이메일 입니다");
 
-            await CheckUserName(db);
+            await CheckUserNameAsync(db);
 
             //U_ID 가져옴
             this.U_ID = (await db.GetQueryFromXmlAsync<uint>("User.xml", "GetSignUp_Uid", new { })).FirstOrDefault();
@@ -99,7 +99,7 @@ namespace BluePope.HomeWeb.Models.User
             return await db.ExecuteFromXmlAsync("User.xml", "InsertSignUp", this);
         }
 
-        public async Task CheckUserName(IDapperHelper db)
+        public async Task CheckUserNameAsync(IDapperHelper db)
         {
             if (USER_NAME.IndexOfAny(new char[] { '　' }) > -1) throw new Exception("사용할수 없는 문자가 존재합니다");
             if (USER_NAME.In("관리자", "운영자")) throw new Exception("사용할수 없는 닉네임이 존재합니다");

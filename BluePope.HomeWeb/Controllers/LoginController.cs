@@ -61,7 +61,7 @@ namespace BluePope.HomeWeb.Controllers
                 }
                 */
 
-                var login = await MUserinfo.GetLogin(email, password);
+                var login = await MUserinfo.GetLoginAsync(email, password);
 
                 if (login == null) //로그인 오류
                     return Redirect("/");
@@ -118,7 +118,7 @@ namespace BluePope.HomeWeb.Controllers
             {
                 _db.BeginTransaction();
 
-                var r = await input.SignUp(_db);
+                var r = await input.SignUpAsync(_db);
 
                 if (r < 1)
                     throw new Exception("회원 등록 오류");

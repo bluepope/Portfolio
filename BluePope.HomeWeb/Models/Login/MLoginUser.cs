@@ -33,9 +33,16 @@ namespace BluePope.HomeWeb.Models.Login
 
             var claimsPrincipal = _httpContextAccessor.HttpContext.User as ClaimsPrincipal;
 
-            this.U_ID = Convert.ToUInt16(claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.U_Id));
-            this.EMAIL = claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.Email);
-            this.USER_NAME = claimsPrincipal.GetClaimValue(WebExtention.CustomClaimType.UserName);
+            var modelBase = (IUserInfo)this;
+
+            foreach (var claim in claimsPrincipal.Claims)
+            {
+                var property = modelBase.GetType().GetProperty(claim.Type);
+                if (property != null)
+                {
+                    property.SetValue(this, claim.Value);
+                }
+            }
         }
     }
 }
