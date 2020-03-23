@@ -84,7 +84,7 @@ namespace BluePope
             sb.Replace("/", "");
             sb.Replace(".", "");
 
-            if (DateTime.TryParseExact(sb.ToString(), "yyyyMMdd", CultureInfo.CurrentCulture, DateTimeStyles.None, out _))
+            if (DateTime.TryParseExact(sb.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
                 return sb.ToString();
 
             return null;
@@ -107,7 +107,7 @@ namespace BluePope
 
             DateTime d;
 
-            if (DateTime.TryParseExact(sb.ToString(), "yyyyMMdd", CultureInfo.CurrentCulture, DateTimeStyles.None, out d))
+            if (DateTime.TryParseExact(sb.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None, out d))
                 return d.ToString("yyyy-MM-dd");
 
             return null;
@@ -142,7 +142,7 @@ namespace BluePope
                     format = "yyyy-MM-dd";
             }
 
-            return DateTime.ParseExact(str, format, System.Globalization.CultureInfo.CurrentCulture);
+            return DateTime.ParseExact(str, format, System.Globalization.CultureInfo.InvariantCulture);
         }
         public static DateTime FirstDay(this DateTime date) => date.AddDays(-(date.Day - 1));
         public static DateTime LastDay(this DateTime date) => date.AddDays(-(date.Day - 1)).AddMonths(1).AddDays(-1);
