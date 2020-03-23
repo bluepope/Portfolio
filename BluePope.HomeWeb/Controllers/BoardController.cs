@@ -39,7 +39,7 @@ namespace BluePope.HomeWeb.Controllers
                 p = 1;
 
             ViewData["page"] = p;
-            ViewData["total_count"] = MBoard.GetCount("GENERAL");
+            ViewData["total_count"] = await MBoard.GetCountAsync("GENERAL");
             
             var model = await MBoard.GetListAsync("GENERAL", p);
 

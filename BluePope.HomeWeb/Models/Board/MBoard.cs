@@ -47,7 +47,7 @@ namespace BluePope.HomeWeb.Models.Board
             return model.FirstOrDefault();
         }
 
-        public static async Task<int> GetCount(string board_type)
+        public static async Task<int> GetCountAsync(string board_type)
         {
             return (await MySqlDapperHelper.Instance.GetQueryFromXmlAsync<int>("Board.xml", "GetBoardCount", new
             {
