@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,7 +32,8 @@ namespace BluePope.Lib.Http
 
             Client.DefaultRequestHeaders.Add("Accept-Language", "ko-KR,en-US");
             Client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            //Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=UTF-8");
+            //Client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -59,7 +61,7 @@ namespace BluePope.Lib.Http
                 request.Content = content;
             }
 
-            var response = await this.Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            var response = await this.Client.SendAsync(request, HttpCompletionOption.ResponseContentRead);
             response.EnsureSuccessStatusCode();
 
             return response;
@@ -68,6 +70,13 @@ namespace BluePope.Lib.Http
         public async Task<string> GetStringAsync(HttpMethod method, string url, object sendData = null)
         {
             var response = await SendAsync(method, url, new FormUrlEncodedContent(ConvertFormData(sendData)));
+
+            return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<string> GetStringSendJsonAsync(HttpMethod method, string url, object sendData = null)
+        {
+            var response = await SendAsync(method, url, new StringContent(JsonConvert.SerializeObject(sendData), Encoding.UTF8, "application/json"));
 
             return await response.Content.ReadAsStringAsync();
         }

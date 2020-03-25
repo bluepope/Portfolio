@@ -194,12 +194,18 @@ unzip NanumFont_TTF_ALL.zip
             {
                 using (var client = new HttpClientHelper())
                 {
+                    await client.GetStringSendJsonAsync(HttpMethod.Post, "https://localhost:44377/SampleData", new object[] {
+                        new { col1 = "row3", col2 = 3 },
+                        new { col1 = "row4", col2 = 4 },
+                    });
+
                     /* Download */
+                    /*
                     var file = await client.GetFileAsync(HttpMethod.Get, url);
                     file.SaveAs($"DownloadFiles/{file.FileName}", true, (now) => {
                         Console.WriteLine($"download {file.FileName} : {file.TotalBytesSize} / {now}");
                     });
-
+                    */
                     /* Upload */
                     /*
                     var fileList = new List<HttpFile>();
@@ -224,7 +230,6 @@ unzip NanumFont_TTF_ALL.zip
                 return Json(new { msg = ex.Message });
             }
         }
-
 
         public IActionResult DbTableList()
         {
