@@ -36,8 +36,14 @@ namespace BluePope.HomeWeb.Controllers
             return View();
         }
 
+        public IActionResult AxiosTest()
+        {
+            return View();
+        }
+
         [RequestSizeLimit(52428800)] //50MB
         //[DisableRequestSizeLimit] --unlimited
+        //axios 는 [FromBody] 해줘야함
         public async Task<IActionResult> SaveAjaxData(MTestJson input, string json_data)
         {
             try

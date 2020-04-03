@@ -21,6 +21,8 @@ namespace BluePope.HomeWeb.Controllers.ViewComponents
         
         public IViewComponentResult Invoke()
         {
+            //singleton 형태로 바꿔서 내용을 좀 줄일수 있을 것 같은데
+
             var controller = ViewContext.RouteData.Values["Controller"] as string;
             var action = ViewContext.RouteData.Values["Action"] as string;
 
@@ -48,6 +50,11 @@ namespace BluePope.HomeWeb.Controllers.ViewComponents
                 setting.SubMenuList.Add(MLeftMenu.Create((menu) => {
                     menu.ActionName = "ajaxTest";
                     menu.Name = "Ajax Test";
+                }));
+
+                setting.SubMenuList.Add(MLeftMenu.Create((menu) => {
+                    menu.ActionName = "axiosTest";
+                    menu.Name = "Axios Test";
                 }));
 
                 setting.SubMenuList.Add(MLeftMenu.Create((menu) => {
