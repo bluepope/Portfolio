@@ -125,6 +125,9 @@
         });
 
         var formData = new FormData();
+
+        //formData.append("input[COL1]", "a");
+        //formData.append("input[COL2]", "b");
         formData.append("json_data", JSON.stringify(obj));
 
         $("#ajax-test input[type=file]").each(function () {

@@ -189,6 +189,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadFiles\" />
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>

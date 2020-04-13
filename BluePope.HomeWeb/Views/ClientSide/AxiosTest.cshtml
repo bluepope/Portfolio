@@ -36,6 +36,11 @@
 </div>
 
 <script>
+    const formUrlEncoded = x => Object.keys(x).reduce((p, c) => p + `&${c}=${encodeURIComponent(x[c])}`, '');
+    
+    //Object.keys()
+    //Array.isArray()
+
     $("#btn1").click(function () {
         //파일을 전송할 수 없음
         var obj = {};
@@ -44,18 +49,20 @@
             obj[$(this).attr("name")] = $(this).val();
         });
 
-        axios.post("/ClientSide/SaveAjaxData", obj)
-            .then(function (response) {
-                if (data.msg == "OK") {
-                    alert("저장되었습니다");
-                }
-                else {
-                    alert(data.msg);
-                }
-            })
-            .catch(function (error) {
-                AjaxCommonError(error);
-            });
+        axios({
+            method: 'post',
+            url: "/ClientSide/SaveAjaxData",
+            headers: { 'Content-type': 'application/x-www-form-urlencoded', },
+            data: formUrlEncoded(obj)
+        })
+        .then(function (response) {
+            //handle success
+            console.log(response);
+        })
+        .catch(function (response) {
+            //handle error
+            console.log(response);
+        });
     });
 
     $("#btn2").click(function () {
@@ -129,31 +136,19 @@
             }
         });
 
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
+        axios({
+            method: 'post',
             url: "/ClientSide/SaveAjaxData",
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            success: function (data, status, xhr) {
-                if (data.msg == "OK") {
-                    alert("저장되었습니다");
-                }
-                else {
-                    alert(data.msg);
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                AjaxCommonError(xhr);
-            },
-            xhr: function () {
-                var progress = new JQueryAjaxProgress();
-                progress.SetButtonSendProgress(new ButtonProgress(btn));
-
-                return progress.GetXhr();
-            }
+            headers: { 'Content-type': "multipart/form-data", },
+            data: formData
+        })
+        .then(function (response) {
+            //handle success
+            console.log(response);
+        })
+        .catch(function (response) {
+            //handle error
+            console.log(response);
         });
     });
 
