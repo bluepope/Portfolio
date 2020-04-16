@@ -1,4 +1,82 @@
-﻿$.fn.reset = function () {
+﻿function ObjectToFormDataArray(obj, prefix) {
+    var formDataList = [];
+    var name;
+
+    if (obj == null)
+        return formDataList;
+
+    if (Array.isArray(obj)) {
+        var idx = 0;
+
+        for (var i = 0; i < obj.length; i++) {
+            var item = obj[i];
+            var keys = Object.keys(item);
+
+            if (item != null && typeof (item) === "object") {
+                for (var k = 0; k < keys.length; k++) {
+                    var key = keys[k];
+
+                    if (prefix == null) {
+                        name = key + "[" + idx + "]";
+                    }
+                    else {
+                        name = prefix + "[" + idx + "]" + key;
+                    }
+
+                    if (Array.isArray(item[key])) {
+                        var subList = ObjectToFormDataArray(item[key], prefix);
+                        for (var x = 0; x < subList.length; x++) {
+                            formDataList.push(subList[x]);
+                        }
+                    }
+                    else {
+                        formDataList.push({ key: name, value: item[key] });
+                    }
+                }
+            }
+            else {
+                if (prefix == null) {
+                    name = "";
+                }
+                else {
+                    name = prefix + "[" + idx + "]";
+                }
+                formDataList.push({ key: name, value: item });
+            }
+            idx++;
+        }
+    }
+    else {
+        var keys = Object.keys(obj);
+
+        for (var i = 0; i < keys.length; i++) {
+            var key = keys[i];
+
+            if (prefix == null) {
+                name = key;
+            }
+            else {
+                name = prefix + "[" + key + "]";
+            }
+
+            if (obj[key] != null) {
+                if (Array.isArray(obj[key]) || typeof (obj[key]) === "object") {
+                    var subList = ObjectToFormDataArray(obj[key], name);
+                    for (var x = 0; x < subList.length; x++) {
+                        formDataList.push(subList[x]);
+                    }
+                }
+                else {
+                    formDataList.push({ key: name, value: obj[key] });
+                }
+            }
+        }
+    }
+
+    return formDataList;
+}
+
+$.fn.reset = function () {
     return this.each(function () {
         $(this).replaceWith($(this).val("").clone(true));
     });

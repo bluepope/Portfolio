@@ -10,7 +10,7 @@ Vue.component('v-datepicker', {
         if ($obj.hasClass("date-nobtn")) {
             $obj.children(".input-group-append").hide();
         }
-        
+
         $obj.datepicker();
 
         $obj.children("input").on("change", function () {
@@ -79,12 +79,12 @@ Vue.component('v-select2', {
                 $(vselect2.$el).append('<option value="' + vselect2.value + '" selected="selected">' + vselect2.text + '</option>');
             }
         }
-        
+
         $(vselect2.$el).on("change", function () {
             //console.log("change");
-            vselect2.$emit("input", this.value);
+            vselect2.$emit("input", $(vselect2.$el).val());
         });
-        
+
         if (typeof (vselect2.value) !== "undefined") {
             $(vselect2.$el).val(vselect2.value).trigger("change");
         }
@@ -101,10 +101,20 @@ Vue.component('v-select2', {
         },
         value: function (value) {
             //console.log("watch");
+            if (Array.isArray(value)) {
+                if (value.join(',') === $(this.$el).val().join(',')) {
+                    return;
+                }
+            }
+            else if (value === $(this.$el).val()) {
+                return;
+            }
+
             $(this.$el).val(value).trigger('change');
         }
     },
     destroyed: function () {
-        $(this.$el).off().select2('destroy');
+        //console.log(this.$el);
+        $(this.$el).off().select2().select2('destroy');
     }
 });
