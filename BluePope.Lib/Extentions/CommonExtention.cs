@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -168,5 +170,44 @@ namespace BluePope
         public static bool Between(this float num, float min, float max) => (min <= num && num <= max);
         public static bool Between(this double num, double min, double max) => (min <= num && num <= max);
         #endregion
+
+        public static void CheckRequired(this object instance)
+        {
+            if (instance.GetType().IsClass == false)
+                throw new NotSupportedException();
+
+            foreach (var prop in instance.GetType().GetProperties())
+            {
+                var requiredList = prop.GetCustomAttributes(typeof(RequiredAttribute), true);
+
+                if (requiredList?.Length > 0)
+                {
+                    if (prop.GetValue(instance) == null || (prop.GetType() == typeof(string) && string.IsNullOrWhiteSpace(prop.GetValue(instance) as string)))
+                    {
+                        string msg = (requiredList[0] as RequiredAttribute).ErrorMessage;
+
+                        if (msg.IsNull())
+                        {
+                            var displayNameList = prop.GetCustomAttributes(typeof(DisplayNameAttribute), true);
+
+                            if (displayNameList?.Length > 0)
+                            {
+                                var displayName = (displayNameList[0] as DisplayNameAttribute).DisplayName;
+
+                                throw new Exception($"{displayName}을 입력해주세요");
+                            }
+                            else
+                            {
+                                throw new Exception($"필수 값이 누락되었습니다 [{prop.Name.IsNull()}]");
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception(msg);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
