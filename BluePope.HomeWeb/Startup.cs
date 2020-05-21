@@ -33,12 +33,6 @@ namespace BluePope.HomeWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-#if DEBUG
-            services
-                .AddControllersWithViews()
-                .AddRazorRuntimeCompilation()
-                .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
-#else
             services.AddHttpsRedirection(options =>
             {
                 options.HttpsPort = 443;
@@ -47,7 +41,6 @@ namespace BluePope.HomeWeb
             services
                 .AddControllersWithViews()
                 .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
-#endif
 
             /*
             //Cross Origin Çã¿ë

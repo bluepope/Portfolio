@@ -1,9 +1,9 @@
-var ButtonProgress = /** @class */ (function () {
-    function ButtonProgress(target) {
+class ButtonProgress {
+    constructor(target) {
         this._targetObject = target;
         this.InitProgress();
     }
-    ButtonProgress.prototype.InitProgress = function () {
+    InitProgress() {
         this._initFlag = 0;
         this._progressPercent = 0;
         this._color = window.getComputedStyle(this._targetObject, "").backgroundColor;
@@ -16,8 +16,8 @@ var ButtonProgress = /** @class */ (function () {
         if (this._targetObject.tagName == "BUTTON") {
             this._targetObject.setAttribute("disabled", "true");
         }
-    };
-    ButtonProgress.prototype.SetProgress = function (percent) {
+    }
+    SetProgress(percent) {
         this._initFlag = 1;
         if (this._progressPercent != percent) {
             this._progressPercent = percent;
@@ -26,8 +26,8 @@ var ButtonProgress = /** @class */ (function () {
                 this._targetObject.classList.add("blinking");
             }
         }
-    };
-    ButtonProgress.prototype.EndProgress = function () {
+    }
+    EndProgress() {
         this._initFlag = 2;
         this._targetObject.style.color = "";
         this._targetObject.style.background = "";
@@ -35,14 +35,11 @@ var ButtonProgress = /** @class */ (function () {
         if (this._targetObject.tagName == "BUTTON") {
             this._targetObject.removeAttribute("disabled");
         }
-    };
-    return ButtonProgress;
-}());
-var DragDrop = /** @class */ (function () {
-    function DragDrop() {
     }
-    DragDrop.SetFileDropZone = function (cssSelector, callBack) {
-        var dropZoneList = document.querySelectorAll(cssSelector);
+}
+class DragDrop {
+    static SetFileDropZone(cssSelector, callBack) {
+        let dropZoneList = document.querySelectorAll(cssSelector);
         Array.prototype.slice.call(dropZoneList).forEach(function (dropZone) {
             dropZone.addEventListener('dragover', function (e) {
                 e.stopPropagation();
@@ -56,30 +53,28 @@ var DragDrop = /** @class */ (function () {
                 callBack(e, e.dataTransfer.files);
             });
         });
-    };
-    return DragDrop;
-}());
-var JQueryAjaxProgress = /** @class */ (function () {
-    function JQueryAjaxProgress() {
     }
-    JQueryAjaxProgress.prototype.SetButtonSendProgress = function (buttonProgressObject) {
+}
+class JQueryAjaxProgress {
+    constructor() {
+    }
+    SetButtonSendProgress(buttonProgressObject) {
         this._buttonProgressObject = buttonProgressObject;
         this._buttonProgressObject.InitProgress();
-    };
-    JQueryAjaxProgress.prototype.GetXhr = function () {
-        var _this = this;
-        var customXhr = $.ajaxSettings.xhr();
+    }
+    GetXhr() {
+        let customXhr = $.ajaxSettings.xhr();
         if (customXhr.upload) { // check if upload property exists
             if (this.sendProgressEvent || this._buttonProgressObject) {
-                customXhr.upload.addEventListener('progress', function (evt) {
-                    if (_this._buttonProgressObject) {
+                customXhr.upload.addEventListener('progress', (evt) => {
+                    if (this._buttonProgressObject) {
                         if (evt.lengthComputable) {
                             var percentComplete = Math.round((evt.loaded / evt.total) * 100);
-                            _this._buttonProgressObject.SetProgress(percentComplete);
+                            this._buttonProgressObject.SetProgress(percentComplete);
                         }
                     }
-                    if (_this.sendProgressEvent) {
-                        _this.sendProgressEvent(evt);
+                    if (this.sendProgressEvent) {
+                        this.sendProgressEvent(evt);
                     }
                 }, false); // for handling the progress of the upload
             }
@@ -87,27 +82,26 @@ var JQueryAjaxProgress = /** @class */ (function () {
                 customXhr.upload.addEventListener('abort', this.sendAbortEvent); // for handling the progress of the upload
             }
             if (this.sendCompleteEvent || this._buttonProgressObject) {
-                customXhr.upload.addEventListener('load', function (evt) {
-                    if (_this._buttonProgressObject) {
-                        _this._buttonProgressObject.EndProgress();
+                customXhr.upload.addEventListener('load', (evt) => {
+                    if (this._buttonProgressObject) {
+                        this._buttonProgressObject.EndProgress();
                     }
-                    if (_this.sendCompleteEvent) {
-                        _this.sendCompleteEvent(evt);
+                    if (this.sendCompleteEvent) {
+                        this.sendCompleteEvent(evt);
                     }
                 }); // for handling the progress of the upload
             }
         }
         return customXhr;
-    };
-    return JQueryAjaxProgress;
-}());
+    }
+}
 jQuery.ajaxSetup({ cache: false }); //ajax 캐시 사용안함
 var AjaxCommonError = function (xhr) {
     if (xhr.statusText === "abort")
         return;
     else if (xhr.responseText != null) {
-        var message = xhr.responseText;
-        var div = document.createElement("div");
+        let message = xhr.responseText;
+        let div = document.createElement("div");
         div.innerHTML = message;
         alert(div.innerText);
     }
