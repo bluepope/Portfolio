@@ -16,6 +16,7 @@ using System.Net.Http;
 using BluePope.Lib.Http;
 using BluePope.HomeWeb.Models.Lab;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace BluePope.HomeWeb.Controllers
 {
@@ -173,7 +174,7 @@ unzip NanumFont_TTF_ALL.zip
             return View();
         }
 
-        public async Task<IActionResult> UploadTest()
+        public async Task<IActionResult> UploadTest(List<MTest1> input)//[FromBody] List<MTest1> input)
         {
             var files = Request.Form.Files.GetFiles("file1");
 
@@ -190,6 +191,34 @@ unzip NanumFont_TTF_ALL.zip
 
         public async Task<IActionResult> GetWebFileDownload(string url)
         {
+            RestSharp.RestClient restClient = new RestSharp.RestClient();
+            restClient.Post(new Func<RestRequest>(() => 
+            {
+                var req = new RestRequest();
+                req.Resource = "https://localhost:5001/lab/UploadTest";
+                req.Method = Method.POST;
+                req.RequestFormat = DataFormat.Json;
+                /*
+                req.AddHeader("content-type", "application/x-www-form-urlencoded");
+                req.AddParameter("application/x-www-form-urlencoded", $"input[0][col1]=row1&input[0][col2]=1", ParameterType.RequestBody);
+                */
+
+                /*
+                req.AddJsonBody(new object[] 
+                {
+                    new { col1 = "row3", col2 = 3 },
+                    new { col1 = "row4", col2 = 4 },
+                });
+                */
+
+                req.AlwaysMultipartFormData = true;
+                req.AddFile("file1", "d:/18.jpg");
+                return req;
+            }).Invoke());
+
+            //restClient.DownloadData(new RestRequest("", Method.POST, DataFormat.Json));
+
+
             try
             {
                 using (var client = new HttpClientHelper())
