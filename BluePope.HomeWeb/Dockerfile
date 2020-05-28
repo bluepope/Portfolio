@@ -1,22 +1,12 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM bluepope/centos8-dotnet3.1
+
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
+EXPOSE 5001
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
-WORKDIR /src
-COPY ["BluePope.HomeWeb/BluePope.HomeWeb.csproj", "BluePope.HomeWeb/"]
-RUN dotnet restore "BluePope.HomeWeb/BluePope.HomeWeb.csproj"
-COPY . .
-WORKDIR "/src/BluePope.HomeWeb"
-RUN dotnet build "BluePope.HomeWeb.csproj" -c Release -o /app/build
+COPY BluePope.HomeWeb/bin/Release/netcoreapp3.1 .
+COPY BluePope.HomeWeb/wwwroot wwwroot/
 
-FROM build AS publish
-RUN dotnet publish "BluePope.HomeWeb.csproj" -c Release -o /app/publish
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "HomeWeb.dll"]

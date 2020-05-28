@@ -4,6 +4,5 @@
 .gitignore
 .vs
 .vscode
-*/bin
 */obj
 **/.toolstarget

@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>HomeWeb</AssemblyName>
+    <UserSecretsId>e33aed3d-5d52-473b-b6b5-7e20e51e81a0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -34,9 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.dockerignore" Link=".dockerignore">
-      <DependentUpon>$(DockerDefaultDockerfile)</DependentUpon>
-    </None>
     <None Include="bundleconfig.json" />
     <None Include="Views\Shared\Components\LeftMenu\Default.cshtml" />
     <None Include="wwwroot\lib\bootstrap-datepicker\bootstrap-datepicker.js" />
@@ -175,6 +174,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="NetBarcode" Version="1.0.8" />
     <PackageReference Include="RestSharp" Version="106.11.4" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
