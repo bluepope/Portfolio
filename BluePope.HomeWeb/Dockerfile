@@ -1,6 +1,6 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM bluepope/centos8-dotnet3.1
+FROM bluepope/centos8-dotnet3.1-chrome83
 
 WORKDIR /app
 EXPOSE 5000
