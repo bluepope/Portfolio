@@ -22,14 +22,14 @@ namespace BluePope.HomeWeb
                 {
                     webBuilder.UseStartup<Startup>();
                     
-                    if (System.IO.File.Exists("hyunmo.pfx"))
+                    if (System.IO.File.Exists("aspnetapp.pfx"))
                     {
                         webBuilder.UseKestrel(options =>
                         {
                             options.ListenAnyIP(5000);
                             options.ListenAnyIP(5001, config =>
                             {
-                                config.UseHttps("hyunmo.pfx");
+                                config.UseHttps("aspnetapp.pfx");
                             });
                         });
                     }

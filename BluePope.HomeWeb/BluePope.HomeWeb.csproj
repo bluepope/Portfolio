@@ -183,9 +183,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="hyunmo.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="webdriver\chromedriver">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
