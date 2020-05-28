@@ -189,10 +189,10 @@ unzip NanumFont_TTF_ALL.zip
             return Json(new { msg = "OK" });
         }
 
-        public async Task<IActionResult> GetWebFileDownload(string url)
+        public IActionResult RestsharpTest()
         {
             RestSharp.RestClient restClient = new RestSharp.RestClient();
-            restClient.Post(new Func<RestRequest>(() => 
+            restClient.Post(new Func<RestRequest>(() =>
             {
                 var req = new RestRequest();
                 req.Resource = "https://localhost:5001/lab/UploadTest";
@@ -218,7 +218,11 @@ unzip NanumFont_TTF_ALL.zip
 
             //restClient.DownloadData(new RestRequest("", Method.POST, DataFormat.Json));
 
+            return Json(new { msg = "OK", fileName = "test" });
+        }
 
+        public async Task<IActionResult> GetWebFileDownload(string url)
+        {
             try
             {
                 using (var client = new HttpClientHelper())
