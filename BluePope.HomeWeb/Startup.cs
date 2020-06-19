@@ -35,8 +35,8 @@ namespace BluePope.HomeWeb
         {
             services
                 .AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
+                .AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = null; }); //NewtonSoftJson 사용 및 camelCase 강제적용 제외
+                //.AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNamingPolicy = null; });
 
             /*
             //Cross Origin 허용
