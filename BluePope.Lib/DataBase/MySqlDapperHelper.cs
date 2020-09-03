@@ -83,7 +83,7 @@ namespace BluePope.Lib.DataBase
         {
             try
             {
-                return await Dapper.SqlMapper.QueryAsync<T>(_conn, sql, param);
+                return await Dapper.SqlMapper.QueryAsync<T>(_conn, sql, param, _trans);
             }
             catch (Exception ex)
             {
@@ -104,7 +104,7 @@ namespace BluePope.Lib.DataBase
         {
             try
             {
-                return await Dapper.SqlMapper.ExecuteAsync(_conn, sql, param);
+                return await Dapper.SqlMapper.ExecuteAsync(_conn, sql, param, _trans);
             }
             catch (Exception ex)
             {

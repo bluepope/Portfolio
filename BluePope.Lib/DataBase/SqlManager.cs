@@ -9,13 +9,14 @@ namespace BluePope.Lib.DataBase
 {
     public class SqlManager
     {
+        public static string RootPath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
         string _filePath;
         Dictionary<string, string> _sqlDictionary = new Dictionary<string, string>();
         DateTime _fileWriteTime;
 
         public SqlManager(string xmlPath)
         {
-            _filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sql", xmlPath);
+            _filePath = System.IO.Path.Combine(RootPath, "Sql", xmlPath);
             LoadSql();
         }
 

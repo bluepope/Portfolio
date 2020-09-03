@@ -118,6 +118,8 @@ namespace BluePope.HomeWeb
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            SqlManager.RootPath = env.ContentRootPath;
+
             if (!env.IsDevelopment())
             {
                 app.UseForwardedHeaders(new ForwardedHeadersOptions
