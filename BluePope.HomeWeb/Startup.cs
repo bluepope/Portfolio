@@ -54,6 +54,13 @@ namespace BluePope.HomeWeb
             }).AddCookie(options =>
             {
                 options.LoginPath = "/Login";
+                /*
+                options.AccessDeniedPath = "/Error/AccessDenied";
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    throw new Exception("test");
+                };
+                */
                 options.EventsType = typeof(CustomCookieAuthenticationEvents);
             });
 
@@ -135,7 +142,7 @@ namespace BluePope.HomeWeb
 
             app.UseHttpsRedirection();
             app.UseExceptionHandler("/Error");
-
+            
             /*
             var provider = new FileExtensionContentTypeProvider();
             provider.Mappings[".png"] = "application/x-msdownload";

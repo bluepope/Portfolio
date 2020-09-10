@@ -1,10 +1,14 @@
 ﻿using BluePope.HomeWeb.Models.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+
+using Newtonsoft.Json;
+
 using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace BluePope.HomeWeb.Services.Server
@@ -13,6 +17,22 @@ namespace BluePope.HomeWeb.Services.Server
     {
         public CustomCookieAuthenticationEvents()
         {
+        }
+
+        public async override Task RedirectToAccessDenied(RedirectContext<CookieAuthenticationOptions> context)
+        {
+            context.HttpContext.Response.StatusCode = 401;
+            context.HttpContext.Response.ContentType = "application/json; charset=utf-8";
+            
+            var json = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new 
+            {
+                message = "권한이 없습니다",
+                redirectUrl = context.Request.Path
+            }));
+
+            await context.HttpContext.Response.Body.WriteAsync(json, 0, json.Length);
+
+            //return base.RedirectToAccessDenied(context);
         }
 
         public override async Task ValidatePrincipal(CookieValidatePrincipalContext context)
