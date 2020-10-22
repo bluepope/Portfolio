@@ -5,6 +5,7 @@
     <AssemblyName>HomeWeb</AssemblyName>
     <UserSecretsId>e33aed3d-5d52-473b-b6b5-7e20e51e81a0</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

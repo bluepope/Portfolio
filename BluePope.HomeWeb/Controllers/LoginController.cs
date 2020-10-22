@@ -70,7 +70,14 @@ namespace BluePope.HomeWeb.Controllers
 
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, login.U_ID.ToString()));
                 identity.AddClaim(new Claim(ClaimTypes.Name, login.EMAIL));
-                identity.AddClaim(new Claim(ClaimTypes.Role, login.ROLES.IsNull("")));
+                if (login.ROLES.IsNull() == false)
+                {
+                    foreach(string role in login.ROLES.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        identity.AddClaim(new Claim(ClaimTypes.Role, role.Trim()));
+                    }
+                }
+                
                 identity.AddClaim(WebExtention.CustomClaimType.Email, login.EMAIL, typeof(string).ToString());
                 identity.AddClaim(WebExtention.CustomClaimType.UserName, login.USER_NAME, typeof(string).ToString());
                 identity.AddClaim(WebExtention.CustomClaimType.NextCheckTime, DateTime.Now.AddMinutes(15).ToString("yyyyMMddHHmmss"), typeof(DateTime).ToString());
